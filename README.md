@@ -1,2 +1,1 @@
-# TaskerMAN
-Web Application for Tasker service
+# aber-cs221-group-15-web
