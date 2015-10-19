@@ -8,10 +8,10 @@ $api = new api;
 $api->setMethod($core->io->get('method'));
 
 if ($api->method !== 'login'){
-	$api->key = $core->io->get('key');
+	$api->token = $core->io->get('token');
 
 	// Authorize user
-	if (!$api->authenticateByKey($api->key)){
+	if (!$api->authenticateByToken()){
 		echo $api->error('Invalid API key');
 		exit;
 	}

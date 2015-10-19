@@ -9,13 +9,13 @@ class api {
 
 	public $uid;
 	public $is_admin;
-	public $key;
+	public $token;
 
 	public function __construct(){
 		$this->core = core::getInstance();
 	}
 
-	static public function GenerateAPIKey(){
+	static public function GenerateAPIToken(){
 		return math::GenerateUUIDv4() . '-' . math::GenerateUUIDv4();
 	}
 
@@ -23,11 +23,15 @@ class api {
 		$this->method = preg_replace('/[^\w-]/', '', $method);
 	}
 
-	public function authenticateByKey($key){
+	public function authenticateByToken(){
+
+		if (empty($this->token)){
+			return false;
+		}
 
 		$query = $this->core->db->query("SELECT `id`, `admin`
 			FROM `users`
-			WHERE `api_token` = '$key'
+			WHERE `api_token` = '$this->token'
 			LIMIT 1
 		");
 
@@ -42,9 +46,9 @@ class api {
 		return true;
 	}
 
-	public function getKey($uid){
+	public function getUserAPIToken($uid){
 
-		$query = $this->core->db->query("SELECT `key`
+		$query = $this->core->db->query("SELECT `api_token`
 			FROM `users`
 			WHERE `id` = '$uid'
 			LIMIT 1
@@ -55,7 +59,7 @@ class api {
 		}
 
 		$fetch = $query->fetch_assoc();
-		return $fetch['key'];
+		return $fetch['api_token'];
 	}
 
 	public function response($data){
