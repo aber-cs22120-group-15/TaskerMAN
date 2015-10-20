@@ -76,10 +76,6 @@ class task {
 		$this->title = $title;
 	}
 
-	public function setElements($elements){
-		$this->elements = $elements;
-	}
-
 	public function save(){
 
 		if ($this->new_task){
