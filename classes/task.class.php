@@ -10,7 +10,6 @@ class task {
 	public $completed_time;
 	public $status;
 	public $title;
-	public $details;
 
 	private $core;
 
@@ -51,7 +50,6 @@ class task {
 		$this->completed_time 	= $fetch['completed_time'];
 		$this->status 			= $fetch['status'];
 		$this->title 			= $fetch['title'];
-		$this->details 			= $fetch['details'];
 	}
 
 	public function setAssignee($assignee){
@@ -78,8 +76,8 @@ class task {
 		$this->title = $title;
 	}
 
-	public function setDetails($details){
-		$this->details = $details;
+	public function setElements($elements){
+		$this->elements = $elements;
 	}
 
 	public function save(){
@@ -87,9 +85,9 @@ class task {
 		if ($this->new_task){
 
 			$stmt = new PDOQuery("INSERT INTO `tasks`
-				(`assignee_uid`, `due_by`, `completed_time`, `status`, `title`, `details`)
+				(`assignee_uid`, `due_by`, `completed_time`, `status`, `title`)
 				VALUES
-				(:assignee_uid, :due_by, :completed_time, :status, :title, :details)
+				(:assignee_uid, :due_by, :completed_time, :status, :title)
 			");
 		} else {
 
@@ -98,8 +96,7 @@ class task {
 				`due_by` = :due_by,
 				`completed_time` = :completed_time,
 				`status` = :status,
-				`title`= :title,
-				`details` = :details
+				`title`= :title
 
 				WHERE `id` = :id
 				LIMIT 1
@@ -113,8 +110,7 @@ class task {
 		$stmt->bindValue(':completed_time', (string) $this->completed_time, PDO::PARAM_STR);
 		$stmt->bindValue(':status', (int) $this->status, PDO::PARAM_INT);
 		$stmt->bindValue(':title', (string) $this->title, PDO::PARAM_STR);
-		$stmt->bindValue(':details', (string) $this->details, PDO::PARAM_STR);
-
+		
 		$stmt->execute();
 
 		if ($this->new_task){
