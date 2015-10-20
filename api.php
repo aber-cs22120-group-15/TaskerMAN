@@ -3,28 +3,28 @@ header('Content-type: application/json');
 
 require_once('config/init.php');
 
-$api = new api;
+$API = new API;
 
-$api->setMethod($core->io->get('method'));
+$API->setMethod($core->IO->get('method'));
 
-if ($api->method !== 'login'){
-	$api->token = $core->io->get('token');
+if ($API->method !== 'login'){
+	$API->token = $core->IO->get('token');
 
 	// Authorize user
-	if (!$api->authenticateByToken()){
-		echo $api->error('Invalid API key');
+	if (!$API->authenticateByToken()){
+		echo $API->error('Invalid API key');
 		exit;
 	}
 
 }
 
-if (empty($api->method)){
-	echo $api->error('Method not found');
+if (empty($API->method)){
+	echo $API->error('Method not found');
 	exit;
 }
 
-if (!@include_once('api/' . $api->method . '.php')){
-	echo $api->error('Method not found');
+if (!@include_once('api/' . $API->method . '.php')){
+	echo $API->error('Method not found');
 	exit;
 }
 

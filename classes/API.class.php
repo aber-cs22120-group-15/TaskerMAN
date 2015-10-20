@@ -1,6 +1,6 @@
 <?php
 
-class api {
+class API {
 	
 	private $core;
 	private $data;
@@ -16,7 +16,7 @@ class api {
 	}
 
 	static public function GenerateAPIToken(){
-		return math::GenerateUUIDv4() . '-' . math::GenerateUUIDv4();
+		return Math::GenerateUUIDv4() . '-' . math::GenerateUUIDv4();
 	}
 
 	public function setMethod($method){
