@@ -22,13 +22,13 @@ switch ($status){
 	// allocated
 	case 1:
 		$task->setStatus(1);
-		$task->setCompletedTime();
+		$task->setCompletedTime('0000-00-00 00:00:00');
 	break;
 
 	// completed
 	case 2:
 		$task->setStatus(2);
-		$task->setCompletedTime('0000-00-00 00:00:00');
+		$task->setCompletedTime();
 	break;
 
 	// Invalid status code
@@ -40,4 +40,4 @@ switch ($status){
 
 $task->save();
 
-var_dump($task);
+echo $API->response('Success');
