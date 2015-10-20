@@ -57,9 +57,16 @@ class task {
 		$this->due_by = $due_by;
 	}
 
-	public function complete(){
-		$this->completed_time = date("Y-m-d H:i:s");
-		$this->status = 1;
+	public function setCompletedTime($time = null){
+		if (is_null($time)){
+			$time = date("Y-m-d H:i:s");
+		}
+
+		$this->completed_time = $time;
+	}
+
+	public function setStatus($status){
+		$this->status = $status;
 	}
 
 	public function setTitle($title){
@@ -73,9 +80,9 @@ class task {
 	public function save(){
 
 		$stmt = new PDOQuery("INSERT INTO `tasks`
-			(`assignee_uid`, `due_by`, `completed_time`, `status`, `title`, `details`)
+			(`id`, `assignee_uid`, `due_by`, `completed_time`, `status`, `title`, `details`)
 			VALUES
-			(:assignee_uid, :due_by, :completed_time, :status, :title, :details)
+			(:id, :assignee_uid, :due_by, :completed_time, :status, :title, :details)
 
 			ON DUPLICATE KEY UPDATE 
 			`assignee_uid` = :assignee_uid,
@@ -84,9 +91,6 @@ class task {
 			`status` = :status,
 			`title`= :title,
 			`details` = :details
-
-			WHERE `id` = :id
-			LIMIT 1
 		");
 
 		$stmt->bindValue(':id', (int) $this->id, PDO::PARAM_INT);
