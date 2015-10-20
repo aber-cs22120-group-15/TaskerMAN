@@ -1,6 +1,6 @@
 <?php
 
-class user_tasks {
+class UserTaskRelation {
 
 	private $uid;
 	private $core;
