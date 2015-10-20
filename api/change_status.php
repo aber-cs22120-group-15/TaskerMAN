@@ -2,7 +2,7 @@
 
 
 $task_id = (int) $core->io->get('id');
-$status = $core->io->get('status');
+$status = (int) $core->io->get('status');
 
 $task = new task($task_id);
 
@@ -12,15 +12,7 @@ if (empty($task->id)){
 	exit;
 }
 
-if (empty($status)){
-	// No status passed
-	echo $api->error('Invalid status value (must be 1 or 0)');
-	exit;
-}
-
-
-/// THIS DOESN'T WORK
-if ($status !== '0' && $status !== '1'){
+if (is_null($status) || ($status !== 0 && $status !== 1)){
 	// No status passed
 	echo $api->error('Invalid status value (must be 1 or 0)');
 	exit;
