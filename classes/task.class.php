@@ -1,6 +1,6 @@
 <?php
 
-class task {
+class Task {
 	
 	public $id;
 	public $created_uid;
