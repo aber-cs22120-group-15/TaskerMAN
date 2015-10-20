@@ -28,9 +28,16 @@ class Task {
 
 	private function load($id){
 
-		$query = new PDOQuery("SELECT *
+		$query = new PDOQuery("SELECT `tasks`.*,
+			`users_assignee`.`username` AS `assignee_username`,
+			`users_created`.`username` AS `created_username`
+			
 			FROM `tasks`
-			WHERE `id` = ?
+
+			JOIN `users` AS `users_assignee` ON `users_assignee`.`id` = `tasks`.`assignee_uid`
+			JOIN `users` AS `users_created` ON `users_created`.`id` = `tasks`.`created_uid`
+
+			WHERE `tasks`.`id` = ?
 			LIMIT 1
 		");
 
@@ -42,14 +49,25 @@ class Task {
 
 		$fetch = $query->row();
 
-		$this->id 				= $fetch['id'];
-		$this->created_uid 		= $fetch['created_uid'];
-		$this->created_time 	= $fetch['created_time'];
-		$this->assignee_uid 	= $fetch['assignee_uid'];
-		$this->due_by 			= $fetch['due_by'];
-		$this->completed_time 	= $fetch['completed_time'];
-		$this->status 			= $fetch['status'];
-		$this->title 			= $fetch['title'];
+		$this->id 					= $fetch['id'];
+		$this->created_uid 			= $fetch['created_uid'];
+		$this->created_username 	= $fetch['created_username'];
+		$this->created_time 		= $fetch['created_time'];
+		$this->assignee_uid 		= $fetch['assignee_uid'];
+		$this->assignee_username 	= $fetch['assignee_username'];
+		$this->due_by 				= $fetch['due_by'];
+		$this->completed_time 		= $fetch['completed_time'];
+		$this->status 				= $fetch['status'];
+		$this->title 				= $fetch['title'];
+
+		$query = new PDOQuery("SELECT `id`, `title`
+			FROM `steps`
+			WHERE `task_id` = ?
+		");
+
+		$query->execute($this->id);
+
+		$this->steps = $query->results();
 	}
 
 	public function setAssignee($assignee){
@@ -61,6 +79,7 @@ class Task {
 	}
 
 	public function setCompletedTime($time = null){
+		
 		if (is_null($time)){
 			$time = date("Y-m-d H:i:s");
 		}
