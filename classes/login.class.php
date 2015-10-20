@@ -10,14 +10,16 @@ class login {
 
 	public function verifyCredentials($username, $password){
 
-		$query = $this->core->db->query("SELECT `id`, `password`
+		$query = new PDOQuery("SELECT `id`, `password`
 			FROM `users`
-			WHERE `username` = '$username'
+			WHERE `username` = ?
 			LIMIT 1
 		");
 
-		$fetch = $query->fetch_assoc();
+		$query->execute($username);
 
+		$fetch = $query->row();
+		
 		// Compare given password with stored user password hash
 		if (password_verify($password, $fetch['password'])){
 			return $fetch['id'];

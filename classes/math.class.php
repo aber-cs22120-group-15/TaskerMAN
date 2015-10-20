@@ -4,7 +4,7 @@ class math {
 	
 
 	/**
-	* This function was adapted from code found at https://github.com/j20/php-uuid/blob/master/src/J20/Uuid/Uuid.php
+	* This function was inspired by code found at https://github.com/j20/php-uuid/blob/master/src/J20/Uuid/Uuid.php
 	*/
 	static public function GenerateUUIDv4(){
 		$hex = bin2hex(openssl_random_pseudo_bytes(14));

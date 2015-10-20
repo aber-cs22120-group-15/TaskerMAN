@@ -1,11 +1,16 @@
 <?php
 
 ob_start();
+error_reporting(E_ALL);
 require_once('config/config.php');
 
 // Initialize autoloader
 function TaskerMANAutoloader($class){
-	include('classes/' . $class . '.class.php');
+	if (substr($class, strlen($class) - 9) == 'Exception'){
+		require_once('exceptions/' . $class . '.class.php');
+	} else {
+		include('classes/' . $class . '.class.php');
+	}
 }
 
 spl_autoload_register('TaskerMANAutoloader');
@@ -14,5 +19,5 @@ spl_autoload_register('TaskerMANAutoloader');
 $core = core::getInstance();
 
 // Initialize database connections
-$core->db = new mysql($config->mysql_host, $config->mysql_port, $config->mysql_user, $config->mysql_password, $config->mysql_db);
+$core->PDOConnection = new PDOConnection($config->mysql_host, $config->mysql_user, $config->mysql_password, $config->mysql_db);
 $core->io = new io;

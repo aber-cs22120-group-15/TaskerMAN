@@ -74,10 +74,9 @@ class io {
 			foreach ($val as $k => $v){
 				$val[$k] = $this->sanitize($v, $html);
 			}
+
 		} else {
-
-			$val = $this->core->db->real_escape_string($val);
-
+			
 			if ($html){
 				$val = htmlentities($val);
 			}

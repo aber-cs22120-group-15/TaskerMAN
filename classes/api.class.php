@@ -29,18 +29,20 @@ class api {
 			return false;
 		}
 
-		$query = $this->core->db->query("SELECT `id`, `admin`
+		$query = new PDOQuery("SELECT `id`, `admin`
 			FROM `users`
-			WHERE `api_token` = '$this->token'
+			WHERE `api_token` = ?
 			LIMIT 1
 		");
 
-		if ($query->num_rows < 1){
+		$query->execute($this->token);
+
+		if ($query->rowCount() < 1){
 			return false;
 		}
 
-		$fetch = $query->fetch_assoc();
-		$this->uid = $fetch['id'];
+		$fetch = $query->row();
+		$this->uid = (int) $fetch['id'];
 		$this->is_admin = (bool) $fetch['admin'];
 
 		return true;
@@ -48,17 +50,19 @@ class api {
 
 	public function getUserAPIToken($uid){
 
-		$query = $this->core->db->query("SELECT `api_token`
+		$query = new PDOQuery("SELECT `api_token`
 			FROM `users`
-			WHERE `id` = '$uid'
+			WHERE `id` = ?
 			LIMIT 1
 		");
 
-		if ($query->num_rows < 1){
+		$query->execute($uid);
+
+		if ($query->rowCount() < 1){
 			return false;
 		}
 
-		$fetch = $query->fetch_assoc();
+		$fetch = $query->row();
 		return $fetch['api_token'];
 	}
 
