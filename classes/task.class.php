@@ -14,11 +14,16 @@ class task {
 
 	private $core;
 
+	private $new_task = false;
+
 	public function __construct($id = null){
 		$this->core = core::getInstance();
 
 		if (!empty($id)){
+			$this->new_task = false;
 			$this->load($id);
+		} else {
+			$this->new_task = true;
 		}
 	}
 
@@ -79,21 +84,30 @@ class task {
 
 	public function save(){
 
-		$stmt = new PDOQuery("INSERT INTO `tasks`
-			(`id`, `assignee_uid`, `due_by`, `completed_time`, `status`, `title`, `details`)
-			VALUES
-			(:id, :assignee_uid, :due_by, :completed_time, :status, :title, :details)
+		if ($this->new_task){
 
-			ON DUPLICATE KEY UPDATE 
-			`assignee_uid` = :assignee_uid,
-			`due_by` = :due_by,
-			`completed_time` = :completed_time,
-			`status` = :status,
-			`title`= :title,
-			`details` = :details
-		");
+			$stmt = new PDOQuery("INSERT INTO `tasks`
+				(`assignee_uid`, `due_by`, `completed_time`, `status`, `title`, `details`)
+				VALUES
+				(:assignee_uid, :due_by, :completed_time, :status, :title, :details)
+			");
+		} else {
 
-		$stmt->bindValue(':id', (int) $this->id, PDO::PARAM_INT);
+			$stmt = new PDOQuery("UPDATE `tasks` SET
+				`assignee_uid` = :assignee_uid,
+				`due_by` = :due_by,
+				`completed_time` = :completed_time,
+				`status` = :status,
+				`title`= :title,
+				`details` = :details
+
+				WHERE `id` = :id
+				LIMIT 1
+			");
+
+			$stmt->bindValue(':id', (int) $this->id, PDO::PARAM_INT);
+		}
+
 		$stmt->bindValue(':assignee_uid', (int) $this->assignee_uid, PDO::PARAM_INT);
 		$stmt->bindValue(':due_by', (string) $this->due_by, PDO::PARAM_STR);
 		$stmt->bindValue(':completed_time', (string) $this->completed_time, PDO::PARAM_STR);
@@ -102,6 +116,10 @@ class task {
 		$stmt->bindValue(':details', (string) $this->details, PDO::PARAM_STR);
 
 		$stmt->execute();
+
+		if ($this->new_task){
+			$this->id = $stmt->lastInsertID();
+		}
 
 	}
 }
