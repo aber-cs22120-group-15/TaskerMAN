@@ -54,4 +54,80 @@ class UserManagement {
 		return $query->lastInsertID();
 	}
 
+	public function update($id, $name, $email, $admin){
+
+		// Check if email is valid
+		if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+			throw new UserManagementInvalidEmailException($email);
+			return false;
+		}
+
+		$query = new DBQuery("UPDATE `users` SET
+			`name` = :name,
+			`email` = :email,
+			`admin` = :admin
+
+			WHERE `id` = :id
+			LIMIT 1
+		");
+
+		$query->bindValue(':name', $name);
+		$query->bindValue(':email', $email);
+		$query->bindValue(':admin', (int) $admin);
+		$query->bindValue(':id', $id);
+
+		$query->execute();
+
+		return true;
+	}
+
+	public function changePassword($id, $password){
+
+		// Hash password
+		$password = password_hash($password, PASSWORD_DEFAULT);
+
+		// Generate new API Token
+		$api_token = API::generateAPIToken();
+
+		$query = new DBQuery("UPDATE `users` SET 
+			`password` = :password,
+			`api_token` = :api_token
+
+			WHERE `id` = :id
+			LIMIT 1
+		");
+
+		$query->bindValue(':password', $password);
+		$query->bindValue(':api_token', $api_token);
+		$query->bindValue(':id', $id);
+		$query->execute();
+
+		return true;
+	}
+
+	public function delete($id){
+
+		// Do not allow deletion if only one user is registered
+		$query = new DBQuery("SELECT COUNT(*) AS `rowCount`
+			FROM `users`
+		");
+
+		$query->execute();
+		$fetch = $query->row();
+
+		if ($fetch['rowCount'] == 1){
+			throw new UserManagementDeleteLastUserException();
+			return false;
+		}
+
+		$query = new DBQuery("DELETE FROM `users`
+			WHERE `id` = ?
+			LIMIT 1
+		");
+
+		$query->execute($id);
+
+		return true;
+	}
+
 }
