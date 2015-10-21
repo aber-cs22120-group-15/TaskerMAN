@@ -8,15 +8,15 @@ class Login {
 		$this->core = core::getInstance();
 	}
 
-	public function verifyCredentials($username, $password){
+	public function verifyCredentials($email, $password){
 
 		$query = new PDOQuery("SELECT `id`, `password`
 			FROM `users`
-			WHERE `username` = ?
+			WHERE `email` = ?
 			LIMIT 1
 		");
 
-		$query->execute($username);
+		$query->execute($email);
 
 		$fetch = $query->row();
 		
