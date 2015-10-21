@@ -29,8 +29,8 @@ class Task {
 	private function load($id){
 
 		$query = new PDOQuery("SELECT `tasks`.*,
-			`users_assignee`.`username` AS `assignee_username`,
-			`users_created`.`username` AS `created_username`
+			`users_assignee`.`name` AS `assignee_name`,
+			`users_created`.`name` AS `created_name`
 			
 			FROM `tasks`
 
@@ -51,10 +51,10 @@ class Task {
 
 		$this->id 					= $fetch['id'];
 		$this->created_uid 			= $fetch['created_uid'];
-		$this->created_username 	= $fetch['created_username'];
+		$this->created_name 		= $fetch['created_name'];
 		$this->created_time 		= $fetch['created_time'];
 		$this->assignee_uid 		= $fetch['assignee_uid'];
-		$this->assignee_username 	= $fetch['assignee_username'];
+		$this->assignee_name 		= $fetch['assignee_name'];
 		$this->due_by 				= $fetch['due_by'];
 		$this->completed_time 		= $fetch['completed_time'];
 		$this->status 				= $fetch['status'];
