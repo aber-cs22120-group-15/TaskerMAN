@@ -13,8 +13,8 @@ class UserTaskRelation {
 	public function get($limit = 25, $start = 0){
 
 		$query = new PDOQuery("SELECT `tasks`.*,
-			`users_assignee`.`username` AS `assignee_username`,
-			`users_created`.`username` AS `created_username`
+			`users_assignee`.`name` AS `assignee_name`,
+			`users_created`.`name` AS `created_name`
 
 			FROM `tasks`
 			

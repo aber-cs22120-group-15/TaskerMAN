@@ -15,7 +15,7 @@ class API {
 		$this->core = core::getInstance();
 	}
 
-	static public function GenerateAPIToken(){
+	static public function generateAPIToken(){
 		return Math::GenerateUUIDv4() . '-' . math::GenerateUUIDv4();
 	}
 
