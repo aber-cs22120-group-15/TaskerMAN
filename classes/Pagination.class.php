@@ -1,5 +1,10 @@
 <?php
 
+/*
+* General concept for this class and some code comes from:
+* http://gazellewhatcd.googlecode.com/svn-history/r2/trunk/classes/script_start.php
+*/
+
 class Pagination {
 	
 	private $NumPages;
