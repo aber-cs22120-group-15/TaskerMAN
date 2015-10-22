@@ -12,5 +12,10 @@ Pellentesque dapibus lobortis erat eu interdum. Nunc feugiat lorem et interdum f
 <br />
 
 <?php
+
+
+$tli = new TaskListInterface();
+print_r($tli->execute());
+
 require_once('template/footer.php');
 ?>

@@ -1,5 +1,12 @@
 <?php
 
+/*
+Status Codes:
+	0 = abandoned
+	1 = allocated
+	2 = completed
+*/
+
 class Task {
 	
 	public $id;
