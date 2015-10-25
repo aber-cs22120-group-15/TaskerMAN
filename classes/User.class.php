@@ -14,7 +14,7 @@ class User {
 		$this->load();
 	}
 
-	public function load(){
+	private function load(){
 
 		$query = new PDOQuery("SELECT `email`, `name`, `admin`, `api_token`
 			FROM `users`
