@@ -21,7 +21,7 @@ require_once('pages/' . $core->Page->page . '.php');
 $ob = ob_get_contents();
 ob_end_clean();
 
-require_once('template/header.php');
+if ($core->Page->showTemplate){ require_once('template/header.php'); }
 echo $ob;
-require_once('template/footer.php');
+if ($core->Page->showTemplate){ require_once('template/footer.php'); }
 ?>
