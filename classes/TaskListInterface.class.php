@@ -8,6 +8,8 @@ class TaskListInterface {
 	private $statuses 	= null;
 	private $user 		= null;
 
+	private $per_page 	= 25;
+
 	public function __construct(){
 
 		$this->core = core::getInstance();
@@ -18,7 +20,7 @@ class TaskListInterface {
 		// Verify statuses are all legal
 		foreach ($statuses as $k => $v){
 			if ($v > 2 || $v < 0){
-				throw new TaskListInterfaceException('Invalid status filter ' . $v)
+				throw new TaskListInterfaceException('Invalid status filter ' . $v);
 				return false;
 			}
 		}
@@ -32,8 +34,6 @@ class TaskListInterface {
 		$this->user = (int) $uid;
 	}
 
-
-	// TODO - ADD PAGINATION
 	public function execute($page = null){
 
 		$limit = self::generateLimitConstraint($page);
@@ -69,7 +69,7 @@ class TaskListInterface {
 			$where
 
 			ORDER BY `tasks`.`due_by` DESC
-			LIMIT $limit
+			LIMIT $limit->start, $limit->end
 		");
 
 
@@ -89,11 +89,17 @@ class TaskListInterface {
 
 	// TODO: Implement this function to work dynamically
 
-	private function generateLimitConstraint($page){
+	private function generateLimitConstraint($page = null){
 
-		return '1';
+		if (is_null($page)){
+			$page = 1;
+		}
 
+		$return = new stdClass();
+		$return->start = ($page - 1) * $this->per_page;
+		$return->end = $this->per_page;
+		var_dump($return);
+
+		return $return;
 	}
-
-
 }
