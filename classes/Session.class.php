@@ -3,7 +3,7 @@
 class Session {
 	
 
-	public  $uid = null;
+	public  $user = null;
 	private $session_id;
 	private $core;
 
@@ -16,7 +16,7 @@ class Session {
 		
 		$uid = $this->get('uid');
 		if (!empty($uid)){
-			$this->uid = $uid;
+			$this->user = new User($uid);
 		}
 
 	}
@@ -30,7 +30,7 @@ class Session {
 	}
 
 	public function isLoggedIn(){
-		return !is_null($this->uid);
+		return !is_null($this->user);
 	}
 
 	public function logout(){
