@@ -2,6 +2,33 @@
 
 $tasks = range(1, 100);
 
+// Title generation
+$verbs = array(
+	'Fix',
+	'Create',
+	'Confirm',
+	'Eat',
+	'Drink',
+	'Paint',
+	'Code',
+	'Test'
+);
+
+$things = array(
+	'beer',
+	'user interface',
+	'burgers',
+	'pizza',
+	'code',
+	'Jack Reed',
+	'desktop application',
+	'Java',
+	'PHP',
+	'coffee',
+	'meeting',
+	'pasta'
+);
+
 // Get array of all user IDs
 $query = new PDOQuery("SELECT `id` FROM `users`");
 $query->execute();
@@ -31,7 +58,7 @@ foreach ($tasks as $i){
 		$t->setCompletedTime(date('Y-m-d H:i:s', rand_future_time()));
 	}
 
-	$t->setTitle('Title #' . $i);
+	$t->setTitle($verbs[array_rand($verbs)] . ' the ' . $things[array_rand($things)]);
 	$t->save();
 
 }
