@@ -22,7 +22,7 @@ class Login {
 		
 		// Compare given password with stored user password hash
 		if (password_verify($password, $fetch['password'])){
-			return $fetch['id'];
+			return new User($fetch['id']);
 		} else {
 			return false;
 		}

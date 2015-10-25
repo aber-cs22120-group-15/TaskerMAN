@@ -17,8 +17,10 @@ if (isset($_POST['submit'])){
 
 	if (!$user){
 		$error = '<span style="align: center; color: red">Invalid username or password combination</span>';
+	} elseif (!$user->admin){
+		$error = '<span style="align: center; color: red">Your account does not have access to this control panel</span>';
 	} else {
-		$core->Session->set('uid', $user);
+		$core->Session->set('uid', $user->id);
 		header('Location: index.php?p=main');
 		exit;
 	}

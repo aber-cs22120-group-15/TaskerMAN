@@ -14,7 +14,7 @@ class Session {
 		session_start();
 		$this->session_id = session_id();
 		
-		$uid = self::get('uid');
+		$uid = $this->get('uid');
 		if (!empty($uid)){
 			$this->uid = $uid;
 		}

@@ -10,14 +10,14 @@ if (empty($email) || empty($password)){
 
 // Verify the user's login credentials
 $login = new Login;
-$uid = $login->verifyCredentials($email, $password);
+$user = $login->verifyCredentials($email, $password);
 
 // Login details incorrect
-if ($uid === FALSE){
+if (!$user){
 	echo $API->error('Incorrect email or password');
 	exit;
 }
 
 // Login success, return API Token
-echo $API->response(array('key' => $api->getUserAPIToken($uid)));
+echo $API->response(array('key' => $user->api_token));
 exit;
