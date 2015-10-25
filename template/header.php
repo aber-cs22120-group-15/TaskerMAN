@@ -1,6 +1,6 @@
 <html>
 	<head>
-	<title>Hello World</title>	
+	<title><?=$core->Page->title?> - TaskerMAN</title>	
 	</head>
 
 	<body>
