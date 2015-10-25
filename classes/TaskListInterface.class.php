@@ -17,7 +17,13 @@ class TaskListInterface {
 	}
 
 	public function setPage($page = 1){
+
+		if (!is_numeric($page) || $page < 0){
+			$page = 1;
+		}
+
 		$this->page = $page;
+		return true;
 	}
 
 	public function filterByStatus($statuses){
@@ -52,7 +58,7 @@ class TaskListInterface {
 		// Check if we are filtering by a user
 		if ($this->user !== null){
 			// Filter by user
-			$where[] = "`tasks`.`assigned_uid` = :uid";
+			$where[] = "`tasks`.`assignee_uid` = :uid";
 		}
 
 		// Check if we are only using selected statuses
@@ -108,8 +114,6 @@ class TaskListInterface {
 		$return = new stdClass();
 		$return->start = ($page - 1) * $this->per_page;
 		$return->end = $this->per_page;
-		var_dump($return);
-
 		return $return;
 	}
 }

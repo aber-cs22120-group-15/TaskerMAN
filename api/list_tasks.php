@@ -1,7 +1,12 @@
 <?php
 
-$user_tasks = new UserTaskRelation($API->uid);
-$tasks = $user_tasks->get();
+$TaskListInterface = new TaskListInterface();
+$TaskListInterface->filterByUser($API->uid);
 
-echo $API->response(array('tasks' => $tasks));
+if (isset($_GET['page'])){
+	$TaskListInterface->setPage($core->IO->get('page'));
+}
+
+
+echo $API->response(array('tasks' => $TaskListInterface->execute()));
 exit;
