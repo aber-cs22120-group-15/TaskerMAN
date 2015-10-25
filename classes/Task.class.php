@@ -77,6 +77,10 @@ class Task {
 		$this->steps = $query->results();
 	}
 
+	public function setCreatedByUser($uid){
+		$this->created_uid = $uid;
+	}
+
 	public function setAssignee($assignee){
 		$this->assignee_uid = $assignee;
 	}
@@ -107,13 +111,15 @@ class Task {
 		if ($this->new_task){
 
 			$stmt = new PDOQuery("INSERT INTO `tasks`
-				(`assignee_uid`, `due_by`, `completed_time`, `status`, `title`)
+				(`created_uid`, `created_time`, `assignee_uid`, `due_by`, `completed_time`, `status`, `title`)
 				VALUES
-				(:assignee_uid, :due_by, :completed_time, :status, :title)
+				(:created_uid, NOW(), :assignee_uid, :due_by, :completed_time, :status, :title)
 			");
+			
 		} else {
 
 			$stmt = new PDOQuery("UPDATE `tasks` SET
+				`created_uid` = :created_uid,
 				`assignee_uid` = :assignee_uid,
 				`due_by` = :due_by,
 				`completed_time` = :completed_time,
@@ -127,6 +133,7 @@ class Task {
 			$stmt->bindValue(':id', (int) $this->id, PDO::PARAM_INT);
 		}
 
+		$stmt->bindValue(':created_uid', (int) $this->created_uid, PDO::PARAM_INT);
 		$stmt->bindValue(':assignee_uid', (int) $this->assignee_uid, PDO::PARAM_INT);
 		$stmt->bindValue(':due_by', (string) $this->due_by, PDO::PARAM_STR);
 		$stmt->bindValue(':completed_time', (string) $this->completed_time, PDO::PARAM_STR);
