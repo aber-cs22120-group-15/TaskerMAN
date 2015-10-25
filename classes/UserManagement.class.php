@@ -13,7 +13,7 @@ class UserManagement {
 
 		// Check if email is valid
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
-			throw new UserManagementInvalidEmailException($email);
+			throw new UserManagementException('Invalid email ' . $email);
 			return false;
 		}
 
@@ -26,7 +26,7 @@ class UserManagement {
 		$query->execute($email);
 
 		if ($query->numRows() > 0){
-			throw new UserManagementUserExistsException($email);
+			throw new UserManagementException('User with email ' . $email . ' already exists');
 			return false;
 		}
 
@@ -58,7 +58,7 @@ class UserManagement {
 
 		// Check if email is valid
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
-			throw new UserManagementInvalidEmailException($email);
+			throw new UserManagementException('Invalid email ' . $email);
 			return false;
 		}
 
@@ -116,7 +116,7 @@ class UserManagement {
 		$fetch = $query->row();
 
 		if ($fetch['rowCount'] == 1){
-			throw new UserManagementDeleteLastUserException();
+			throw new UserManagementException('Cannot delete last remaining user');
 			return false;
 		}
 

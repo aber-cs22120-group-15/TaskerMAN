@@ -18,7 +18,7 @@ class TaskListInterface {
 		// Verify statuses are all legal
 		foreach ($statuses as $k => $v){
 			if ($v > 2 || $v < 0){
-				throw new TaskListInterfaceInvalidStatusFilterException($v);
+				throw new TaskListInterfaceException('Invalid status filter ' . $v)
 				return false;
 			}
 		}
