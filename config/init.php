@@ -21,3 +21,4 @@ $core = core::getInstance();
 // Initialize database connections
 $core->PDOConnection = new PDOConnection($config->mysql_host, $config->mysql_user, $config->mysql_password, $config->mysql_db);
 $core->IO = new IO;
+$core->Session = new Session;
