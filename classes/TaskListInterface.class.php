@@ -8,6 +8,7 @@ class TaskListInterface {
 	private $statuses 	= null;
 	private $user 		= null;
 
+	private $page 		= 1;
 	private $per_page 	= 25;
 
 	public function __construct(){
@@ -15,11 +16,20 @@ class TaskListInterface {
 		$this->core = core::getInstance();
 	}
 
+	public function setPage($page = 1){
+		$this->page = $page;
+	}
+
 	public function filterByStatus($statuses){
+
+		if (!is_array($statuses)){
+			throw new TaskListInterfaceException('Invalid input to filterByStatus() - not an array');
+			return false;
+		}
 
 		// Verify statuses are all legal
 		foreach ($statuses as $k => $v){
-			if ($v > 2 || $v < 0){
+			if ($v > 2 || $v < 0 || !is_numeric($v)){
 				throw new TaskListInterfaceException('Invalid status filter ' . $v);
 				return false;
 			}
@@ -34,9 +44,9 @@ class TaskListInterface {
 		$this->user = (int) $uid;
 	}
 
-	public function execute($page = null){
+	public function execute(){
 
-		$limit = self::generateLimitConstraint($page);
+		$limit = self::generateLimitConstraint($this->page);
 		$where = array();
 
 		// Check if we are filtering by a user
@@ -50,11 +60,11 @@ class TaskListInterface {
 
 			$qMarks = str_repeat('?,', count($this->statuses) - 1) . '?';
 
-			$where[] = "`tasks`.`status` IN ($qmarks)";
+			$where[] = "`tasks`.`status` IN ($qMarks)";
 		}
 
 		if (!empty($where)){
-			$where = implode(' AND ', $where);
+			$where = 'WHERE ' . implode(' AND ', $where);
 		} else {
 			$where = null;
 		}
