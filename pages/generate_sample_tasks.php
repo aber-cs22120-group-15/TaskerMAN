@@ -54,6 +54,11 @@ foreach ($tasks as $i){
 	$status = rand(1, 2);
 	$t->setStatus($status);
 
+	$steps = range(1, rand(1, 3));
+	foreach ($steps as $step_i){
+		$t->createStep('Step #' . $step_i, 'Not done yet, sorry');
+	}
+
 	if ($status == 2){
 		$t->setCompletedTime(date('Y-m-d H:i:s', rand_future_time()));
 	}
@@ -64,5 +69,5 @@ foreach ($tasks as $i){
 }
 
 function rand_future_time(){
-	return time() + rand(0, 86400) + (rand(0, 60) * 86400);
+	return time() + rand(3600, 86400) + (rand(0, 60) * 86400);
 }
