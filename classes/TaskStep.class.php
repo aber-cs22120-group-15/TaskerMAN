@@ -9,12 +9,20 @@ class TaskStep {
 	public $title;
 	public $comment;
 
-	public function __construct($id){
-		$this->id = $id;
-		$this->load();
+	private $new_step = false;
+
+	public function __construct($id = null){
+
+		if (!empty($id)){
+			$this->new_step = false;
+			$this->load($id);
+		} else {
+			$this->new_step = true;
+		}
+
 	}
 
-	private function load(){
+	private function load($id){
 
 		$query = new PDOQuery("SELECT `steps`.*,
 			(
@@ -27,7 +35,7 @@ class TaskStep {
 			LIMIT 1
 		");
 
-		$query->execute($this->id);
+		$query->execute($id);
 
 		if ($query->rowCount() == 0){
 			return false;
@@ -35,6 +43,7 @@ class TaskStep {
 
 		$fetch = $query->row();
 
+		$this->id = $id;
 		$this->task_id = $fetch['task_id'];
 		$this->assignee_uid = $fetch['assignee_uid'];
 		$this->title = $fetch['title'];
@@ -51,6 +60,14 @@ class TaskStep {
 		$this->title = $title;
 	}
 
+	public function setTaskID($id){
+		$this->task_id = $id;
+	}
+
+	public function setAssigneeUID($uid){
+		$this->assignee_uid = $uid;
+	}
+
 	public function delete(){
 
 		$query = new PDOQuery("DELETE FROM `steps`
@@ -65,19 +82,39 @@ class TaskStep {
 
 	public function save(){
 
-		$query = new PDOQuery("UPDATE `steps` SET
-			`title` = :title,
-			`comment` = :comment
 
-			WHERE `id` = :id
-			LIMIT 1
-		");
+		if ($this->new_step){
 
-		$query->bindValue(':id', $this->id);
-		$query->bindValue(':title', $this->title);
-		$query->bindValue(':comment', $this->comment);
+			$query = new PDOQuery("INSERT INTO `steps`
+				(`task_id`, `title`, `comment`)
+				VALUES
+				(:task_id, :title, :comment)
+			");
 
-		$query->execute();
+			$query->bindValue(':task_id', $this->task_id);
+			$query->bindValue(':title', $this->title);
+			$query->bindValue(':comment', $this->comment);
+
+			$query->execute();
+
+			$this->id = $query->lastInsertID();
+		} else {
+
+			$query = new PDOQuery("UPDATE `steps` SET
+				`title` = :title,
+				`comment` = :comment
+
+				WHERE `id` = :id
+				LIMIT 1
+			");
+
+			$query->bindValue(':id', $this->id);
+			$query->bindValue(':title', $this->title);
+			$query->bindValue(':comment', $this->comment);
+
+			$query->execute();
+		}
+
 	}
 
 }

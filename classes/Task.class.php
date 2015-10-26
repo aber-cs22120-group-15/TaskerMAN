@@ -17,10 +17,12 @@ class Task {
 	public $completed_time;
 	public $status;
 	public $title;
+	public $steps;
 
 	private $core;
 
 	private $new_task = false;
+	private $temp_steps;
 
 	public function __construct($id = null){
 		$this->core = core::getInstance();
@@ -106,9 +108,45 @@ class Task {
 		$this->title = $title;
 	}
 
+	public function createStep($title, $comment){
+
+		if ($this->new_task){
+
+			$this->temp_steps[] = array('title' => $title, 'comment' => $comment);
+			return true;
+		} else {
+
+			// Create step object now
+			$step = new TaskStep();
+			$step->setTitle($title);
+			$step->setComment($comment);
+			$step->setTaskID($this->id);
+			$step->save();
+
+			$this->steps[] = $step->id;
+			return $step->id;
+		}
+
+	}
+
+	private function buildSteps(){
+
+		foreach ($this->temp_steps as $step){
+			$this->createStep($step['title'], $step['comment']);
+		}
+
+		$this->temp_steps = array();
+	}
+
 	public function save(){
 
 		if ($this->new_task){
+
+			if (empty($this->temp_steps)){
+				// Each task must have at least one step associated with it
+				throw new TaskException('Task creation requires at least one associated step');
+				return false;
+			}
 
 			$stmt = new PDOQuery("INSERT INTO `tasks`
 				(`created_uid`, `created_time`, `assignee_uid`, `due_by`, `completed_time`, `status`, `title`)
@@ -144,6 +182,8 @@ class Task {
 
 		if ($this->new_task){
 			$this->id = $stmt->lastInsertID();
+			$this->new_task = false;
+			$this->buildSteps();
 		}
 
 	}
