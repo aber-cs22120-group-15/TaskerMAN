@@ -5,10 +5,10 @@ require_once('config/init.php');
 
 $API = new API;
 
-$API->setMethod($core->IO->get('method'));
+$API->setMethod(IO::GET('method'));
 
 if ($API->method !== 'login'){
-	$API->token = $core->IO->get('token');
+	$API->token = IO::GET('token');
 
 	// Authorize user
 	if (!$API->authenticateByToken()){

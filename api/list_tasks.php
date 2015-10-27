@@ -4,7 +4,7 @@ $TaskListInterface = new TaskListInterface();
 $TaskListInterface->filterByUser($API->uid);
 
 if (isset($_GET['page'])){
-	$TaskListInterface->setPage($core->IO->get('page'));
+	$TaskListInterface->setPage(IO::GET('page'));
 }
 
 

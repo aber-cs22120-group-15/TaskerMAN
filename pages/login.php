@@ -1,26 +1,26 @@
 <?php
 
-if ($core->Session->isLoggedIn()){
+if (Session::isLoggedIn()){
 	header('Location: index.php?p=main');
 	exit;
 }
 
-$core->Page->setTitle('Login');
-$core->Page->showTemplate(false);
+WebInterface::setTitle('login');
+WebInterface::showTemplate(false);
 
 $error = null;
 
 if (isset($_POST['submit'])){
 
 	$login = new Login;
-	$user = $login->verifyCredentials($core->IO->post('email'), $core->IO->post('password'));
+	$user = $login->verifyCredentials(IO::POST('email'), IO::POST('password'));
 
-	if (!$user){
+	if (!$user){ // Login failed
 		$error = '<span style="align: center; color: red">Invalid username or password combination</span>';
 	} elseif (!$user->admin){
 		$error = '<span style="align: center; color: red">Your account does not have access to this control panel</span>';
 	} else {
-		$core->Session->set('uid', $user->id);
+		Session::set('uid', $user->id);
 		header('Location: index.php?p=main');
 		exit;
 	}
@@ -63,7 +63,7 @@ if (isset($_POST['submit'])){
 	    	}
 
 	    	if (isset($_POST['email'])){
-	    		$email_placeholder = 'value="' . $core->IO->post('email') . '"';
+	    		$email_placeholder = 'value="' . IO::POST('email') . '"';
  	    	} else {
  	    		$email_placeholder = null;
  	    	}

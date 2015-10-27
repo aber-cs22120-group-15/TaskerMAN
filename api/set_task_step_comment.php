@@ -1,7 +1,7 @@
 <?php
 
-$id = (int) $core->IO->get('id');
-$comment = $core->IO->post('comment');
+$id = (int) IO::GET('id');
+$comment = IO::GET('comment');
 
 $step = new TaskStep($id);
 

@@ -1,5 +1,5 @@
 <?php
 
-$core->Session->logout();
+Session::logout();
 header('Location: index.php?p=login');
 exit;

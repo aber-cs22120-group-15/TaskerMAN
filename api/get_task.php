@@ -1,6 +1,6 @@
 <?php
 
-$id = (int) $core->IO->get('id');
+$id = (int) IO::GET('id');
 
 $task = new Task($id);
 

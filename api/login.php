@@ -1,7 +1,7 @@
 <?php
 
-$email = $core->IO->get('email');
-$password = $core->IO->get('password');
+$email = IO::GET('email');
+$password = IO::GET('password');
 
 if (empty($email) || empty($password)){
 	echo $API->error('Requires email and password');

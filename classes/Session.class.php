@@ -3,37 +3,37 @@
 class Session {
 	
 
-	public  $user = null;
-	private $session_id;
-	private $core;
+	static public  $user = null;
+	static private $session_id;
+	static private $core;
 
-	public function __construct(){
+	static public function init(){
 
-		$this->core = core::getInstance();
+		self::$core = core::getInstance();
 
 		session_start();
-		$this->session_id = session_id();
+		self::$session_id = session_id();
 		
-		$uid = $this->get('uid');
+		$uid = self::get('uid');
 		if (!empty($uid)){
-			$this->user = new User($uid);
+			self::$user = new User($uid);
 		}
 
 	}
 
-	public function set($key, $value){
-		return $this->core->IO->session_write($key, $value);
+	static public function set($key, $value){
+		return IO::session_write($key, $value);
 	}
 
-	public function get($key){
-		return $this->core->IO->session_read($key);
+	static public function get($key){
+		return IO::session_read($key);
 	}
 
-	public function isLoggedIn(){
-		return !is_null($this->user);
+	static public function isLoggedIn(){
+		return !is_null(self::$user);
 	}
 
-	public function logout(){
+	static public function logout(){
 		session_destroy();
 	}
 }

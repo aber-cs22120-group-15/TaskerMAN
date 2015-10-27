@@ -1,7 +1,7 @@
 <?php
 
-$task_id = (int) $core->IO->get('id');
-$status = (int) $core->IO->get('status');
+$task_id = (int) IO::GET('id');
+$status = (int) IO::GET('status');
 
 $task = new task($task_id);
 
