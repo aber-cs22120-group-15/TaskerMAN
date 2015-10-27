@@ -13,7 +13,7 @@ class PDOQuery {
    			$this->stmt = $this->core->PDOConnection->prepare($this->query);
    		} catch (PDOException $e){
    			// Fatal query exception
-   			throw new DBQueryException('Connection', $e);
+   			throw new DBQueryException('Connection', $e, false);
    		}
 
    	}
@@ -82,8 +82,12 @@ class PDOQuery {
     		return $this->stmt->execute($args);
     	} catch (PDOException $e){
     		// Fatal query exception
-   			throw new DBQueryException($this->query, $e);
+   			throw new DBQueryException($this->query, $e, $this->showDebug());
    		}
+    }
+
+    private function showDebug(){
+      return $this->core->Session->user->admin;
     }
 
     public function results(){
