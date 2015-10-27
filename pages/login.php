@@ -61,10 +61,17 @@ if (isset($_POST['submit'])){
 	    	if (!is_null($error)){
 	    		echo $error;
 	    	}
+
+	    	if (isset($_POST['email'])){
+	    		$email_placeholder = 'value="' . $core->IO->post('email') . '"';
+ 	    	} else {
+ 	    		$email_placeholder = null;
+ 	    	}
+ 	    	
 	    	?>
 
 			<label for="email" class="sr-only">Email address</label>
-			<input type="email" id="email" name="email" class="form-control" placeholder="Email address" required autofocus>
+			<input type="email" id="email" name="email" class="form-control" placeholder="Email address" <?=$email_placeholder?> required autofocus>
 			<label for="password" class="sr-only">Password</label>
 			<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
 			<button class="btn btn-lg btn-primary btn-block" name="submit" type="submit">Sign in</button>
