@@ -47,7 +47,7 @@ while ($row = $query->row()){
 
 foreach ($tasks as $i){
 
-	$t = new Task();
+	$t = new TaskerMAN\Task();
 	$t->setAssignee($users[array_rand($users)]);
 	$t->setDueBy(date('Y-m-d H:i:s', rand_future_time()));
 	$t->setCreatedByUser($admins[array_rand($admins)]);
