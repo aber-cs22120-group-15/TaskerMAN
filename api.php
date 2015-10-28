@@ -1,5 +1,5 @@
 <?php
-
+header('Content-type: application/json');
 require_once('config/init.php');
 
 try {
