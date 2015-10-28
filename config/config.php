@@ -1,8 +1,12 @@
 <?php
-$config = new stdClass();
 
-$config->mysql_host = 'localhost';
-$config->mysql_user = 'taskerman';
-$config->mysql_password = 'abercs';
-$config->mysql_db = 'taskerman';
+$config['DEBUG'] = true;
 
+$config['DB_HOST'] = 'localhost';
+$config['DB_USERNAME'] = 'taskerman';
+$config['DB_PASSWORD'] = 'abercs';
+$config['DB_DATABASE'] = 'taskerman';
+
+
+Registry::loadConfig($config);
+unset($config);

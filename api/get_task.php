@@ -2,17 +2,15 @@
 
 $id = (int) IO::GET('id');
 
-$task = new Task($id);
+$task = new TaskerMAN\Task($id);
 
 if (is_null($task->id)){
 	// Unable to load task
-	echo $API->error('Task does not exist');
-	exit;
+	throw new TaskerMAN\APIErrorException('Task does not exist');
 }
 
-if ((int) $task->assignee_uid !== $API->uid){
-	echo $API->error('User does not have access to this task');
-	exit;
+if ((int) $task->assignee_uid !== TaskerMAN\API::$uid){
+	throw new TaskerMAN\APIErrorException('User does not have access to this task');
 }
 
 $result = array(
@@ -30,4 +28,4 @@ $result = array(
 
 );
 
-echo $API->response($result);
+echo TaskerMAN\API::response($result);

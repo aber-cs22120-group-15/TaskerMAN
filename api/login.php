@@ -4,20 +4,16 @@ $email = IO::GET('email');
 $password = IO::GET('password');
 
 if (empty($email) || empty($password)){
-	echo $API->error('Requires email and password');
-	exit;
+	throw new TaskerMAN\APIErrorException('Requires email and password');
 }
 
 // Verify the user's login credentials
-$login = new Login;
-$user = $login->verifyCredentials($email, $password);
+$user = TaskerMAN\Login::verifyCredentials($email, $password);
 
 // Login details incorrect
 if (!$user){
-	echo $API->error('Incorrect email or password');
-	exit;
+	throw new TaskerMAN\APIErrorException('Incorrect email or password');
 }
 
 // Login success, return API Token
-echo $API->response(array('key' => $user->api_token));
-exit;
+echo TaskerMAN\API::response(array('key' => $user->api_token));

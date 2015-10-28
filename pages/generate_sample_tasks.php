@@ -30,7 +30,7 @@ $things = array(
 );
 
 // Get array of all user IDs
-$query = new PDOQuery("SELECT `id` FROM `users`");
+$query = new DBQuery("SELECT `id` FROM `users`");
 $query->execute();
 
 while ($row = $query->row()){
@@ -38,7 +38,7 @@ while ($row = $query->row()){
 }
 
 // Get array of all admins
-$query = new PDOQuery("SELECT `id` FROM `users` WHERE `admin` = '1'");
+$query = new DBQuery("SELECT `id` FROM `users` WHERE `admin` = '1'");
 $query->execute();
 
 while ($row = $query->row()){

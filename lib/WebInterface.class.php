@@ -9,15 +9,11 @@ class WebInterface {
 
 	static private $showTemplate = true;
 
-	static private $core;
-
 	static public function init(){
-
-		self::$core = core::getInstance();
 
 		Session::init();
 
-		self::$page = preg_replace("/[^A-Za-z0-9_ ]/", '', self::$core->IO->get('p'));
+		self::$page = preg_replace("/[^A-Za-z0-9_ ]/", '', IO::GET('p'));
 		self::enforceLogin();
 		self::validatePage();
 		self::execute();
@@ -25,11 +21,10 @@ class WebInterface {
 
 	static private function enforceLogin(){
 
-		if (is_null(Session::$user) && self::$page !== 'login'){
+		if (self::$page !== 'login'  && self::$page !== '404' && !Session::isLoggedIn()){
 			header('Location: index.php?p=login');
 			exit;
 		}
-
 	}
 
 	static private function validatePage(){

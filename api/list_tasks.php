@@ -1,12 +1,12 @@
 <?php
 
-$TaskListInterface = new TaskListInterface();
-$TaskListInterface->filterByUser($API->uid);
+$TaskListInterface = new TaskerMAN\TaskListInterface();
+$TaskListInterface->filterByUser(TaskerMAN\API::$uid);
 
 if (isset($_GET['page'])){
 	$TaskListInterface->setPage(IO::GET('page'));
 }
 
 
-echo $API->response(array('tasks' => $TaskListInterface->execute()));
+echo TaskerMAN\API::response(array('tasks' => $TaskListInterface->execute()));
 exit;

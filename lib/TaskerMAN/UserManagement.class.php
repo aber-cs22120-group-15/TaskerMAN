@@ -1,15 +1,9 @@
 <?php
+namespace TaskerMAN;
 
 class UserManagement {
 	
-	private $core;
-
-	public function __construct(){
-
-		$this->core = core::getInstance();
-	}
-
-	public function create($email, $name, $password, $admin = false){
+	static public function create($email, $name, $password, $admin = false){
 
 		// Check if email is valid
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
@@ -18,7 +12,7 @@ class UserManagement {
 		}
 
 		// Check if user with this email already exists
-		$query = new DBQuery("SELECT `email`
+		$query = new \DBQuery("SELECT `email`
 			FROM `users`
 			WHERE `email` = ?
 			LIMIT 1
@@ -37,7 +31,7 @@ class UserManagement {
 		$api_token = API::generateAPIToken();
 
 		// Store user
-		$query = new DBQuery("INSERT INTO `users`
+		$query = new \DBQuery("INSERT INTO `users`
 			(`email`, `name`, `password`, `admin`, `api_token`)
 			VALUES
 			(:email, :name, :password, :admin, :api_token)
@@ -54,7 +48,7 @@ class UserManagement {
 		return $query->lastInsertID();
 	}
 
-	public function update($id, $name, $email, $admin){
+	static public function update($id, $name, $email, $admin){
 
 		// Check if email is valid
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
@@ -62,7 +56,7 @@ class UserManagement {
 			return false;
 		}
 
-		$query = new DBQuery("UPDATE `users` SET
+		$query = new \DBQuery("UPDATE `users` SET
 			`name` = :name,
 			`email` = :email,
 			`admin` = :admin
@@ -81,7 +75,7 @@ class UserManagement {
 		return true;
 	}
 
-	public function changePassword($id, $password){
+	static public function changePassword($id, $password){
 
 		// Hash password
 		$password = password_hash($password, PASSWORD_DEFAULT);
@@ -89,7 +83,7 @@ class UserManagement {
 		// Generate new API Token
 		$api_token = API::generateAPIToken();
 
-		$query = new DBQuery("UPDATE `users` SET 
+		$query = new \DBQuery("UPDATE `users` SET 
 			`password` = :password,
 			`api_token` = :api_token
 
@@ -105,10 +99,10 @@ class UserManagement {
 		return true;
 	}
 
-	public function delete($id){
+	static public function delete($id){
 
 		// Do not allow deletion if only one user is registered
-		$query = new DBQuery("SELECT COUNT(*) AS `rowCount`
+		$query = new \DBQuery("SELECT COUNT(*) AS `rowCount`
 			FROM `users`
 		");
 
@@ -120,7 +114,7 @@ class UserManagement {
 			return false;
 		}
 
-		$query = new DBQuery("DELETE FROM `users`
+		$query = new \DBQuery("DELETE FROM `users`
 			WHERE `id` = ?
 			LIMIT 1
 		");

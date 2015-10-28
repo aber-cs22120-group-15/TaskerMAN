@@ -12,8 +12,7 @@ $error = null;
 
 if (isset($_POST['submit'])){
 
-	$login = new Login;
-	$user = $login->verifyCredentials(IO::POST('email'), IO::POST('password'));
+	$user = TaskerMAN\Login::verifyCredentials(IO::POST('email'), IO::POST('password'));
 
 	if (!$user){ // Login failed
 		$error = '<span style="align: center; color: red">Invalid username or password combination</span>';

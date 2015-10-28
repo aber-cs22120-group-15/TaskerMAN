@@ -1,24 +1,27 @@
 <?php
 
-ob_start();
-error_reporting(E_ALL);
-require_once('config/config.php');
-
 // Initialize autoloader
-function TaskerMANAutoloader($class){
-	if (substr($class, strlen($class) - 9) == 'Exception'){
-		require_once('exceptions/' . $class . '.class.php');
+function CustomAutoLoader($class){
+
+	if (substr($class, 0, 10) == 'TaskerMAN\\'){
+		$lib_path = 'lib/TaskerMAN/';
+		$exception_path = 'exceptions/TaskerMAN/';
+		$class =  substr($class, 10);
 	} else {
-		include('classes/' . $class . '.class.php');
+		$lib_path = 'lib/';
+		$exception_path = 'exceptions/';
+	}
+
+
+	if (substr($class, strlen($class) - 9) == 'Exception'){
+
+		require_once($exception_path . $class . '.class.php');
+	} else { // Normal library include
+		
+		require_once($lib_path . $class . '.class.php');
 	}
 }
 
-spl_autoload_register('TaskerMANAutoloader');
+spl_autoload_register('CustomAutoLoader');
 
-// Build core object
-$core = core::getInstance();
-
-// Initialize database connections
-$core->PDOConnection = new PDOConnection($config->mysql_host, $config->mysql_user, $config->mysql_password, $config->mysql_db);
-$core->IO = new IO;
-$core->Session = new Session;
+require_once('config/config.php');

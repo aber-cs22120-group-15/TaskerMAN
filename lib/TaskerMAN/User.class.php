@@ -1,0 +1,40 @@
+<?php
+namespace TaskerMAN;
+
+class User {
+	
+	public $id;
+	public $email;
+	public $name;
+	public $admin;
+	public $api_token;
+
+	public function __construct($id){
+
+		$this->id = $id;
+		$this->load();
+	}
+
+	private function load(){
+
+		$query = new \DBQuery("SELECT `email`, `name`, `admin`, `api_token`
+			FROM `users`
+			WHERE `id` = ?
+			LIMIT 1
+		");
+		$query->execute($this->id);
+
+		$fetch = $query->row();
+
+		if (empty($fetch)){
+			return false;
+		}
+
+		$this->email 		= $fetch['email'];
+		$this->name 		= $fetch['name'];
+		$this->admin 		= (bool) $fetch['admin'];
+		$this->api_token 	= $fetch['api_token'];
+
+		return true;
+	}
+}

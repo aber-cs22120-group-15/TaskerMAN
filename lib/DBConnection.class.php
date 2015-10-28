@@ -1,14 +1,19 @@
 <?php
 
-class PDOConnection {
+class DBConnection {
 
 	public $conn;
 	private $error;
 	private $query;
+	
+	public function __construct($host, $user, $password, $db){
 
-	public function __construct($host, $username, $password, $database){
+		$this->connect($host, $user, $password, $db);
+	}
 
-        $dsn = 'mysql:host=' . $host . ';dbname=' . $database;
+	private function connect ($host, $user, $password, $db){
+		
+		$dsn = 'mysql:host=' . $host . ';dbname=' . $db;
 
         $options = array(
             \PDO::ATTR_PERSISTENT => true,
@@ -16,14 +21,15 @@ class PDOConnection {
         );
 
         try {
-            $this->conn = new PDO($dsn, $username, $password, $options);
+            $this->conn = new \PDO($dsn, $user, $password, $options);
         } catch (Exception $e){
-			throw new DBQueryException('FATAL ERROR: Unable to connect to MySQL server!', $e);
-        }
+			throw new DBConnectionException($e->getMessage());
+		}
 
+		return true;
 	}
 
-    public function prepare($query){
+	public function prepare($query){
         return $this->conn->prepare($query);
     }
 
@@ -42,9 +48,4 @@ class PDOConnection {
     public function cancelTransaction(){
         return $this->conn->rollBack();
     }
-
-    public function lastInsertID(){
-        return $this->conn->lastInsertId();
-    }
-
 }

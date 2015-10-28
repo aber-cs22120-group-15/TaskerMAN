@@ -3,22 +3,20 @@
 $id = (int) IO::GET('id');
 $comment = IO::GET('comment');
 
-$step = new TaskStep($id);
+$step = new TaskerMAN\TaskStep($id);
 
 if ($step->task_id === NULL){
 	// Unable to load step, does not exist
-	echo $API->error('Unknown step ID');
-	exit;
+	throw new TaskerMAN\APIErrorException('Unknown step ID');
 }
 
-if ((int) $step->assignee_uid != $API->uid){
-	echo $API->error('User does not have access to modify this step');
-	exit;
+if ((int) $step->assignee_uid != TaskerMAN\API::$uid){
+	throw new TaskerMAN\APIErrorException('User does not have access to modify this step');
 }
 
 $step->setComment($comment);
 $step->save();
 
-echo $API->response('Step comment updated successfully');
+echo TaskerMAN\API::response('Step comment updated successfully');
 
 
