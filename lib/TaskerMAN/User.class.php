@@ -37,4 +37,20 @@ class User {
 
 		return true;
 	}
+
+	public function getName(){
+		return $this->name;
+	}
+
+	public function getEmail(){
+		return $this->email;
+	}
+
+	public function isAdmin(){
+		return $this->admin;
+	}
+
+	public function getAPIToken(){
+		return $this->api_token;
+	}
 }

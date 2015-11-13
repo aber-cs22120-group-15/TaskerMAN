@@ -9,6 +9,8 @@ class WebInterface {
 
 	static private $showTemplate = true;
 
+	static public $user = null;
+
 	static public function init(){
 
 		Session::init();
@@ -16,6 +18,7 @@ class WebInterface {
 		self::$page = preg_replace("/[^A-Za-z0-9_ ]/", '', IO::GET('p'));
 		self::enforceLogin();
 		self::validatePage();
+		self::loadLoggedInUser();
 		self::execute();
 	}
 
@@ -37,6 +40,14 @@ class WebInterface {
 		}
 
 		return true;
+	}
+
+	static private function loadLoggedInUser(){
+		if (!Session::isLoggedIn()){
+			return false;
+		}
+
+		self::$user = new \TaskerMAN\User(Session::get('uid'));
 	}
 
 	static private function execute(){
