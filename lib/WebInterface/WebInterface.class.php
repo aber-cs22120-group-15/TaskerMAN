@@ -37,7 +37,7 @@ class WebInterface {
 			self::$page = 'main';
 			return true;
 		} elseif (!file_exists('pages/' . self::$page . '.php')){
-			self::$page = '404';
+			throw new \FatalException('404 - Page Not Found', new \Exception('Requested page ('  . self::$page . ') was not found'));
 			return false;
 		}
 

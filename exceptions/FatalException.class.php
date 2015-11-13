@@ -20,20 +20,30 @@ class FatalException extends Exception {
 
 		ob_end_clean();
 
-		echo '<h2>Fatal Error</h2>';
-		echo parent::getMessage();
+		// Load template
+		$template = file_get_contents('template/fatal_error.php');
 
 		if (Registry::getConfig('DEBUG')){
-			echo '<br /><br />';
-			echo '<strong>Error: </strong><br />';
-			echo '<pre>' . $this->e_message . '</pre>';
+			$html  = '<div style="text-align: left">';
+			$html .= '<strong>Error: </strong><br />';
+			$html .= '<pre>' . $this->e_message . '</pre>';
+			$html .= '</div>';
 
-			echo $this->html;
+			$html .=  $this->html;
 
-			echo '<br /><br />';
-			echo '<strong>Stack Trace: </strong><br />';
-			echo '<pre>' . $this->trace . '</pre>';
+			$html .= '<div style="text-align: left">';
+			$html .= '<strong>Stack Trace: </strong><br />';
+			$html .= '<pre style="white-space: nowrap; text-align: left">' . nl2br($this->trace) . '</pre>';
+			$html .= '</div>';
+		} else {
+			$html = null;
 		}
+
+
+		$search = array('{{TITLE}}', '{{MAIN_MESSAGE}}', '{{EXTRA_HTML}}');
+		$replace = array('An error occured', parent::getMessage(), $html);
+
+		echo str_replace($search, $replace, $template);
 
 		exit;
 

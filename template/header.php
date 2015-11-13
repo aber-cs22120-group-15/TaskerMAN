@@ -8,9 +8,10 @@
 
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
-
-
 	<link href="static/css/dashboard.css" rel="stylesheet">
+	<link href="static/css/taskerman.css" rel="stylesheet">
+	
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 
 	</head>
 
@@ -28,7 +29,7 @@
 	        </div>
 	        <div id="navbar" class="navbar-collapse collapse">
 	          <ul class="nav navbar-nav navbar-right">
-	            <li><a href="index.php?p=settings"><?=WebInterface\WebInterface::$user->getName()?></a></li>
+	            <li><a href="index.php?p=manage_user&amp;id=<?=WebInterface\WebInterface::$user->getID()?>"><?=WebInterface\WebInterface::$user->getName()?></a></li>
 	            <li><a href="index.php?p=logout">Logout</a></li>
 	          </ul>
 	        </div>
@@ -38,7 +39,12 @@
 
 <?php
 // Build sidebar navigation
-
+$sidebar = new WebInterface\SidebarNavigation();
+$sidebar->setActiveHTML(' class="active"');
+$sidebar->addItem('main', 'Dashboard');
+$sidebar->addItem('new_task', 'New Task');
+$sidebar->addItem('list_tasks', 'List Tasks');
+$sidebar->addItem('users', 'Manage Users');
 ?>
 
 	    <div class="container-fluid">
@@ -46,10 +52,11 @@
 	        <div class="col-sm-3 col-md-2 sidebar">
 	          <ul class="nav nav-sidebar">
 
-	            <li class="active"><a href="#">Overview </a></li>
-	            <li><a href="#">Reports</a></li>
-	            <li><a href="#">Analytics</a></li>
-	            <li><a href="#">Export</a></li>
+	          <?php
+	          foreach ($sidebar->getItems() as $item){
+	          	echo '<li' . $item['active_html'] . '><a href="index.php?p=' . $item['url'] . '">' . $item['text'] . '</a></li>' . "\n";
+	          }
+	          ?>
 	          </ul>
 	         
 	        </div>

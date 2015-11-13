@@ -1,155 +1,112 @@
+<?php
+WebInterface\WebInterface::setTitle('Dashboard');
+
+$stats = TaskerMAN\DashboardStats::getStats();
+?>
+
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
+	<div class="row placeholders">
+		<div class="col-xs-6 col-sm-3 placeholder">
+			<br />
+			<br />
+			<span class="large-dashboard-number"><?=$stats['outstanding']?></span>
+		</div>
 
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-          </div>
+		<div class="col-xs-6 col-sm-3 placeholder">
+			<br />
+			<br />
+			<?php
+			echo '<span class="large-dashboard-number"';
+			if ($stats['overdue'] > 0){
+				echo ' style="color: #F7464A"';
+			} else {
+				echo ' style="color: #66CD00"';
+			}
+			echo '>' . $stats['overdue'] . '</span>';
+			?>
+		</div>
 
-          <h2 class="sub-header">Section title</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                </tr>
-                <tr>
-                  <td>1,002</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>elit</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>Integer</td>
-                  <td>nec</td>
-                  <td>odio</td>
-                  <td>Praesent</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>libero</td>
-                  <td>Sed</td>
-                  <td>cursus</td>
-                  <td>ante</td>
-                </tr>
-                <tr>
-                  <td>1,004</td>
-                  <td>dapibus</td>
-                  <td>diam</td>
-                  <td>Sed</td>
-                  <td>nisi</td>
-                </tr>
-                <tr>
-                  <td>1,005</td>
-                  <td>Nulla</td>
-                  <td>quis</td>
-                  <td>sem</td>
-                  <td>at</td>
-                </tr>
-                <tr>
-                  <td>1,006</td>
-                  <td>nibh</td>
-                  <td>elementum</td>
-                  <td>imperdiet</td>
-                  <td>Duis</td>
-                </tr>
-                <tr>
-                  <td>1,007</td>
-                  <td>sagittis</td>
-                  <td>ipsum</td>
-                  <td>Praesent</td>
-                  <td>mauris</td>
-                </tr>
-                <tr>
-                  <td>1,008</td>
-                  <td>Fusce</td>
-                  <td>nec</td>
-                  <td>tellus</td>
-                  <td>sed</td>
-                </tr>
-                <tr>
-                  <td>1,009</td>
-                  <td>augue</td>
-                  <td>semper</td>
-                  <td>porta</td>
-                  <td>Mauris</td>
-                </tr>
-                <tr>
-                  <td>1,010</td>
-                  <td>massa</td>
-                  <td>Vestibulum</td>
-                  <td>lacinia</td>
-                  <td>arcu</td>
-                </tr>
-                <tr>
-                  <td>1,011</td>
-                  <td>eget</td>
-                  <td>nulla</td>
-                  <td>Class</td>
-                  <td>aptent</td>
-                </tr>
-                <tr>
-                  <td>1,012</td>
-                  <td>taciti</td>
-                  <td>sociosqu</td>
-                  <td>ad</td>
-                  <td>litora</td>
-                </tr>
-                <tr>
-                  <td>1,013</td>
-                  <td>torquent</td>
-                  <td>per</td>
-                  <td>conubia</td>
-                  <td>nostra</td>
-                </tr>
-                <tr>
-                  <td>1,014</td>
-                  <td>per</td>
-                  <td>inceptos</td>
-                  <td>himenaeos</td>
-                  <td>Curabitur</td>
-                </tr>
-                <tr>
-                  <td>1,015</td>
-                  <td>sodales</td>
-                  <td>ligula</td>
-                  <td>in</td>
-                  <td>libero</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+		<div class="col-xs-6 col-sm-3 placeholder">
+			<canvas id="chart-task-distribution" width="200" height="200"></canvas>
+
+			<?php
+			// Generate JavaScript 
+			$js_task_distribution = array();
+
+			foreach (TaskerMAN\DashboardStats::getTaskDistribution() as $item){
+
+				$color = WebInterface\PieChart::generatePastelColours($item['assignee_uid']);
+
+				$js_task_distribution[] = '
+					{
+						value: ' . $item['count'] . ',
+						color: "' . $color['color'] . '",
+						highlight: "' . $color['highlight'] . '",
+						label: "' . $item['name'] . '"
+					}';
+			}
+			?>
+
+			<script type="text/javascript">
+				var ctx_task_distribution = document.getElementById("chart-task-distribution").getContext("2d");
+				var data = [
+					<?=implode(",\n", $js_task_distribution)?>
+				]
+				new Chart(ctx_task_distribution).Pie(data);
+			</script>
+		</div>
+
+		<div class="col-xs-6 col-sm-3 placeholder">
+			<canvas id="chart-on-time" width="200" height="200"></canvas>
+			<script type="text/javascript">
+				var ctx_on_time = document.getElementById("chart-on-time").getContext("2d");
+				var data = [
+					{
+						value: <?=$stats['completed_late']?>,
+						color:"#F7464A",
+						highlight: "#FF5A5E",
+						label: "Completed Late"
+					},
+					{
+						value: <?=$stats['completed_on_time']?>,
+						color: "#66CD00",
+						highlight: "#A6D785",
+						label: "Completed On Time"
+					}
+				]
+				new Chart(ctx_on_time).Pie(data);
+			</script>
+		</div>
+	</div>
+
+
+	<div class="row placeholders">
+
+		<div class="col-xs-6 col-sm-3 placeholder">
+			<h4>Outstanding Tasks</h4>
+			<span class="text-muted"><?=$stats['due_in_week']?> due in the next week</span>
+		</div>
+
+		<div class="col-xs-6 col-sm-3 placeholder">
+			<h4>Overdue Tasks</h4>
+			<span class="text-muted"><?=$stats['due_in_week']?> due in the next week</span>
+		</div>
+
+		<div class="col-xs-6 col-sm-3 placeholder">
+			<h4>Task Distribution</h4>
+			<span class="text-muted"><?=$stats['avg_tasks_per_user']?> average tasks per user</span>
+		</div>
+
+		<div class="col-xs-6 col-sm-3 placeholder">
+			<h4>Completed On Time</h4>
+			<span class="text-muted"><?=$stats['completed_on_time_percentage']?>&#37; of tasks completed on time</span>
+		</div>
+	
+	</div>
+
+	<h2 class="sub-header">Outstanding Tasks</h2>
+	<div class="table-responsive">
+
+	</div>
+
+</div>

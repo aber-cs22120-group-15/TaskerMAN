@@ -13,7 +13,7 @@ class DBQueryException extends FatalException {
 	}
 
 	private function getHTML(){
-		return '<strong>MySQL Query: </strong> <pre>' . $this->query . '</pre>';
+		return '<div style="text-align: left"><strong>MySQL Query: </strong> <pre style="text-align: left">' . $this->query . '</pre></div>';
 	}
 
 		
