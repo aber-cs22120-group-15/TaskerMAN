@@ -23,7 +23,7 @@ class DBConnection {
         try {
             $this->conn = new \PDO($dsn, $user, $password, $options);
         } catch (Exception $e){
-			throw new DBConnectionException($e->getMessage());
+			throw new DBConnectionException($e->getMessage(), $e);
 		}
 
 		return true;

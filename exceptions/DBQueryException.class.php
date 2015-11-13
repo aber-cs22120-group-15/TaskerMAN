@@ -1,19 +1,20 @@
 <?php
 
-class DBQueryException {
+class DBQueryException extends FatalException {
 	
+	private $query = null;
+
 	public function __construct($query, $e){
-		ob_end_clean();
 
-		echo '<h2>Fatal error</h2>';
-		echo 'A fatal, unexpected error has occurred.';
+		$this->query = $query;
 
-		if (Registry::getConfig('DEBUG')){
-			echo '<br /><br /><strong>MySQL Error: </strong> <pre>' . $e->getMessage() . '</pre>';
-			echo '<br /><br /><strong>MySQL Query: </strong> <pre>' . $query . '</pre>';
-			echo '<br /><br /><strong>Stack trace: </strong><br />
-			<pre>' . $e->getTraceAsString() . '</pre>';
-		}
-		exit;
+		parent::__construct('SQL Query Error', $e);
+		parent::setExtraHTML($this->getHTML());
 	}
+
+	private function getHTML(){
+		return '<strong>MySQL Query: </strong> <pre>' . $this->query . '</pre>';
+	}
+
+		
 }

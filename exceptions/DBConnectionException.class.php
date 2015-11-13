@@ -1,9 +1,10 @@
 <?php
 
-class DBConnectionException extends Exception {
+class DBConnectionException extends FatalException {
 	
-	public function __construct($error){
-		parent::__construct('Unable to connect to database - ' . $error);
+	public function __construct($error, $e){
+		parent::__construct('Unable to connect to database', $e);
+		parent::setExtraHTML('<strong>Error Message: </strong> ' . $error);
 	}
 
 }

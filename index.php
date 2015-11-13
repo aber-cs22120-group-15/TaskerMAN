@@ -2,4 +2,8 @@
 
 require_once('config/init.php');
 
-WebInterface::init();
+try {
+	WebInterface::init();
+} catch (FatalException $e){
+	$e->display_html();
+}

@@ -6,4 +6,6 @@ try {
 	TaskerMAN\API::init();
 } catch (TaskerMAN\APIErrorException $e){
 	die(TaskerMAN\API::error($e->getMessage()));
+} catch (FatalException $e){
+	die(TaskerMAN\API::error($e->get_json()));
 }

@@ -89,6 +89,11 @@ class API {
 	}
 
 	static public function error($message){
+		
+		if (!is_array($message)){
+			$message = array('message' => $message);
+		}
+
 		return json_encode(array('status' => 'error', 'error' => $message));
 	}
 
