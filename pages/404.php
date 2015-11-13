@@ -1,5 +1,5 @@
 <?php
-WebInterface::showTemplate(false);
+WebInterface\WebInterface::showTemplate(false);
 ?>
 
 

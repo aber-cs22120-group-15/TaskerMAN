@@ -7,6 +7,10 @@ function CustomAutoLoader($class){
 		$lib_path = 'lib/TaskerMAN/';
 		$exception_path = 'exceptions/TaskerMAN/';
 		$class =  substr($class, 10);
+	} elseif (substr($class, 0, 13) == 'WebInterface\\'){
+		$lib_path = 'lib/WebInterface/';
+		$exception_path = 'exceptions/WebInterface/';
+		$class =  substr($class, 13);
 	} else {
 		$lib_path = 'lib/';
 		$exception_path = 'exceptions/';

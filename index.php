@@ -1,9 +1,8 @@
 <?php
-
 require_once('config/init.php');
 
 try {
-	WebInterface::init();
+	WebInterface\WebInterface::init();
 } catch (FatalException $e){
 	$e->display_html();
 }

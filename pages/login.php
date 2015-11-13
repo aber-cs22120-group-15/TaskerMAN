@@ -1,12 +1,11 @@
 <?php
 
-if (Session::isLoggedIn()){
+if (WebInterface\Session::isLoggedIn()){
 	header('Location: index.php?p=main');
 	exit;
 }
 
-WebInterface::setTitle('login');
-WebInterface::showTemplate(false);
+WebInterface\WebInterface::showTemplate(false);
 
 $error = null;
 
@@ -19,7 +18,7 @@ if (isset($_POST['submit'])){
 	} elseif (!$user->admin){
 		$error = '<span style="align: center; color: red">Your account does not have access to this control panel</span>';
 	} else {
-		Session::set('uid', $user->id);
+		WebInterface\Session::set('uid', $user->id);
 		header('Location: index.php?p=main');
 		exit;
 	}

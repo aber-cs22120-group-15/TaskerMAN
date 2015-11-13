@@ -1,4 +1,6 @@
 <?php
+namespace WebInterface;
+use IO;
 
 class WebInterface {
 	
@@ -15,7 +17,7 @@ class WebInterface {
 
 		Session::init();
 
-		self::$page = preg_replace("/[^A-Za-z0-9_ ]/", '', IO::GET('p'));
+		self::$page = preg_replace("/[^A-Za-z0-9_ ]/", '', \IO::GET('p'));
 		self::enforceLogin();
 		self::validatePage();
 		self::loadLoggedInUser();

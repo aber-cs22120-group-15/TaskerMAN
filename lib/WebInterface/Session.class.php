@@ -1,4 +1,7 @@
 <?php
+namespace WebInterface;
+
+use IO;
 
 class Session {
 	
