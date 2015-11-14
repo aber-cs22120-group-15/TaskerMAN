@@ -28,6 +28,13 @@ class TaskListInterface {
 								'value' => null,
 								'condition' => "`tasks`.`assignee_uid` = :assignee_uid",
 								'parameter' => ':assignee_uid'
+							),
+
+		'status' => array(
+								'enabled' => false,
+								'value' => null,
+								'condition' => "`tasks`.`status` = :status",
+								'parameter' => ':status'
 							)
 	);
 
@@ -49,7 +56,7 @@ class TaskListInterface {
 		}
 
 		if (!isset(self::$search_criteria[$key])){
-			throw new InventoryException('Unknown search criteria mode ' . $key);
+			throw new TaskListInterfaceException('Unknown search criteria mode ' . $key);
 			return false;
 		}
 
@@ -104,7 +111,7 @@ class TaskListInterface {
 	 *
 	 * @return array Array of task data
 	*/
-	static public function getTasks(){
+	static public function getTasks($objects = false){
 
 		$conditional = self::buildConditional();
 		$limit = self::buildLimit();
@@ -138,7 +145,19 @@ class TaskListInterface {
 
 		$query->execute();
 
-		return $query->results();
+		if (!$objects){
+			return $query->results();
+		} else {
+
+			$return = array();
+
+			while ($row = $query->row()){
+				$return[$row['id']] = new Task;
+				$return[$row['id']]->loadArray($row);
+			}
+
+			return $return;
+		}
 	}
 
 	/**

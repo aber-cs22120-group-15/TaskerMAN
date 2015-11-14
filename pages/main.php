@@ -88,8 +88,8 @@ $stats = TaskerMAN\DashboardStats::getStats();
 		</div>
 
 		<div class="col-xs-6 col-sm-3 placeholder">
-			<h4>Overdue Tasks</h4>
-			<span class="text-muted"><?=$stats['due_in_24h']?> due in the next 24 hours</span>
+      <h4>Overdue Tasks</h4>
+      <span class="text-muted"><?=$stats['completed_on_time_percentage']?>&#37; of tasks completed on time</span>
 		</div>
 
 		<div class="col-xs-6 col-sm-3 placeholder">
@@ -98,35 +98,42 @@ $stats = TaskerMAN\DashboardStats::getStats();
 		</div>
 
 		<div class="col-xs-6 col-sm-3 placeholder">
-			<h4>Completed On Time</h4>
-			<span class="text-muted"><?=$stats['completed_on_time_percentage']?>&#37; of tasks completed on time</span>
+      <h4>Completed On Time</h4>
+      <span class="text-muted"><?=$stats['average_completion_time']?> average completion time</span>
 		</div>
 	
 	</div>
 
 
 <?php
+
+TaskerMAN\TaskListInterface::setSearchCriteria('status', 1);
+
+// Pagination
 $Pagination = new WebInterface\WebPagination();
-$Pagination->setItemsPerPage(5);
+$Pagination->setItemsPerPage(25);
 $Pagination->setNumItems(TaskerMAN\TaskListInterface::getNumTasks());
 $Pagination->setCurrentPage(IO::GET('page'));
 $Pagination->setBaseURL('index.php?p=main');
 
 TaskerMAN\TaskListInterface::setStartPosition($Pagination->generateLIMITStartPosition());
 TaskerMAN\TaskListInterface::setLimit($Pagination->getItemsPerPage());
-$TaskData = TaskerMAN\TaskListInterface::getTasks();
-print_r($TaskData);
+$TaskData = TaskerMAN\TaskListInterface::getTasks(true);
 ?>
 
 	<h2 class="sub-header">Outstanding Tasks</h2>
 	<div class="table-responsive">
 
-    <table class="table-striped table-hover">
+    <div align="center">
+      <?=$Pagination->getOutput()?>
+    </div>
+
+    <table class="table table-striped table-hover">
       <thead>
         <tr>
-          <th>#</th>
+          <th style="text-align: center;">#</th>
           <th>Title</th>
-          <th>Due By</th>
+          <th>Due In</th>
           <th>Assigned To</th>
         </tr>
       </thead>
@@ -135,15 +142,28 @@ print_r($TaskData);
 
       <?php
       foreach ($TaskData as $task){
-echo '
-<tr>
-  <td>' . $task['id'] . '</td>
-  <td>' . $task['title'] . '</td>
-  <td>' . $task['id'] . '
 
+        if ($task->isOverdue()){
+          $row_styling = ' class="warning"';
+        } else {
+          $row_styling = null;
+        }
 
-</tr>
-';
+        echo '<tr' . $row_styling . '>';
+        echo '<td style="text-align: center;">' . $task->id . '</td>';
+        echo '<td><a href="index.php?p=task&amp;id=' . $task->id . '">' . $task->title . '</a></td>';
+        echo '<td><span title="' . $task->due_by . '">' . WebInterface\DateFormat::timeDifference($task->due_by) . '</span>';
+
+        if ($task->isOverdue()){
+          echo '&nbsp; <span class="label label-danger">Overdue!</span>';
+        } elseif ($task->dueSoon()){
+          echo '&nbsp; <span class="label label-warning">Due soon!</span>';
+        }
+
+        echo '</td>';
+        echo '<td><a href="index.php?p=user&amp;id=' . $task->assignee_uid . '">' . $task->assignee_name . '</a></td>';
+        echo '</tr>';
+
       }
 
       ?>

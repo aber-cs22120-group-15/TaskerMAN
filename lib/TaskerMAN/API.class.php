@@ -34,7 +34,7 @@ class API {
 	}
 
 	static public function generateAPIToken(){
-		return \Math::GenerateUUIDv4() . '-' . math::GenerateUUIDv4();
+		return \Math::GenerateUUIDv4() . '-' . \Math::GenerateUUIDv4();
 	}
 
 	static public function setMethod($method){

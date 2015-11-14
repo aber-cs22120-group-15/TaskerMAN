@@ -31,17 +31,9 @@ class DashboardStats {
 				SELECT COUNT(*)
 				FROM `tasks`
 				WHERE `tasks`.`status` = 1
-				AND `tasks`.`due_by` BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 week)
+				AND `tasks`.`due_by` BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 1 WEEK)
 				$where
 			) AS `due_in_week`,
-
-			(
-				SELECT COUNT(*)
-				FROM `tasks`
-				WHERE `tasks`.`status` = 1
-				AND `tasks`.`due_by` BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 day)
-				$where
-			) AS `due_in_24h`,
 
 			(
 				SELECT COUNT(*)
@@ -75,6 +67,23 @@ class DashboardStats {
 			) AS `completed_on_time`,
 
 			(
+				SELECT ROUND(
+							ABS(
+								AVG(
+									TIME_TO_SEC(
+												TIMEDIFF(
+														`tasks`.`created_time`, `tasks`.`completed_time`
+														)
+												)
+									)
+								)
+							)
+				FROM `tasks`
+				WHERE `tasks`.`status` = 2
+				$where
+			) AS `average_completion_time`,
+
+			(
 				SELECT COUNT(*)
 				FROM `users`
 			) AS `user_count`
@@ -91,6 +100,8 @@ class DashboardStats {
 
 		$stats['completed_on_time_percentage'] = round(($stats['completed_late'] / $stats['completed'] * 100), 2);
 		$stats['avg_tasks_per_user'] = floor($stats['total'] / $stats['user_count']);
+		$stats['average_completion_time'] = \WebInterface\DateFormat::timeFormat($stats['average_completion_time'], true);
+
 
 		return $stats;
 	}

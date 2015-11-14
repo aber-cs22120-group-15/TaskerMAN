@@ -9,10 +9,12 @@ class User {
 	public $admin;
 	public $api_token;
 
+	public $exists = false;
+
 	public function __construct($id){
 
 		$this->id = $id;
-		$this->load();
+		$this->exists = $this->load();
 	}
 
 	private function load(){

@@ -29,7 +29,7 @@
 	        </div>
 	        <div id="navbar" class="navbar-collapse collapse">
 	          <ul class="nav navbar-nav navbar-right">
-	            <li><a href="index.php?p=manage_user&amp;id=<?=WebInterface\WebInterface::$user->getID()?>"><?=WebInterface\WebInterface::$user->getName()?></a></li>
+	            <li><a href="index.php?p=user&amp;id=<?=WebInterface\WebInterface::$user->getID()?>"><?=WebInterface\WebInterface::$user->getName()?></a></li>
 	            <li><a href="index.php?p=logout">Logout</a></li>
 	          </ul>
 	        </div>
@@ -43,8 +43,8 @@ $sidebar = new WebInterface\SidebarNavigation();
 $sidebar->setActiveHTML(' class="active"');
 $sidebar->addItem('main', 'Dashboard');
 $sidebar->addItem('new_task', 'New Task');
-$sidebar->addItem('list_tasks', 'List Tasks');
-$sidebar->addItem('users', 'Manage Users');
+$sidebar->addItem('list_tasks', 'List All Tasks');
+$sidebar->addItem('manage_users', 'Manage Users');
 ?>
 
 	    <div class="container-fluid">

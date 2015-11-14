@@ -12,8 +12,10 @@ class Task {
 	
 	public $id;
 	public $created_uid;
+	public $created_name;
 	public $created_time;
 	public $assignee_uid;
+	public $assignee_name;
 	public $due_by;
 	public $completed_time;
 	public $status;
@@ -22,6 +24,8 @@ class Task {
 
 	private $new_task = false;
 	private $temp_steps;
+
+	const ONE_DAY_IN_SECONDS = 86400;
 
 	public function __construct($id = null){
 	
@@ -66,6 +70,27 @@ class Task {
 		$this->completed_time 		= $fetch['completed_time'];
 		$this->status 				= $fetch['status'];
 		$this->title 				= $fetch['title'];
+	}
+
+	public function loadArray($fetch){
+		$this->id 					= $fetch['id'];
+		$this->created_uid 			= $fetch['created_uid'];
+		$this->created_name 		= $fetch['created_name'];
+		$this->created_time 		= $fetch['created_time'];
+		$this->assignee_uid 		= $fetch['assignee_uid'];
+		$this->assignee_name 		= $fetch['assignee_name'];
+		$this->due_by 				= $fetch['due_by'];
+		$this->completed_time 		= $fetch['completed_time'];
+		$this->status 				= $fetch['status'];
+		$this->title 				= $fetch['title'];
+		$this->new_task 			= false;
+	}
+
+	public function getSteps(){
+
+		if (!empty($this->steps)){
+			return $this->steps;
+		}
 
 		$query = new \DBQuery("SELECT `id`, `title`
 			FROM `steps`
@@ -75,6 +100,16 @@ class Task {
 		$query->execute($this->id);
 
 		$this->steps = $query->results();
+
+		return $this->steps;
+	}
+
+	public function isOverdue(){
+		return (time() > strtotime($this->due_by));
+	}
+
+	public function dueSoon(){
+		return ((time() + self::ONE_DAY_IN_SECONDS) > strtotime($this->due_by));
 	}
 
 	public function setID($id){
