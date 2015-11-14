@@ -1,12 +1,7 @@
 <?php
 
-$TaskListInterface = new TaskerMAN\TaskListInterface();
-$TaskListInterface->filterByUser(TaskerMAN\API::$uid);
-
-if (isset($_GET['page'])){
-	$TaskListInterface->setPage(IO::GET('page'));
-}
+TaskerMAN\TaskListInterface::setSearchCriteria('assignee_uid', TaskerMAN\API::$uid);
 
 
-echo TaskerMAN\API::response(array('tasks' => $TaskListInterface->execute()));
+echo TaskerMAN\API::response(array('tasks' => TaskerMAN\TaskListInterface::getTasks()));
 exit;

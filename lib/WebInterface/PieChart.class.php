@@ -3,8 +3,6 @@ namespace WebInterface;
 
 class PieChart {
 
-
-
 	static public function generatePastelColours($seed = null){
 
 		// Set the random number generator to a static seed

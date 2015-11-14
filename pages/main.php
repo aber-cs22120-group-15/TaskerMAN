@@ -89,7 +89,7 @@ $stats = TaskerMAN\DashboardStats::getStats();
 
 		<div class="col-xs-6 col-sm-3 placeholder">
 			<h4>Overdue Tasks</h4>
-			<span class="text-muted"><?=$stats['due_in_week']?> due in the next week</span>
+			<span class="text-muted"><?=$stats['due_in_24h']?> due in the next 24 hours</span>
 		</div>
 
 		<div class="col-xs-6 col-sm-3 placeholder">
@@ -104,9 +104,30 @@ $stats = TaskerMAN\DashboardStats::getStats();
 	
 	</div>
 
+
+<?php
+$Pagination = new WebInterface\WebPagination();
+$Pagination->setItemsPerPage(5);
+$Pagination->setNumItems(TaskerMAN\TaskListInterface::getNumTasks());
+$Pagination->setCurrentPage(IO::GET('page'));
+$Pagination->setBaseURL('index.php?p=main');
+
+TaskerMAN\TaskListInterface::setStartPosition($Pagination->generateLIMITStartPosition());
+TaskerMAN\TaskListInterface::setLimit($Pagination->getItemsPerPage());
+$TaskData = TaskerMAN\TaskListInterface::getTasks();
+?>
+
 	<h2 class="sub-header">Outstanding Tasks</h2>
 	<div class="table-responsive">
 
-	</div>
+    <table class="table-striped table-hover">
 
+
+    </table>
+
+    <div align="center">
+      <?=$Pagination->getOutput()?>
+    </div>
+
+	</div>
 </div>

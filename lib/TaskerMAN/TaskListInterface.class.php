@@ -1,113 +1,217 @@
 <?php
 namespace TaskerMAN;
 
+/**
+ *
+ * @author Daniel K Monaghan <dkm2@aber.ac.uk>
+ * @license GNU General Public License v3.0
+*/
 class TaskListInterface {
 	
-	// Filtering
-	private $statuses 	= null;
-	private $user 		= null;
 
-	private $page 		= 1;
-	private $per_page 	= 25;
+	static public $sort_columns = array('created_time', 'due_by', 'completed_time', 'status', 'title');
+	static private $sort = 'ORDER BY `tasks`.`due_by` ASC';
 
-	public function setPage($page = 1){
+	static private $tasks = array();
 
-		if (!is_numeric($page) || $page < 0){
-			$page = 1;
-		}
+	static private $start_position;
+	static private $limit;
 
-		$this->page = $page;
-		return true;
-	}
+	/**
+	 * This array holds information about all
+	 * possible search constraint options, and their
+	 * associated SQL statements and parameters
+	*/
+	static private $search_criteria = array(
 
-	public function filterByStatus($statuses){
+		'assignee_uid' => array(
+								'enabled' => false,
+								'value' => null,
+								'condition' => "`tasks`.`assignee_uid` = :assignee_uid",
+								'parameter' => ':assignee_uid'
+							)
+	);
 
-		if (!is_array($statuses)){
-			throw new TaskListInterfaceException('Invalid input to filterByStatus() - not an array');
+
+	/**
+	 * Enables one of the preset search criterias 
+	 * as defined in self::$search_criteria, and sets
+	 * the corresponding value
+	 *
+	 * @param string $key Criteria Key
+	 * @param mixed $value Search value
+	 * @throws InventoryException
+	 * @return boolean
+	*/
+	static public function setSearchCriteria($key, $value){
+
+		if (empty($value)){
 			return false;
 		}
 
-		// Verify statuses are all legal
-		foreach ($statuses as $k => $v){
-			if ($v > 2 || $v < 0 || !is_numeric($v)){
-				throw new TaskListInterfaceException('Invalid status filter ' . $v);
-				return false;
-			}
+		if (!isset(self::$search_criteria[$key])){
+			throw new InventoryException('Unknown search criteria mode ' . $key);
+			return false;
 		}
 
-		$this->statuses = $statuses;
+		self::$search_criteria[$key]['enabled'] = true;
+		self::$search_criteria[$key]['value'] = $value;
+	}
 
+	/**
+	 * Set starting position for LIMIT
+	 * 
+	 * @param int $start_position Starting position
+	*/
+	static public function setStartPosition($start_position){
+		self::$start_position = $start_position;
+	}
+
+	/**
+	 * Set number of items to return
+	 * 
+	 * @param int $limit Number of items to return
+	*/
+	static public function setLimit($limit){
+		self::$limit = $limit;
+	}
+
+	/**
+	 * Set sort column
+	 *
+	 * @param str $column Column name
+	 * @param str $direction Ascending/Descending
+	 * @return boolean Success
+	*/
+	static public function setSort($column, $direction){
+
+		$direction = strtoupper($direction);
+
+		if ($direction != 'ASC' && $direction !== 'DESC'){
+			return false;
+		}
+
+		if (!in_array($column, self::$sort_columns)){
+			return false;
+		}
+
+		self::$sort = 'ORDER BY `tasks`.`' . $column . '` ' . $direction;
 		return true;
 	}
 
-	public function filterByUser($uid){
-		$this->user = (int) $uid;
-	}
+	/**
+	 * Executes a search on the list of tasks and
+	 * returns the tasks
+	 *
+	 * @return array Array of task data
+	*/
+	static public function getTasks(){
 
-	public function execute(){
+		$conditional = self::buildConditional();
+		$limit = self::buildLimit();
 
-		$limit = self::generateLimitConstraint($this->page);
-		$where = array();
-
-		// Check if we are filtering by a user
-		if ($this->user !== null){
-			// Filter by user
-			$where[] = "`tasks`.`assignee_uid` = :uid";
-		}
-
-		// Check if we are only using selected statuses
-		if ($this->statuses !== null){
-
-			$qMarks = str_repeat('?,', count($this->statuses) - 1) . '?';
-
-			$where[] = "`tasks`.`status` IN ($qMarks)";
-		}
-
-		if (!empty($where)){
-			$where = 'WHERE ' . implode(' AND ', $where);
-		} else {
-			$where = null;
-		}
-
-		$query = new \DBQuery("SELECT
+		$query = new \DBQuery("SELECT 
 			`tasks`.*,
 			`users`.`name`
 
 			FROM `tasks`
 			JOIN `users` ON `tasks`.`assignee_uid` = `users`.`id`
 
-			$where
+			$conditional
 
-			ORDER BY `tasks`.`due_by` DESC
-			LIMIT $limit->start, $limit->end
+			" . self::$sort . "
+
+			$limit
 		");
 
+		// Bind any conditional parameters
+		if (!is_null($conditional)){
 
-		if ($this->user !== null){
-			$query->bindValue(':uid', $this->user);
+			foreach (self::$search_criteria as $key => $criteria){
+				if ($criteria['enabled']){
+					$query->bindValue($criteria['parameter'], $criteria['value']);
+				}
+			}
+
 		}
 
-		if ($this->statuses !== null){
-			$query->setArrayAsRawParams(true);
-			$query->execute($this->statuses);
-		} else {
-			$query->execute();
-		}
+		$query->execute();
 
 		return $query->results();
 	}
 
-	// TODO: Implement this function to work dynamically
+	/**
+	 * Builds SQL WHERE statement based on
+	 * conditionals defined in the self::$search_criteria
+	 *
+	 * @return string SQL 
+	*/
+	static private function buildConditional(){
 
-	private function generateLimitConstraint($page = null){
+		$conditions = array();
 
-		if (is_null($page)){
-			$page = 1;
+		foreach (self::$search_criteria as $key => $criteria){
+			if (!$criteria['enabled']){
+				continue;
+			}
+
+			$conditions[] = $criteria['condition'];
 		}
 
-		$return = new \stdClass();
-		$return->start = ($page - 1) * $this->per_page;
-		$return->end = $this->per_page;
-		return $return;
+		if (empty($conditions)){
+			return null;
+		} 
+
+		return "WHERE " . implode(" AND ", $conditions);
 	}
+
+	/**
+	 * Builds SQL LIMIT statement based on
+	 * self::$start_position and $limit
+	 *
+	 * @return string SQL
+	*/
+	static private function buildLimit(){
+
+		if (is_null(self::$start_position) || is_null(self::$limit)){
+			return null;
+		}
+
+		return 'LIMIT ' . self::$limit . ' OFFSET ' . self::$start_position;
+
+	}
+
+	/**
+	 * Returns total count of tasks in database
+	 *
+	 * @return int Count
+	*/
+	static public function getNumTasks(){
+
+		$conditional = self::buildConditional();
+
+		$query = new \DBQuery("SELECT
+		 	COUNT(*) AS `count`
+			FROM `tasks`
+
+			$conditional
+		");
+
+		// Bind any conditional parameters
+		if (!is_null($conditional)){
+
+			foreach (self::$search_criteria as $key => $criteria){
+				if ($criteria['enabled']){
+					$query->bindValue($criteria['parameter'], $criteria['value']);
+				}
+			}
+
+		}
+
+		$query->execute();
+		$row = $query->row();
+
+		return $row['count'];
+	}
+
 }

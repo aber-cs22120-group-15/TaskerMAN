@@ -39,6 +39,14 @@ class DashboardStats {
 				SELECT COUNT(*)
 				FROM `tasks`
 				WHERE `tasks`.`status` = 1
+				AND `tasks`.`due_by` BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 day)
+				$where
+			) AS `due_in_24h`,
+
+			(
+				SELECT COUNT(*)
+				FROM `tasks`
+				WHERE `tasks`.`status` = 1
 				AND NOW() > `tasks`.`due_by`
 				$where
 			) AS `overdue`,

@@ -77,6 +77,11 @@ class Task {
 		$this->steps = $query->results();
 	}
 
+	public function setID($id){
+		$this->id = $id;
+		$this->new_task = false;
+	}
+
 	public function setCreatedByUser($uid){
 		$this->created_uid = $uid;
 	}
