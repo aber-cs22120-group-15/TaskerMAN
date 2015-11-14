@@ -52,7 +52,12 @@ $stats = TaskerMAN\DashboardStats::getStats();
 				var data = [
 					<?=implode(",\n", $js_task_distribution)?>
 				]
-				new Chart(ctx_task_distribution).Pie(data);
+				new Chart(ctx_task_distribution).Pie(data, {
+						tooltipFontSize: 10,
+						tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>",
+						percentageInnerCutout : 50
+					}		
+				);
 			</script>
 		</div>
 
@@ -74,7 +79,12 @@ $stats = TaskerMAN\DashboardStats::getStats();
 						label: "Completed On Time"
 					}
 				]
-				new Chart(ctx_on_time).Pie(data);
+				new Chart(ctx_on_time).Pie(data, {
+						tooltipFontSize: 10,
+						tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>",
+						percentageInnerCutout : 50
+					}
+				);
 			</script>
 		</div>
 	</div>

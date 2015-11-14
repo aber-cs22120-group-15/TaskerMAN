@@ -90,7 +90,12 @@ if (isset($_POST['submit'])){
 						label: "Completed On Time"
 					}
 				]
-				new Chart(ctx_on_time).Pie(data);
+				new Chart(ctx_on_time).Pie(data, {
+						tooltipFontSize: 10,
+						tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>",
+						percentageInnerCutout : 50
+					}	
+				);
 			</script>
 		</div>
 
