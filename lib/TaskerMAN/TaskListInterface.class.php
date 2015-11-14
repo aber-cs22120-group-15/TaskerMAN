@@ -4,7 +4,6 @@ namespace TaskerMAN;
 /**
  *
  * @author Daniel K Monaghan <dkm2@aber.ac.uk>
- * @license GNU General Public License v3.0
 */
 class TaskListInterface {
 	
@@ -112,7 +111,7 @@ class TaskListInterface {
 
 		$query = new \DBQuery("SELECT 
 			`tasks`.*,
-			`users`.`name`
+			`users`.`name` AS `assignee_name`
 
 			FROM `tasks`
 			JOIN `users` ON `tasks`.`assignee_uid` = `users`.`id`
