@@ -5,7 +5,6 @@ namespace WebInterface;
  * Handles the generation of pagination
  *
  * @author Daniel K Monaghan <dkm2@aber.ac.uk>
- * @license GNU General Public License v3.0
 */
 class WebPagination {
 

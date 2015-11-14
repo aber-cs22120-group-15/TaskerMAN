@@ -111,10 +111,12 @@ class TaskListInterface {
 
 		$query = new \DBQuery("SELECT 
 			`tasks`.*,
-			`users`.`name` AS `assignee_name`
+			`users_assignee`.`name` AS `assignee_name`,
+			`users_created`.`name` AS `created_name`
 
 			FROM `tasks`
-			JOIN `users` ON `tasks`.`assignee_uid` = `users`.`id`
+			JOIN `users` AS `users_assignee` ON `tasks`.`assignee_uid` = `users`.`id`
+			JOIN `users` AS `users_created` ON `tasks`.`created_uid` = `users`.`id`
 
 			$conditional
 

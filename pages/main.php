@@ -115,14 +115,31 @@ $Pagination->setBaseURL('index.php?p=main');
 TaskerMAN\TaskListInterface::setStartPosition($Pagination->generateLIMITStartPosition());
 TaskerMAN\TaskListInterface::setLimit($Pagination->getItemsPerPage());
 $TaskData = TaskerMAN\TaskListInterface::getTasks();
+
 ?>
 
 	<h2 class="sub-header">Outstanding Tasks</h2>
 	<div class="table-responsive">
 
     <table class="table-striped table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Due By</th>
+          <th>Assigned To</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+      <?php
+      foreach ($TaskData as $task){
+        
+      }
 
 
+      </tbody>
     </table>
 
     <div align="center">
