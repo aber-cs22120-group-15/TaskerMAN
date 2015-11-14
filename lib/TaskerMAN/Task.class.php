@@ -108,6 +108,14 @@ class Task {
 		return (time() > strtotime($this->due_by));
 	}
 
+	public function completedLate(){
+		if ($this->status != 2){
+			return false;
+		}
+
+		return (strtotime($this->completed_time) > strtotime($this->due_by));
+	}
+
 	public function dueSoon(){
 		return ((time() + self::ONE_DAY_IN_SECONDS) > strtotime($this->due_by));
 	}

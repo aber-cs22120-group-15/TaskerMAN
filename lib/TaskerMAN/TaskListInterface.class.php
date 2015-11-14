@@ -8,7 +8,7 @@ namespace TaskerMAN;
 class TaskListInterface {
 	
 
-	static public $sort_columns = array('created_time', 'due_by', 'completed_time', 'status', 'title');
+	static public $sort_columns = array('id', 'created_time', 'due_by', 'completed_time', 'status', 'title');
 	static private $sort = 'ORDER BY `tasks`.`due_by` ASC';
 
 	static private $tasks = array();
@@ -35,6 +35,20 @@ class TaskListInterface {
 								'value' => null,
 								'condition' => "`tasks`.`status` = :status",
 								'parameter' => ':status'
+							),
+
+		'title' => array(
+								'enabled' => false,
+								'value' => null,
+								'condition' => "LOWER(`tasks`.`title`) LIKE :title",
+								'parameter' => ':title'
+							),
+
+		'creator_uid' => array(
+								'enabled' => false,
+								'value' => null,
+								'condition' => "`tasks`.`creator_uid` = :creator_uid",
+								'parameter' => ':creator_uid'
 							)
 	);
 

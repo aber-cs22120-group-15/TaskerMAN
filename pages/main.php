@@ -161,7 +161,7 @@ $TaskData = TaskerMAN\TaskListInterface::getTasks(true);
         }
 
         echo '</td>';
-        echo '<td><a href="index.php?p=user&amp;id=' . $task->assignee_uid . '">' . $task->assignee_name . '</a></td>';
+        echo '<td><a href="index.php?p=list_tasks&amp;assignee_uid=' . $task->assignee_uid . '">' . $task->assignee_name . '</a></td>';
         echo '</tr>';
 
       }
