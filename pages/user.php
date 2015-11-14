@@ -102,6 +102,7 @@ if (isset($_POST['submit'])){
 				}
 				?>
 				<li class="list-group-item"><span class="label label-default">E-Mail Address</span> <?=$user->email?></li>
+				<li class="list-group-item"><a class="btn btn-default btn-sm" href="index.php?p=list_tasks&amp;assignee_uid=<?=$user->id?>" role="button">View Tasks</a></li>
 			</ul>
 		</div>
 
