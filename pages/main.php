@@ -115,7 +115,7 @@ $Pagination->setBaseURL('index.php?p=main');
 TaskerMAN\TaskListInterface::setStartPosition($Pagination->generateLIMITStartPosition());
 TaskerMAN\TaskListInterface::setLimit($Pagination->getItemsPerPage());
 $TaskData = TaskerMAN\TaskListInterface::getTasks();
-
+print_r($TaskData);
 ?>
 
 	<h2 class="sub-header">Outstanding Tasks</h2>
@@ -135,9 +135,18 @@ $TaskData = TaskerMAN\TaskListInterface::getTasks();
 
       <?php
       foreach ($TaskData as $task){
-        
+echo '
+<tr>
+  <td>' . $task['id'] . '</td>
+  <td>' . $task['title'] . '</td>
+  <td>' . $task['id'] . '
+
+
+</tr>
+';
       }
 
+      ?>
 
       </tbody>
     </table>

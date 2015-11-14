@@ -115,8 +115,8 @@ class TaskListInterface {
 			`users_created`.`name` AS `created_name`
 
 			FROM `tasks`
-			JOIN `users` AS `users_assignee` ON `tasks`.`assignee_uid` = `users`.`id`
-			JOIN `users` AS `users_created` ON `tasks`.`created_uid` = `users`.`id`
+			JOIN `users` AS `users_assignee` ON `tasks`.`assignee_uid` = `users_assignee`.`id`
+			JOIN `users` AS `users_created` ON `tasks`.`created_uid` = `users_created`.`id`
 
 			$conditional
 
