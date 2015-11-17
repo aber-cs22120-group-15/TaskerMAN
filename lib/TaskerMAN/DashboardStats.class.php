@@ -54,7 +54,7 @@ class DashboardStats {
 				SELECT COUNT(*)
 				FROM `tasks`
 				WHERE `tasks`.`status` = 2
-				AND `tasks`.`due_by` > `tasks`.`completed_time`
+				AND `tasks`.`due_by` <= `tasks`.`completed_time`
 				$where
 			) AS `completed_late`,
 
@@ -62,7 +62,7 @@ class DashboardStats {
 				SELECT COUNT(*)
 				FROM `tasks`
 				WHERE `tasks`.`status` = 2
-				AND `tasks`.`due_by` <= `tasks`.`completed_time`
+				AND `tasks`.`due_by` > `tasks`.`completed_time`
 				$where
 			) AS `completed_on_time`,
 
