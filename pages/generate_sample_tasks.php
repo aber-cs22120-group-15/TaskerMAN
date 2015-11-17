@@ -49,9 +49,16 @@ foreach ($tasks as $i){
 
 	$t = new TaskerMAN\Task();
 	$t->setAssignee($users[array_rand($users)]);
-	$t->setDueBy(date('Y-m-d H:i:s', rand_future_time()));
+	$due_by = rand_future_time() - (86400 * 4);
+	$t->setDueBy(date('Y-m-d H:i:s', $due_by));
 	$t->setCreatedByUser($admins[array_rand($admins)]);
-	$status = rand(1, 2);
+
+	if (rand(1, 5) > 2){
+		$status = 2;
+	} else {
+		$status = 1;
+	}
+
 	$t->setStatus($status);
 
 	$steps = range(1, rand(1, 3));
@@ -60,7 +67,20 @@ foreach ($tasks as $i){
 	}
 
 	if ($status == 2){
-		$t->setCompletedTime(date('Y-m-d H:i:s', rand_future_time()));
+
+		// Should this task be completed late or on time?
+		if (rand(0, 10) < 8){
+			// On time
+			// Generate a time between created time and due date
+			$complete_time = rand(time(), $due_by);
+		} else {
+			// Late
+			// Generate a time between due date, and 2 weeks after due date
+			$complete_time = rand($due_by, $due_by + (14 * 86400));
+		}
+
+
+		$t->setCompletedTime(date('Y-m-d H:i:s', $complete_time));
 	}
 
 	$t->setTitle($verbs[array_rand($verbs)] . ' the ' . $things[array_rand($things)]);
