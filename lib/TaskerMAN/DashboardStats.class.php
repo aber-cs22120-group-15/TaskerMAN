@@ -98,7 +98,12 @@ class DashboardStats {
 
 		$stats = $query->row();
 
-		$stats['completed_on_time_percentage'] = round(($stats['completed_late'] / $stats['completed'] * 100), 2);
+		if ($stats['completed'] > 0){
+			$stats['completed_on_time_percentage'] = round(($stats['completed_late'] / $stats['completed'] * 100), 2);
+		} else {
+			$stats['completed_on_time_percentage'] = 100;
+		}
+		
 		$stats['avg_tasks_per_user'] = floor($stats['total'] / $stats['user_count']);
 		$stats['average_completion_time'] = \WebInterface\DateFormat::timeFormat($stats['average_completion_time'], true);
 

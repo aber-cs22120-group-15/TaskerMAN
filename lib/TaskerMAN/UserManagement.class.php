@@ -19,7 +19,7 @@ class UserManagement {
 		");
 		$query->execute($email);
 
-		if ($query->numRows() > 0){
+		if ($query->rowCount() > 0){
 			throw new UserManagementException('User with email ' . $email . ' already exists');
 			return false;
 		}
