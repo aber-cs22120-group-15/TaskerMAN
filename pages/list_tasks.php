@@ -92,8 +92,8 @@ $TaskData = TaskerMAN\TaskListInterface::getTasks(true);
         } elseif ($task->status == 2){
         	$row_styling = ' class="success"';
         } else {
-			$row_styling = null;
-        }
+			    $row_styling = null;
+       }
 
         echo '<tr' . $row_styling . '>';
         echo '<td style="text-align: center;">' . $task->id . '</td>';
