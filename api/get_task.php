@@ -24,7 +24,7 @@ $result = array(
 	'completed_time' => $task->completed_time,
 	'status' => $task->status,
 	'title' => $task->title,
-	'steps' => $task->steps
+	'steps' => $task->getSteps()
 
 );
 

@@ -92,7 +92,7 @@ class Task {
 			return $this->steps;
 		}
 
-		$query = new \DBQuery("SELECT `id`, `title`
+		$query = new \DBQuery("SELECT `id`, `title`, `comment`
 			FROM `steps`
 			WHERE `task_id` = ?
 		");
