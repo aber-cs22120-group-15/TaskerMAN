@@ -14,4 +14,4 @@ if ((int) $task->assignee_uid !== TaskerMAN\API::$uid){
 }
 
 
-echo TaskerMAN\API::response($task->getSteps());
+echo TaskerMAN\API::response(array('steps' => $task->getSteps()));
