@@ -2,6 +2,11 @@
 
 $task_id = (int) IO::GET('id');
 $status = (int) IO::GET('status');
+$completed_time = (int) IO::GET('completed_time');
+
+if (empty($complete_time)){
+	$completed_time = time();
+}
 
 $task = new TaskerMAN\Task($task_id);
 
@@ -26,7 +31,7 @@ switch ($status){
 	// completed
 	case 2:
 		$task->setStatus(2);
-		$task->setCompletedTime();
+		$task->setCompletedTime(date("Y-m-d H:i:s", $completed_time));
 	break;
 
 	// Invalid status code
