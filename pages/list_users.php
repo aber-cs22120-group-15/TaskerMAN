@@ -10,6 +10,7 @@ $UserData = TaskerMAN\UserListInterface::getUsers();
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
 	<h2 class="page-header">Users</h2>
+	<h4><a href="index.php?p=new_user">Create new user</a></h4>
 	<div class="table-responsive">
 
     <table class="table table-striped table-hover">
