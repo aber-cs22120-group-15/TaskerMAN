@@ -2,9 +2,11 @@
 
 $task_id = (int) IO::GET('id');
 $status = (int) IO::GET('status');
+
+// Expects time in UNIX timestamp format
 $completed_time = (int) IO::GET('completed_time');
 
-if (empty($complete_time)){
+if (empty($completed_time)){
 	$completed_time = time();
 }
 
