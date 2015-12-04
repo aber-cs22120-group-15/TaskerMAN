@@ -1,22 +1,24 @@
 <?php
 
-WebInterface\WebInterface::setTitle('Create New User');
+WebInterface\WebInterface::setTitle('Create New Task');
 
 if (isset($_POST['submit'])){
 	// Form submitted
-	
-	if (isset($_POST['admin'])){
-		$is_admin = true;
-	} else {
-		$is_admin = false;
-	}
 		
-	// Update user
+	// Create Task
 	try {
 
-		$uid = TaskerMAN\UserManagement::create(IO::POST('email'), IO::POST('name'), IO::POST('password'), $is_admin);
+		$task = new TaskerMAN\Task;
+		$task->setCreatedByUser(WebInterface\WebInterface::$user->getID());
+		$task->setAssignee(IO::POST('assignee'));
+		$task->setDueBy($date); // HOW DO WE HANDLE THE DATE HERE?
+		$task->setStatus(0); // Allocated
+		$task->setTitle(IO::POST('title'));
 
-		header('Location: index.php?p=user&id=' . $uid);
+		// Steps
+		// HOW TO HANDLE STEPS?
+
+		header('Location: index.php?p=task&id=' . $task->id);
 
 	} catch (TaskerMAN\UserManagementException $e){
 		$alert = '<div class="alert alert-danger" role="alert">' . $e->getMessage() . '</div>';
