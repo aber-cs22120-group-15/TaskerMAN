@@ -121,6 +121,14 @@ class UserManagement {
 
 		$query->execute($id);
 
+		// Unassign all tasks which were assigned to this user
+		$query = new \DBQuery("UPDATE `tasks`
+			SET `assignee_uid` = NULL
+			WHERE `assignee_uid` = ?
+		");
+
+		$query->execute($id);
+
 		return true;
 	}
 
