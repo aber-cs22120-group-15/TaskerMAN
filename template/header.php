@@ -44,7 +44,7 @@ $sidebar->setActiveHTML(' class="active"');
 $sidebar->addItem('main', 'Dashboard');
 $sidebar->addItem('new_task', 'New Task');
 $sidebar->addItem('list_tasks', 'List All Tasks');
-$sidebar->addItem('manage_users', 'Manage Users');
+$sidebar->addItem('list_users', 'Manage Users');
 ?>
 
 	    <div class="container-fluid">
