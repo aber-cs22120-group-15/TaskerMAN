@@ -1,7 +1,7 @@
 <?php
 
 $id = (int) IO::GET('id');
-$comment = html_entity_decode(IO::POST('comment'));
+$comment = IO::POST('comment', false);
 
 $step = new TaskerMAN\TaskStep($id);
 
