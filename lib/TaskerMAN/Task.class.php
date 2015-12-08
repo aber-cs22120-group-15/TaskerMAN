@@ -154,7 +154,7 @@ class Task {
 		$this->title = $title;
 	}
 
-	public function createStep($title, $comment){
+	public function createStep($title, $comment = null){
 
 		if ($this->new_task){
 
