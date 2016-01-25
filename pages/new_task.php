@@ -15,7 +15,7 @@ if (isset($_POST['submit'])){
 		$task->setCreatedByUser(WebInterface\WebInterface::$user->getID());
 		$task->setAssignee(IO::POST('assigned-to'));
 		$task->setDueBy(IO::POST('due-date'));
-		$task->setStatus(0); // Allocated
+		$task->setStatus(1); // Allocated
 		$task->setTitle(IO::POST('task-title'));
 
 		$task->createStep(IO::POST('step-text'));
@@ -49,19 +49,19 @@ if (isset($_POST['submit'])){
 		<div class="col-md-6">
 			<form method="post" action="index.php?p=new_task">
 
-				<div class="input-group input-group-lg">
+				<div class="input-group input-group-md">
 					<span class="input-group-addon" id="sizing-addon1">Task Title</span>
 	  				<input type="text" name="task-title" class="form-control" placeholder="Title" aria-describedby="sizing-addon1" value="<?=IO::POST('task-title')?>">
   				</div>
   				<br />
 
-  				<div class="input-group input-group-lg">
+  				<div class="input-group input-group-md">
 					<span class="input-group-addon" id="sizing-addon2">Due Date</span>
 	  				<input type="date" name="due-date" class="form-control" aria-describedby="sizing-addon2" value="<?=IO::POST('due-date')?>">
   				</div>
   				<br />
 
-  				<div class="input-group input-group-lg">
+  				<div class="input-group input-group-md">
 					<span class="input-group-addon" id="sizing-addon3">Assigned To</span>
 					<select name="assigned-to" class="form-control">
 						<?=WebInterface\UserListDropdownGenerator::generate(IO::POST('assigned-to'))?>
@@ -69,14 +69,14 @@ if (isset($_POST['submit'])){
   				</div>
   				<br />
 
-  				<div class="input-group input-group-lg">
+  				<div class="input-group input-group-md">
 					<span class="input-group-addon" id="sizing-addon4">Initial Step</span>
 	  				<input type="text" name="step-text" class="form-control" aria-describedby="sizing-addon4" value="<?=IO::POST('step-text')?>">
   				</div>
   				<br />
 
-  				<div class="input-group input-group-lg">
-	  				<input type="submit" name="submit" value="Submit" class="btn btn-lg btn-primary" />
+  				<div class="input-group input-group-md">
+	  				<input type="submit" name="submit" value="Submit" class="btn btn-md btn-primary" />
 	  			</div>
 
   			</form>
