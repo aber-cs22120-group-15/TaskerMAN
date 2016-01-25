@@ -1,5 +1,12 @@
 <?php
 
+// Check if the application is installed, if not, bounce to install page
+
+if (Install::required()){
+	header('Location: index.php?p=install');
+	exit;
+}
+
 if (WebInterface\Session::isLoggedIn()){
 	header('Location: index.php?p=main');
 	exit;

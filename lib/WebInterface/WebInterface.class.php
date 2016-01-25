@@ -26,7 +26,7 @@ class WebInterface {
 
 	static private function enforceLogin(){
 
-		if (self::$page !== 'login'  && self::$page !== '404' && !Session::isLoggedIn()){
+		if (self::$page !== 'login' && self::$page !== 'install' && self::$page !== '404' && !Session::isLoggedIn()){
 			header('Location: index.php?p=login');
 			exit;
 		}

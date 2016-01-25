@@ -37,7 +37,7 @@ class Install {
 
 	);
 
-	public function required(){
+	static public function required(){
 
 		$query = new \DBQuery("SHOW TABLES IN " . Registry::getConfig('DB_DATABASE'));
 
@@ -52,6 +52,17 @@ class Install {
 			if (!in_array($table, $tables_in_db)){
 				return true;
 			}
+		}
+
+		// Count number of users in database
+
+		$query = new \DBQuery("SELECT COUNT(*) AS `NumRows` FROM `users`");
+		$query->execute();
+
+		$row = $query->row();
+
+		if ($row['NumRows'] == 0){
+			return true;
 		}
 
 		return false;
