@@ -28,7 +28,7 @@ class API {
 	}
 
 	static private function enforceLogin(){
-		if (self::$method !== 'login' && !self::authenticateByToken()){
+		if (self::$method !== 'login' && self::$method!== 'online' && !self::authenticateByToken()){
 			throw new APIErrorException('Invalid API Authentication Token');
 		}
 	}
