@@ -60,12 +60,8 @@ class TaskStep {
 		$this->title = $title;
 	}
 
-	public function setTaskID($id){
-		$this->task_id = $id;
-	}
-
-	public function setAssigneeUID($uid){
-		$this->assignee_uid = $uid;
+	public function setTaskID($task_id){
+		$this->task_id = $task_id;
 	}
 
 	public function delete(){
@@ -81,7 +77,6 @@ class TaskStep {
 	}
 
 	public function save(){
-
 
 		if ($this->new_step){
 
@@ -108,7 +103,7 @@ class TaskStep {
 				LIMIT 1
 			");
 
-			$query->bindValue(':id', $this->id);
+			$query->bindValue(':id', $this->task_id);
 			$query->bindValue(':title', $this->title);
 			$query->bindValue(':comment', $this->comment);
 

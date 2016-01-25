@@ -143,21 +143,21 @@ if (isset($_POST['submit'])){
 		<div class="col-md-6">
 			<form method="post" action="index.php?p=user&amp;id=<?=$user->id?>">
 
-				<div class="input-group input-group-lg">
+				<div class="input-group input-group-md">
 					<span class="input-group-addon" id="sizing-addon1">Name</span>
 	  				<input type="text" name="name" class="form-control" placeholder="Name" aria-describedby="sizing-addon1" value="<?=$user->name?>">
   				</div>
   				
   				<br />
 
-  				<div class="input-group input-group-lg">
+  				<div class="input-group input-group-md">
 	  				<span class="input-group-addon" id="sizing-addon2">Email Address</span>
 	  				<input type="email" name="email" class="form-control" placeholder="Email Address" aria-describedby="sizing-addon2" value="<?=$user->email?>">
   				</div>
 
   				<br />
 
-  				<div class="input-group input-group-lg">
+  				<div class="input-group input-group-md">
 	  				<span class="input-group-addon" id="sizing-addon3">Change Password</span>
 	  				<input type="password" name="password" class="form-control" placeholder="Password" aria-describedby="sizing-addon3">
   				</div>
@@ -171,8 +171,8 @@ if (isset($_POST['submit'])){
 
   				<br />
 
-  				<div class="input-group input-group-lg">
-	  				<input type="submit" name="submit" value="Submit" class="btn btn-lg btn-primary" />
+  				<div class="input-group input-group-md">
+	  				<input type="submit" name="submit" value="Submit" class="btn btn-md btn-primary" />
 	  			</div>
 
   			</form>
