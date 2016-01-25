@@ -98,6 +98,10 @@ class DBQuery {
 				return $this->stmt->fetch(\PDO::FETCH_ASSOC);
 		}
 
+		public function rowNotAssoc(){
+				return $this->stmt->fetch(\PDO::FETCH_NUM);
+		}
+
 		public function rowCount(){
 					return $this->stmt->rowCount();
 		}
