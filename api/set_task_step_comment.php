@@ -14,8 +14,14 @@ if ((int) $step->assignee_uid != TaskerMAN\Application\API::$uid){
 	throw new TaskerMAN\Application\APIErrorException('User does not have access to modify this step');
 }
 
-$step->setComment($comment);
-$step->save();
+try {
+	
+	$step->setComment($comment);
+	$step->save();
+} catch (TaskerMAN\Application\TaskException $e){
+
+	throw new TaskerMAN\Application\APIErrorException($e->getMessage());
+}
 
 echo TaskerMAN\Application\API::response('Step comment updated successfully');
 

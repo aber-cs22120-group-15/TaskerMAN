@@ -16,9 +16,13 @@ if (isset($_POST['delete'])){
 
 } else {
 
-	$step->setComment(TaskerMAN\Core\IO::POST('comment'));
-	$step->setTitle(TaskerMAN\Core\IO::POST('title'));
-	$step->save();
+	try {
+		$step->setComment(TaskerMAN\Core\IO::POST('comment'));
+		$step->setTitle(TaskerMAN\Core\IO::POST('title'));
+		$step->save();
+	} catch (TaskerMAN\Application\TaskException $e){
+	
+	}
 
 }
 

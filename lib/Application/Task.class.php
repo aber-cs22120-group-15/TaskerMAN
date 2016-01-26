@@ -134,6 +134,19 @@ class Task {
 	}
 
 	public function setDueBy($due_by){
+
+		// Validate date
+		if (!self::validateDate($due_by)){
+			throw new TaskException('Inputted due date is not valid');
+			return false;
+		}
+
+		// Check that this date isn't in the past
+		if (strtotime($due_by) < time() + 1){
+			throw new TaskException('Task due date must be in the future');
+			return false;
+		}
+
 		$this->due_by = $due_by;
 	}
 
@@ -146,11 +159,24 @@ class Task {
 		$this->completed_time = $time;
 	}
 
+	private function validateDate($date){
+
+	    $date_object = \DateTime::createFromFormat('Y-m-d', $date);
+	    return $date_object && $date_object->format('Y-m-d') == $date;
+	}
+
 	public function setStatus($status){
 		$this->status = $status;
 	}
 
 	public function setTitle($title){
+		$title = trim($title);
+
+		if (empty($title)){
+			throw new TaskException('Task title cannot be empty');
+			return false;
+		}
+
 		$this->title = $title;
 	}
 

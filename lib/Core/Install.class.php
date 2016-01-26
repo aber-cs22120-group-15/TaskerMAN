@@ -19,7 +19,7 @@ class Install {
 			  `created_uid` int(11) NOT NULL,
 			  `created_time` datetime NOT NULL,
 			  `assignee_uid` int(11) NOT NULL,
-			  `due_by` datetime DEFAULT NULL,
+			  `due_by` date DEFAULT NULL,
 			  `completed_time` datetime DEFAULT NULL,
 			  `status` int(1) DEFAULT NULL,
 			  `title` varchar(300) DEFAULT NULL,

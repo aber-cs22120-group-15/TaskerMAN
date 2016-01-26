@@ -16,6 +16,9 @@ class UserListDropdownGenerator {
 	 * @return string HTML output
 	*/
 	static public function generate($selected = null){
+
+		$output = '';
+		
 		$query = new \TaskerMAN\Core\DBQuery("SELECT
 			`users`.`id`,
 			`users`.`name`

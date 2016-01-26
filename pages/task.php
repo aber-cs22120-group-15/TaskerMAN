@@ -15,6 +15,23 @@ TaskerMAN\WebInterface\WebInterface::setTitle('Task ' . $task_id);
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
 	<?php
+
+	if (isset($_POST['submit'])){
+
+		try {
+			$task->setTitle(TaskerMAN\Core\IO::POST('task-title'));
+			$task->setDueBy(TaskerMAN\Core\IO::POST('due-date'));
+			$task->setAssignee(TaskerMAN\Core\IO::POST('assigned-to'));
+			$task->setStatus(TaskerMAN\Core\IO::POST('status'));
+			$task->save();
+
+		} catch (TaskerMAN\Application\TaskException $e){
+			$alert = '<div class="alert alert-danger" role="alert">' . $e->getMessage() . '</div>';
+
+		}
+
+	}
+
 	if (isset($alert)){
 		echo $alert;
 	}
@@ -46,7 +63,7 @@ TaskerMAN\WebInterface\WebInterface::setTitle('Task ' . $task_id);
 
 	<h2 class="page-header">Manage Task #<?=$task->id?> &middot; <?=$label?></h2>
 
-	<form method="post" action="index.php?p=edit_task&amp;id=<?=$task->id?>">
+	<form method="post" action="index.php?p=task&amp;id=<?=$task->id?>">
 		<div class="row placeholders">
 			<div class="col-md-6">
 
@@ -58,7 +75,7 @@ TaskerMAN\WebInterface\WebInterface::setTitle('Task ' . $task_id);
 
   				<div class="input-group input-group-md">
 					<span class="input-group-addon" id="sizing-addon2">Due Date</span>
-	  				<input type="date" name="due-date" class="form-control" aria-describedby="sizing-addon2" value="<?=substr($task->due_by, 0, strpos($task->due_by, ' '))?>">
+	  				<input type="date" name="due-date" class="form-control" aria-describedby="sizing-addon2" value="<?=$task->due_by?>">
   				</div>
   				<br />
 
@@ -66,6 +83,14 @@ TaskerMAN\WebInterface\WebInterface::setTitle('Task ' . $task_id);
 					<span class="input-group-addon" id="sizing-addon3">Assigned To</span>
 					<select name="assigned-to" class="form-control">
 						<?=TaskerMAN\WebInterface\UserListDropdownGenerator::generate($task->assignee_uid)?>
+					</select>
+  				</div>
+  				<br />
+
+  				<div class="input-group input-group-md">
+					<span class="input-group-addon" id="sizing-addon4">Status</span>
+					<select name="status" class="form-control">
+						<?=TaskerMAN\WebInterface\StatusDropdownGenerator::generate($task->status)?>
 					</select>
   				</div>
   				<br />
@@ -80,7 +105,7 @@ TaskerMAN\WebInterface\WebInterface::setTitle('Task ' . $task_id);
 
 	<hr />
 
-	<h3>Mange Steps</h3>
+	<h3>Manage Steps</h3>
 
 	<?php
 	$steps = $task->getSteps();

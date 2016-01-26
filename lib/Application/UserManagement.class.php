@@ -11,6 +11,18 @@ class UserManagement {
 			return false;
 		}
 
+		// Validate password
+		if (strlen($password) < 5 || strlen($password) > 13){
+			throw new UserManagementException('Password must be between 5 and 13 characters');
+			return false;
+		}
+
+		// Validate username
+		if (empty($name) || strlen($name) > 50){
+			throw new UserManagementException('Name cannot be empty, and no more than 50 characters');
+			return false;
+		}
+
 		// Check if user with this email already exists
 		$query = new \TaskerMAN\Core\DBQuery("SELECT `email`
 			FROM `users`
@@ -56,6 +68,12 @@ class UserManagement {
 			return false;
 		}
 
+		// Validate username
+		if (empty($name) || strlen($name) > 50){
+			throw new UserManagementException('Name cannot be empty, and no more than 50 characters');
+			return false;
+		}
+
 		$query = new \TaskerMAN\Core\DBQuery("UPDATE `users` SET
 			`name` = :name,
 			`email` = :email,
@@ -76,6 +94,11 @@ class UserManagement {
 	}
 
 	static public function changePassword($id, $password){
+
+		if (strlen($password) < 5 || strlen($password) > 13){
+			throw new UserManagementException('Password must be between 5 and 13 characters');
+			return false;
+		}
 
 		// Hash password
 		$password = password_hash($password, PASSWORD_DEFAULT);

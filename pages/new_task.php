@@ -4,7 +4,7 @@ TaskerMAN\WebInterface\WebInterface::setTitle('Create New Task');
 
 if (isset($_POST['submit'])){
 	// Form submitted
-		
+	
 	// Create Task
 	try {
 
@@ -26,6 +26,8 @@ if (isset($_POST['submit'])){
 		
 
 	} catch (TaskerMAN\Application\UserManagementException $e){
+		$alert = '<div class="alert alert-danger" role="alert">' . $e->getMessage() . '</div>';
+	} catch (TaskerMAN\Application\TaskException $e){
 		$alert = '<div class="alert alert-danger" role="alert">' . $e->getMessage() . '</div>';
 	}
 

@@ -57,6 +57,11 @@ class TaskStep {
 	}
 
 	public function setTitle($title){
+
+		if (empty($title)){
+			throw new TaskException('Task Step title cannot be blank');
+		}
+
 		$this->title = $title;
 	}
 
