@@ -165,8 +165,11 @@ if (isset($_POST['submit'])){
   				<br />
 
   				<div class="input-group input-group">
+
 	  				<span class="input-group-addon" id="sizing-addon4">Administrator </span>
-	  				<input type="checkbox" name="admin" class="form-control" placeholder="Password" aria-describedby="sizing-addon4" <?php if ($user->isAdmin()) echo 'checked'; ?>>	  				
+	  				<span class="input-group-addon">
+	  					<input type="checkbox" name="admin" class="form-control" placeholder="Password" aria-describedby="sizing-addon4" <?php if ($user->isAdmin()) echo 'checked'; ?>>	  				
+	  				</span>
   				</div>
 
   				<br />
