@@ -16,6 +16,14 @@ if (isset($_POST['delete'])){
 
 	try {
 		TaskerMAN\Application\UserManagement::delete($uid);
+
+		if ($uid == TaskerMAN\WebInterface\WebInterface::$user->getID()){
+			// User deleted themselves, log them out
+			TaskerMAN\WebInterface\Session::destroy();
+			header('Location: index.php?p=login');
+			exit;
+		}
+
 		header('Location: index.php?p=list_users');
 		exit;
 	} catch (TaskerMAN\Application\UserManagementException $e){
