@@ -11,7 +11,18 @@ if (!$user->exists){
 TaskerMAN\WebInterface\WebInterface::setTitle($user->name);
 $stats = TaskerMAN\Application\DashboardStats::getStats($user->id);
 
-if (isset($_POST['submit'])){
+
+if (isset($_POST['delete'])){
+
+	try {
+		TaskerMAN\Application\UserManagement::delete($uid);
+		header('Location: index.php?p=list_users');
+		exit;
+	} catch (TaskerMAN\Application\UserManagementException $e){
+		$alert = '<div class="alert alert-danger" role="alert">' . $e->getMessage() . '</div>';
+	}
+
+} elseif (isset($_POST['submit'])){
 	// Form submitted
 	
 	if (isset($_POST['admin'])){
@@ -176,7 +187,13 @@ if (isset($_POST['submit'])){
 
   				<div class="input-group input-group-md">
 	  				<input type="submit" name="submit" value="Submit" class="btn btn-md btn-primary" />
+
+	  				&middot;
+
+	  				<input type="submit" name="delete" value="Delete User" class="btn btn-md btn-danger" />
+
 	  			</div>
+
 
   			</form>
 		</div>
