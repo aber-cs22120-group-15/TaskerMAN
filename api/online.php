@@ -1,3 +1,3 @@
 <?php
 
-echo TaskerMAN\API::response('ok');
+echo TaskerMAN\Application\API::response('ok');

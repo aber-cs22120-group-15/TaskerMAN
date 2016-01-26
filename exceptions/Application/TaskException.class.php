@@ -1,5 +1,5 @@
 <?php
-namespace TaskerMAN;
+namespace TaskerMAN\Application;
 
 class TaskException extends \Exception {
 

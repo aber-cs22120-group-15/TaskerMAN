@@ -1,5 +1,5 @@
 <?php
-namespace TaskerMAN;
+namespace TaskerMAN\Application;
 
 /*
 Status Codes:
@@ -39,7 +39,7 @@ class Task {
 
 	private function load($id){
 
-		$query = new \DBQuery("SELECT `tasks`.*,
+		$query = new \TaskerMAN\Core\DBQuery("SELECT `tasks`.*,
 			`users_assignee`.`name` AS `assignee_name`,
 			`users_created`.`name` AS `created_name`
 			
@@ -92,7 +92,7 @@ class Task {
 			return $this->steps;
 		}
 
-		$query = new \DBQuery("SELECT `id`, `title`, `comment`
+		$query = new \TaskerMAN\Core\DBQuery("SELECT `id`, `title`, `comment`
 			FROM `steps`
 			WHERE `task_id` = ?
 		");
@@ -194,7 +194,7 @@ class Task {
 				return false;
 			}
 
-			$stmt = new \DBQuery("INSERT INTO `tasks`
+			$stmt = new \TaskerMAN\Core\DBQuery("INSERT INTO `tasks`
 				(`created_uid`, `created_time`, `assignee_uid`, `due_by`, `completed_time`, `status`, `title`)
 				VALUES
 				(:created_uid, NOW(), :assignee_uid, :due_by, :completed_time, :status, :title)
@@ -202,7 +202,7 @@ class Task {
 			
 		} else {
 
-			$stmt = new \DBQuery("UPDATE `tasks` SET
+			$stmt = new \TaskerMAN\Core\DBQuery("UPDATE `tasks` SET
 				`created_uid` = :created_uid,
 				`assignee_uid` = :assignee_uid,
 				`due_by` = :due_by,

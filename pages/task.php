@@ -1,15 +1,15 @@
 <?php
 
-$task_id = IO::GET('id');
+$task_id = TaskerMAN\Core\IO::GET('id');
 
 // Check task exists
-$task = new TaskerMAN\Task($task_id);
+$task = new TaskerMAN\Application\Task($task_id);
 
 if (is_null($task->id)){
 	throw new \FatalException('404 - Page Not Found', new \Exception('Requested task ('  . $task_id . ') was not found'));
 }
 
-WebInterface\WebInterface::setTitle('Task ' . $task_id);
+TaskerMAN\WebInterface\WebInterface::setTitle('Task ' . $task_id);
 ?>
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -65,7 +65,7 @@ WebInterface\WebInterface::setTitle('Task ' . $task_id);
   				<div class="input-group input-group-md">
 					<span class="input-group-addon" id="sizing-addon3">Assigned To</span>
 					<select name="assigned-to" class="form-control">
-						<?=WebInterface\UserListDropdownGenerator::generate($task->assignee_uid)?>
+						<?=TaskerMAN\WebInterface\UserListDropdownGenerator::generate($task->assignee_uid)?>
 					</select>
   				</div>
   				<br />

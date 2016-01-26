@@ -1,5 +1,5 @@
 <?php
-namespace TaskerMAN;
+namespace TaskerMAN\Application;
 
 class UserManagement {
 	
@@ -12,7 +12,7 @@ class UserManagement {
 		}
 
 		// Check if user with this email already exists
-		$query = new \DBQuery("SELECT `email`
+		$query = new \TaskerMAN\Core\DBQuery("SELECT `email`
 			FROM `users`
 			WHERE `email` = ?
 			LIMIT 1
@@ -31,7 +31,7 @@ class UserManagement {
 		$api_token = API::generateAPIToken();
 
 		// Store user
-		$query = new \DBQuery("INSERT INTO `users`
+		$query = new \TaskerMAN\Core\DBQuery("INSERT INTO `users`
 			(`email`, `name`, `password`, `admin`, `api_token`)
 			VALUES
 			(:email, :name, :password, :admin, :api_token)
@@ -56,7 +56,7 @@ class UserManagement {
 			return false;
 		}
 
-		$query = new \DBQuery("UPDATE `users` SET
+		$query = new \TaskerMAN\Core\DBQuery("UPDATE `users` SET
 			`name` = :name,
 			`email` = :email,
 			`admin` = :admin
@@ -83,7 +83,7 @@ class UserManagement {
 		// Generate new API Token
 		$api_token = API::generateAPIToken();
 
-		$query = new \DBQuery("UPDATE `users` SET 
+		$query = new \TaskerMAN\Core\DBQuery("UPDATE `users` SET 
 			`password` = :password,
 			`api_token` = :api_token
 
@@ -102,7 +102,7 @@ class UserManagement {
 	static public function delete($id){
 
 		// Do not allow deletion if only one user is registered
-		$query = new \DBQuery("SELECT COUNT(*) AS `rowCount`
+		$query = new \TaskerMAN\Core\DBQuery("SELECT COUNT(*) AS `rowCount`
 			FROM `users`
 		");
 
@@ -114,7 +114,7 @@ class UserManagement {
 			return false;
 		}
 
-		$query = new \DBQuery("DELETE FROM `users`
+		$query = new \TaskerMAN\Core\DBQuery("DELETE FROM `users`
 			WHERE `id` = ?
 			LIMIT 1
 		");
@@ -122,7 +122,7 @@ class UserManagement {
 		$query->execute($id);
 
 		// Unassign all tasks which were assigned to this user
-		$query = new \DBQuery("UPDATE `tasks`
+		$query = new \TaskerMAN\Core\DBQuery("UPDATE `tasks`
 			SET `assignee_uid` = NULL
 			WHERE `assignee_uid` = ?
 		");

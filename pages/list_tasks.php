@@ -1,48 +1,48 @@
 <?php
 
-WebInterface\WebInterface::setTitle('List Tasks');
+TaskerMAN\WebInterface\WebInterface::setTitle('List Tasks');
 
 /*
  * Search constraint for creator
 */
-$created_uid = IO::GET('created_uid');
+$created_uid = TaskerMAN\Core\IO::GET('created_uid');
 if ($created_uid == 'any'){
 	$created_uid = null;
 }
-TaskerMAN\TaskListInterface::setSearchCriteria('created_uid', $created_uid);
+TaskerMAN\Application\TaskListInterface::setSearchCriteria('created_uid', $created_uid);
 
 /*
  * Search constraint for assignee
 */
-$assignee_uid = IO::GET('assignee_uid');
+$assignee_uid = TaskerMAN\Core\IO::GET('assignee_uid');
 if ($assignee_uid == 'any'){
 	$assignee_uid = null;
 }
-TaskerMAN\TaskListInterface::setSearchCriteria('assignee_uid', $assignee_uid);
+TaskerMAN\Application\TaskListInterface::setSearchCriteria('assignee_uid', $assignee_uid);
 
 /*
  * Search constraint for status
 */
-$status = IO::GET('status');
+$status = TaskerMAN\Core\IO::GET('status');
 if ($status == 'any'){
 	$status = null;
 }
-TaskerMAN\TaskListInterface::setSearchCriteria('status', $status);
+TaskerMAN\Application\TaskListInterface::setSearchCriteria('status', $status);
 
 /**
  * Search constraint for title
 */
-$title = IO::get('title');
+$title = TaskerMAN\Core\IO::get('title');
 if (!empty($title)){
-	TaskerMAN\TaskListInterface::setSearchCriteria('title', '%' . strtolower($title) . '%');
+	TaskerMAN\Application\TaskListInterface::setSearchCriteria('title', '%' . strtolower($title) . '%');
 }
 
 
 // Pagination
-$Pagination = new WebInterface\WebPagination();
+$Pagination = new TaskerMAN\WebInterface\WebPagination();
 $Pagination->setItemsPerPage(25);
-$Pagination->setNumItems(TaskerMAN\TaskListInterface::getNumTasks());
-$Pagination->setCurrentPage(IO::GET('page'));
+$Pagination->setNumItems(TaskerMAN\Application\TaskListInterface::getNumTasks());
+$Pagination->setCurrentPage(TaskerMAN\Core\IO::GET('page'));
 
 // Generate base url
 $base_url = 'index.php?';
@@ -51,19 +51,19 @@ foreach ($_GET as $key => $val){
 		continue;
 	}
 
-	$base_url .= $key . '=' . IO::sanitize($val) . '&amp;';
+	$base_url .= $key . '=' . TaskerMAN\Core\IO::sanitize($val) . '&amp;';
 }
 
 $base_url = trim($base_url, '&amp;');
 
 $Pagination->setBaseURL($base_url);
 
-TaskerMAN\TaskListInterface::setStartPosition($Pagination->generateLIMITStartPosition());
-TaskerMAN\TaskListInterface::setLimit($Pagination->getItemsPerPage());
+TaskerMAN\Application\TaskListInterface::setStartPosition($Pagination->generateLIMITStartPosition());
+TaskerMAN\Application\TaskListInterface::setLimit($Pagination->getItemsPerPage());
 
-TaskerMAN\TaskListInterface::setSort('id', 'ASC');
+TaskerMAN\Application\TaskListInterface::setSort('id', 'ASC');
 
-$TaskData = TaskerMAN\TaskListInterface::getTasks(true);
+$TaskData = TaskerMAN\Application\TaskListInterface::getTasks(true);
 ?>
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -98,7 +98,7 @@ $TaskData = TaskerMAN\TaskListInterface::getTasks(true);
         echo '<tr' . $row_styling . '>';
         echo '<td style="text-align: center;">' . $task->id . '</td>';
         echo '<td><a href="index.php?p=task&amp;id=' . $task->id . '">' . $task->title . '</a></td>';
-        echo '<td><span title="' . $task->due_by . '">' . WebInterface\DateFormat::timeDifference($task->due_by) . '</span>';
+        echo '<td><span title="' . $task->due_by . '">' . TaskerMAN\WebInterface\DateFormat::timeDifference($task->due_by) . '</span>';
 
         if ($task->status == 1 && $task->isOverdue()){
           echo '&nbsp; <span class="label label-danger">Overdue!</span>';

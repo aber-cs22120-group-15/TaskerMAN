@@ -1,5 +1,5 @@
 <?php
-namespace WebInterface;
+namespace TaskerMAN\WebInterface;
 
 /**
  * Enables generation of dropdowns on listings page
@@ -16,7 +16,7 @@ class UserListDropdownGenerator {
 	 * @return string HTML output
 	*/
 	static public function generate($selected = null){
-		$query = new \DBQuery("SELECT
+		$query = new \TaskerMAN\Core\DBQuery("SELECT
 			`users`.`id`,
 			`users`.`name`
 

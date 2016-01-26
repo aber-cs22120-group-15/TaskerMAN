@@ -1,6 +1,6 @@
 <?php
 
-TaskerMAN\TaskListInterface::setSearchCriteria('assignee_uid', TaskerMAN\API::$uid);
-TaskerMAN\TaskListInterface::setStartPosition(0);
+TaskerMAN\Application\TaskListInterface::setSearchCriteria('assignee_uid', TaskerMAN\Application\API::$uid);
+TaskerMAN\Application\TaskListInterface::setStartPosition(0);
 
-echo TaskerMAN\API::response(array('tasks' => TaskerMAN\TaskListInterface::getTasks()));
+echo TaskerMAN\Application\API::response(array('tasks' => TaskerMAN\Application\TaskListInterface::getTasks()));

@@ -1,5 +1,5 @@
 <?php
-namespace TaskerMAN;
+namespace TaskerMAN\Application;
 
 class API {
 	
@@ -11,8 +11,8 @@ class API {
 
 	static public function init(){
 
-		self::$method = preg_replace("/[^A-Za-z0-9_ ]/", '', \IO::GET('method'));
-		self::$token = \IO::GET('token');
+		self::$method = preg_replace("/[^A-Za-z0-9_ ]/", '', \TaskerMAN\Core\IO::GET('method'));
+		self::$token = \TaskerMAN\Core\IO::GET('token');
 
 		self::enforceLogin();
 		self::execute();
@@ -21,7 +21,7 @@ class API {
 	static private function execute(){
 		
 		if (empty(self::$method) || !file_exists('api/' . self::$method . '.php')){
-			throw new APIErrorException('Method not found');
+			throw new \TaskerMAN\Application\APIErrorException('Method not found');
 		}
 
 		require_once('api/' . self::$method . '.php');
@@ -29,12 +29,12 @@ class API {
 
 	static private function enforceLogin(){
 		if (self::$method !== 'login' && self::$method!== 'online' && !self::authenticateByToken()){
-			throw new APIErrorException('Invalid API Authentication Token');
+			throw new \TaskerMAN\Application\APIErrorException('Invalid API Authentication Token');
 		}
 	}
 
 	static public function generateAPIToken(){
-		return \Math::GenerateUUIDv4() . '-' . \Math::GenerateUUIDv4();
+		return \TaskerMAN\Core\Math::GenerateUUIDv4() . '-' . \TaskerMAN\Core\Math::GenerateUUIDv4();
 	}
 
 	static public function setMethod($method){
@@ -47,7 +47,7 @@ class API {
 			return false;
 		}
 
-		$query = new \DBQuery("SELECT `id`, `admin`
+		$query = new \TaskerMAN\Core\DBQuery("SELECT `id`, `admin`
 			FROM `users`
 			WHERE `api_token` = ?
 			LIMIT 1
@@ -68,7 +68,7 @@ class API {
 
 	static public function getUserAPIToken($uid){
 
-		$query = new \DBQuery("SELECT `api_token`
+		$query = new \TaskerMAN\Core\DBQuery("SELECT `api_token`
 			FROM `users`
 			WHERE `id` = ?
 			LIMIT 1

@@ -1,6 +1,6 @@
 <?php
 
-WebInterface\WebInterface::setTitle('Create New User');
+TaskerMAN\WebInterface\WebInterface::setTitle('Create New User');
 
 if (isset($_POST['submit'])){
 	// Form submitted
@@ -14,11 +14,11 @@ if (isset($_POST['submit'])){
 	// Update user
 	try {
 
-		$uid = TaskerMAN\UserManagement::create(IO::POST('email'), IO::POST('name'), IO::POST('password'), $is_admin);
+		$uid = TaskerMAN\Application\UserManagement::create(TaskerMAN\Core\IO::POST('email'), TaskerMAN\Core\IO::POST('name'), TaskerMAN\Core\IO::POST('password'), $is_admin);
 
 		header('Location: index.php?p=user&id=' . $uid);
 
-	} catch (TaskerMAN\UserManagementException $e){
+	} catch (TaskerMAN\Application\UserManagementException $e){
 		$alert = '<div class="alert alert-danger" role="alert">' . $e->getMessage() . '</div>';
 	}
 
@@ -43,14 +43,14 @@ if (isset($_POST['submit'])){
 
 				<div class="input-group input-group-lg">
 					<span class="input-group-addon" id="sizing-addon1">Name</span>
-	  				<input type="text" name="name" class="form-control" placeholder="Name" aria-describedby="sizing-addon1" value="<?=IO::POST('name')?>">
+	  				<input type="text" name="name" class="form-control" placeholder="Name" aria-describedby="sizing-addon1" value="<?=TaskerMAN\Core\IO::POST('name')?>">
   				</div>
   				
   				<br />
 
   				<div class="input-group input-group-lg">
 	  				<span class="input-group-addon" id="sizing-addon2">Email Address</span>
-	  				<input type="email" name="email" class="form-control" placeholder="Email Address" aria-describedby="sizing-addon2" value="<?=IO::POST('email')?>">
+	  				<input type="email" name="email" class="form-control" placeholder="Email Address" aria-describedby="sizing-addon2" value="<?=TaskerMAN\Core\IO::POST('email')?>">
   				</div>
 
   				<br />

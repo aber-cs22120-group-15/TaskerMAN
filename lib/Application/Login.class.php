@@ -1,11 +1,11 @@
 <?php
-namespace TaskerMAN;
+namespace TaskerMAN\Application;
 
 class Login {
 
 	static public function verifyCredentials($email, $password){
 
-		$query = new \DBQuery("SELECT `id`, `password`
+		$query = new \TaskerMAN\Core\DBQuery("SELECT `id`, `password`
 			FROM `users`
 			WHERE `email` = ?
 			LIMIT 1

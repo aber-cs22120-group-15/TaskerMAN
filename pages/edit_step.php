@@ -1,9 +1,9 @@
 <?php
 
-$id = IO::GET('id');
-$task_id = IO::GET('task_id');
+$id = TaskerMAN\Core\IO::GET('id');
+$task_id = TaskerMAN\Core\IO::GET('task_id');
 
-$step = new TaskerMAN\TaskStep($id);
+$step = new TaskerMAN\Application\TaskStep($id);
 
 if (is_null($step->id)){
 	header('Location: index.php?p=task&id=' . $task_id);
@@ -16,8 +16,8 @@ if (isset($_POST['delete'])){
 
 } else {
 
-	$step->setComment(IO::POST('comment'));
-	$step->setTitle(IO::POST('title'));
+	$step->setComment(TaskerMAN\Core\IO::POST('comment'));
+	$step->setTitle(TaskerMAN\Core\IO::POST('title'));
 	$step->save();
 
 }

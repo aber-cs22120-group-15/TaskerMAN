@@ -1,5 +1,5 @@
 <?php
-namespace TaskerMAN;
+namespace TaskerMAN\Application;
 
 /**
  *
@@ -130,7 +130,7 @@ class TaskListInterface {
 		$conditional = self::buildConditional();
 		$limit = self::buildLimit();
 
-		$query = new \DBQuery("SELECT 
+		$query = new \TaskerMAN\Core\DBQuery("SELECT 
 			`tasks`.*,
 			`users_assignee`.`name` AS `assignee_name`,
 			`users_created`.`name` AS `created_name`
@@ -224,7 +224,7 @@ class TaskListInterface {
 
 		$conditional = self::buildConditional();
 
-		$query = new \DBQuery("SELECT
+		$query = new \TaskerMAN\Core\DBQuery("SELECT
 		 	COUNT(*) AS `count`
 			FROM `tasks`
 

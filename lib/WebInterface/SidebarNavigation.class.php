@@ -1,5 +1,5 @@
 <?php
-namespace WebInterface;
+namespace TaskerMAN\WebInterface;
 
 
 class SidebarNavigation {

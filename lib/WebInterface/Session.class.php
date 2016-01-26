@@ -1,7 +1,7 @@
 <?php
-namespace WebInterface;
+namespace TaskerMAN\WebInterface;
 
-use IO;
+use \TaskerMAN\Core\IO;
 
 class Session {
 	

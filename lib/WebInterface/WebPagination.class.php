@@ -1,5 +1,5 @@
 <?php
-namespace WebInterface;
+namespace TaskerMAN\WebInterface;
 
 /**
  * Handles the generation of pagination

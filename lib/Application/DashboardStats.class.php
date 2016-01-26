@@ -1,5 +1,5 @@
 <?php
-namespace TaskerMAN;
+namespace TaskerMAN\Application;
 
 class DashboardStats {
 	
@@ -11,7 +11,7 @@ class DashboardStats {
 			$where = null;
 		}
 
-		$query = new \DBQuery("SELECT
+		$query = new \TaskerMAN\Core\DBQuery("SELECT
 
 			(
 				SELECT COUNT(*)
@@ -105,7 +105,7 @@ class DashboardStats {
 		}
 		
 		$stats['avg_tasks_per_user'] = floor($stats['total'] / $stats['user_count']);
-		$stats['average_completion_time'] = \WebInterface\DateFormat::timeFormat($stats['average_completion_time'], true);
+		$stats['average_completion_time'] = \TaskerMAN\WebInterface\DateFormat::timeFormat($stats['average_completion_time'], true);
 
 
 		return $stats;
@@ -113,7 +113,7 @@ class DashboardStats {
 
 	static public function getTaskDistribution(){
 
-		$query = new \DBQuery("SELECT 
+		$query = new \TaskerMAN\Core\DBQuery("SELECT 
 			`tasks`.`assignee_uid`,
 			COUNT(*) AS `count`,
 			`users`.`name`

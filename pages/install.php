@@ -1,9 +1,9 @@
 <?php
 
 
-WebInterface\WebInterface::showTemplate(false);
+TaskerMAN\WebInterface\WebInterface::showTemplate(false);
 
-$install = new Install;
+$install = new TaskerMAN\Core\Install;
 
 if (!$install->required()){
 	throw new \FatalException('Install Not Required', new \Exception('All database tables already exist, so an install is not required.'));
@@ -19,7 +19,7 @@ if (isset($_POST['submit'])){
 	// Create user
 	try {
 
-		$uid = TaskerMAN\UserManagement::create(IO::POST('email'), IO::POST('name'), IO::POST('password'), true);
+		$uid = TaskerMAN\UserManagement::create(TaskerMAN\Core\IO::POST('email'), TaskerMAN\Core\IO::POST('name'), TaskerMAN\Core\IO::POST('password'), true);
 
 		header('Location: index.php?p=user&id=' . $uid);
 
@@ -83,13 +83,13 @@ if (isset($_POST['submit'])){
 	    	}
 
 	    	if (isset($_POST['name'])){
-	    		$name_placeholder = 'value="' . IO::POST('name') . '"';
+	    		$name_placeholder = 'value="' . TaskerMAN\Core\IO::POST('name') . '"';
  	    	} else {
  	    		$name_placeholder = null;
  	    	}
 
 	    	if (isset($_POST['email'])){
-	    		$email_placeholder = 'value="' . IO::POST('email') . '"';
+	    		$email_placeholder = 'value="' . TaskerMAN\Core\IO::POST('email') . '"';
  	    	} else {
  	    		$email_placeholder = null;
  	    	}

@@ -23,7 +23,7 @@ class FatalException extends Exception {
 		// Load template
 		$template = file_get_contents('template/fatal_error.php');
 
-		if (Registry::getConfig('DEBUG')){
+		if (\TaskerMAN\Core\Registry::getConfig('DEBUG')){
 			$html  = '<div style="text-align: left">';
 			$html .= '<strong>Error: </strong><br />';
 			$html .= '<pre>' . $this->e_message . '</pre>';
@@ -51,7 +51,7 @@ class FatalException extends Exception {
 
 	public function get_json(){
 
-		if (Registry::getConfig('DEBUG')){
+		if (\TaskerMAN\Core\Registry::getConfig('DEBUG')){
 
 			return array(
 					'message' => $this->message,

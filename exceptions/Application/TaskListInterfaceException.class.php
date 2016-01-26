@@ -1,9 +1,8 @@
 <?php
+namespace TaskerMAN\Application;
 
-namespace TaskerMAN;
+class TaskListInterfaceException extends \Exception {
 
-class APIErrorException extends \Exception {
-	
 	public function __construct($message){
 		parent::__construct($message);
 	}

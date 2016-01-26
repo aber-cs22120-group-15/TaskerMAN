@@ -1,7 +1,7 @@
 <?php
-WebInterface\WebInterface::setTitle('Dashboard');
+TaskerMAN\WebInterface\WebInterface::setTitle('Dashboard');
 
-$stats = TaskerMAN\DashboardStats::getStats();
+$stats = TaskerMAN\Application\DashboardStats::getStats();
 ?>
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -33,9 +33,9 @@ $stats = TaskerMAN\DashboardStats::getStats();
 			// Generate JavaScript 
 			$js_task_distribution = array();
 
-			foreach (TaskerMAN\DashboardStats::getTaskDistribution() as $item){
+			foreach (TaskerMAN\Application\DashboardStats::getTaskDistribution() as $item){
 
-				$color = WebInterface\PieChart::generatePastelColours($item['assignee_uid']);
+				$color = TaskerMAN\WebInterface\PieChart::generatePastelColours($item['assignee_uid']);
 
 				$js_task_distribution[] = '
 					{
@@ -117,18 +117,18 @@ $stats = TaskerMAN\DashboardStats::getStats();
 
 <?php
 
-TaskerMAN\TaskListInterface::setSearchCriteria('status', 1);
+TaskerMAN\Application\TaskListInterface::setSearchCriteria('status', 1);
 
 // Pagination
-$Pagination = new WebInterface\WebPagination();
+$Pagination = new TaskerMAN\WebInterface\WebPagination();
 $Pagination->setItemsPerPage(25);
-$Pagination->setNumItems(TaskerMAN\TaskListInterface::getNumTasks());
-$Pagination->setCurrentPage(IO::GET('page'));
+$Pagination->setNumItems(TaskerMAN\Application\TaskListInterface::getNumTasks());
+$Pagination->setCurrentPage(TaskerMAN\Core\IO::GET('page'));
 $Pagination->setBaseURL('index.php?p=main');
 
-TaskerMAN\TaskListInterface::setStartPosition($Pagination->generateLIMITStartPosition());
-TaskerMAN\TaskListInterface::setLimit($Pagination->getItemsPerPage());
-$TaskData = TaskerMAN\TaskListInterface::getTasks(true);
+TaskerMAN\Application\TaskListInterface::setStartPosition($Pagination->generateLIMITStartPosition());
+TaskerMAN\Application\TaskListInterface::setLimit($Pagination->getItemsPerPage());
+$TaskData = TaskerMAN\Application\TaskListInterface::getTasks(true);
 ?>
 
 	<h2 class="sub-header">Outstanding Tasks</h2>
@@ -162,7 +162,7 @@ $TaskData = TaskerMAN\TaskListInterface::getTasks(true);
         echo '<tr' . $row_styling . '>';
         echo '<td style="text-align: center;">' . $task->id . '</td>';
         echo '<td><a href="index.php?p=task&amp;id=' . $task->id . '">' . $task->title . '</a></td>';
-        echo '<td><span title="' . $task->due_by . '">' . WebInterface\DateFormat::timeDifference($task->due_by) . '</span>';
+        echo '<td><span title="' . $task->due_by . '">' . TaskerMAN\WebInterface\DateFormat::timeDifference($task->due_by) . '</span>';
 
         if ($task->isOverdue()){
           echo '&nbsp; <span class="label label-danger">Overdue!</span>';

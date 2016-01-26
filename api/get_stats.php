@@ -1,3 +1,3 @@
 <?php
 
-echo TaskerMAN\API::response(TaskerMAN\DashboardStats::getStats(TaskerMAN\API::$uid));
+echo TaskerMAN\Application\API::response(TaskerMAN\Application\DashboardStats::getStats(TaskerMAN\Application\API::$uid));

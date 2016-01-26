@@ -1,15 +1,15 @@
 <?php
 
-$uid = IO::GET('id');
+$uid = TaskerMAN\Core\IO::GET('id');
 
-$user = new TaskerMAN\User($uid);
+$user = new TaskerMAN\Application\User($uid);
 
 if (!$user->exists){
 	throw new \FatalException('404 - Page Not Found', new \Exception('Requested user ('  . $uid . ') was not found'));
 }
 
-WebInterface\WebInterface::setTitle($user->name);
-$stats = TaskerMAN\DashboardStats::getStats($user->id);
+TaskerMAN\WebInterface\WebInterface::setTitle($user->name);
+$stats = TaskerMAN\Application\DashboardStats::getStats($user->id);
 
 if (isset($_POST['submit'])){
 	// Form submitted
@@ -23,18 +23,18 @@ if (isset($_POST['submit'])){
 	// Update user
 	try {
 
-		TaskerMAN\UserManagement::update($user->id, IO::POST('name'), IO::POST('email'), $is_admin);
+		TaskerMAN\Application\UserManagement::update($user->id, TaskerMAN\Core\IO::POST('name'), TaskerMAN\Core\IO::POST('email'), $is_admin);
 
 		// Update password
 		if (!empty(IO::POST('password'))){
-			TaskerMAN\UserManagement::changePassword($user->id, IO::POST('password'));
+			TaskerMAN\Application\UserManagement::changePassword($user->id, TaskerMAN\Core\IO::POST('password'));
 		}
 
 		// Reload user
-		$user = new TaskerMAN\User($uid);
+		$user = new TaskerMAN\Application\User($uid);
 		$alert = '<div class="alert alert-info" role="alert">User settings were succesfully updated</div>';
 
-	} catch (TaskerMAN\UserManagementException $e){
+	} catch (TaskerMAN\Application\UserManagementException $e){
 		$alert = '<div class="alert alert-danger" role="alert">' . $e->getMessage() . '</div>';
 	}
 

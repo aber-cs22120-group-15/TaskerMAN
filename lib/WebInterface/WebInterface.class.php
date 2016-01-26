@@ -1,6 +1,7 @@
 <?php
-namespace WebInterface;
-use IO;
+namespace TaskerMAN\WebInterface;
+
+use \TaskerMAN\Core\IO;
 
 class WebInterface {
 	
@@ -17,7 +18,7 @@ class WebInterface {
 
 		Session::init();
 
-		self::$page = preg_replace("/[^A-Za-z0-9_ ]/", '', \IO::GET('p'));
+		self::$page = preg_replace("/[^A-Za-z0-9_ ]/", '', IO::GET('p'));
 		self::enforceLogin();
 		self::validatePage();
 		self::loadLoggedInUser();
@@ -49,7 +50,7 @@ class WebInterface {
 			return false;
 		}
 
-		self::$user = new \TaskerMAN\User(Session::get('uid'));
+		self::$user = new \TaskerMAN\Application\User(Session::get('uid'));
 	}
 
 	static private function execute(){

@@ -1,5 +1,5 @@
 <?php
-namespace TaskerMAN;
+namespace TaskerMAN\Application;
 
 /**
  *
@@ -115,7 +115,7 @@ class UserListInterface {
 		$conditional = self::buildConditional();
 		$limit = self::buildLimit();
 
-		$query = new \DBQuery("SELECT 
+		$query = new \TaskerMAN\Core\DBQuery("SELECT 
 			`users`.`id`,
 			`users`.`name`,
 			`users`.`email`,
@@ -196,7 +196,7 @@ class UserListInterface {
 
 		$conditional = self::buildConditional();
 
-		$query = new \DBQuery("SELECT
+		$query = new \TaskerMAN\Core\DBQuery("SELECT
 		 	COUNT(*) AS `count`
 			FROM `users`
 

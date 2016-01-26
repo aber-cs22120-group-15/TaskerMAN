@@ -1,4 +1,5 @@
 <?php
+namespace TaskerMAN\Core; 
 
 class DBQuery {
 	
@@ -14,11 +15,11 @@ class DBQuery {
 		$this->query = $query;
 
 		try {
-				$this->stmt = $this->conn->prepare($this->query);
-			} catch (PDOException $e){
-				// Fatal query exception
-				throw new DBQueryException($this->query, $e);
-			}
+			$this->stmt = $this->conn->prepare($this->query);
+		} catch (PDOException $e){
+			// Fatal query exception
+			throw new DBQueryException($this->query, $e);
+		}
 
 		}
 

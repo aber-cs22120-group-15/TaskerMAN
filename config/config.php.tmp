@@ -8,5 +8,5 @@ $config['DB_PASSWORD'] = 'abercs';
 $config['DB_DATABASE'] = 'taskerman';
 
 
-Registry::loadConfig($config);
+TaskerMAN\Core\Registry::loadConfig($config);
 unset($config);

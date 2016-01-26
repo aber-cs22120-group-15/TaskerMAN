@@ -1,6 +1,5 @@
 <?php
-
-namespace TaskerMAN;
+namespace TaskerMAN\Application;
 
 class UserStats {
 

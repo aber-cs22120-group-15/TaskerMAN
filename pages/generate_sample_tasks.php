@@ -30,7 +30,7 @@ $things = array(
 );
 
 // Get array of all user IDs
-$query = new DBQuery("SELECT `id` FROM `users`");
+$query = new TaskerMAN\Core\DBQuery("SELECT `id` FROM `users`");
 $query->execute();
 
 while ($row = $query->row()){
@@ -38,7 +38,7 @@ while ($row = $query->row()){
 }
 
 // Get array of all admins
-$query = new DBQuery("SELECT `id` FROM `users` WHERE `admin` = '1'");
+$query = new TaskerMAN\Core\DBQuery("SELECT `id` FROM `users` WHERE `admin` = '1'");
 $query->execute();
 
 while ($row = $query->row()){
@@ -47,7 +47,7 @@ while ($row = $query->row()){
 
 foreach ($tasks as $i){
 
-	$t = new TaskerMAN\Task();
+	$t = new TaskerMAN\Application\Task();
 	$t->setAssignee($users[array_rand($users)]);
 	$due_by = rand_future_time() - (86400 * 4);
 	$t->setDueBy(date('Y-m-d H:i:s', $due_by));

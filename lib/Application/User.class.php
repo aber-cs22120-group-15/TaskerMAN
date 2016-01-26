@@ -1,5 +1,5 @@
 <?php
-namespace TaskerMAN;
+namespace TaskerMAN\Application;
 
 class User {
 	
@@ -19,7 +19,7 @@ class User {
 
 	private function load(){
 
-		$query = new \DBQuery("SELECT `email`, `name`, `admin`, `api_token`
+		$query = new \TaskerMAN\Core\DBQuery("SELECT `email`, `name`, `admin`, `api_token`
 			FROM `users`
 			WHERE `id` = ?
 			LIMIT 1

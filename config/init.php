@@ -6,17 +6,21 @@ date_default_timezone_set('Europe/London');
 // Initialize autoloader
 function CustomAutoLoader($class){
 
-	if (substr($class, 0, 10) == 'TaskerMAN\\'){
-		$lib_path = 'lib/TaskerMAN/';
-		$exception_path = 'exceptions/TaskerMAN/';
-		$class =  substr($class, 10);
-	} elseif (substr($class, 0, 13) == 'WebInterface\\'){
+	if (substr($class, 0, 22) == 'TaskerMAN\Application\\'){
+		$lib_path = 'lib/Application/';
+		$exception_path = 'exceptions/Application/';
+		$class =  substr($class, 22);
+	} elseif (substr($class, 0, 23) == 'TaskerMAN\WebInterface\\'){
 		$lib_path = 'lib/WebInterface/';
 		$exception_path = 'exceptions/WebInterface/';
-		$class =  substr($class, 13);
+		$class =  substr($class, 23);
+	} elseif (substr($class, 0, 15) == 'TaskerMAN\Core\\') {
+		$lib_path = 'lib/Core/';
+		$exception_path = 'exceptions/Core/';
+		$class =  substr($class, 15);
 	} else {
-		$lib_path = 'lib/';
-		$exception_path = 'exceptions/';
+		$lib_path = '';
+		$exception_path = '';
 	}
 
 

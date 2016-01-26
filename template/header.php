@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title><?=WebInterface\WebInterface::$title?> - TaskerMAN</title>	
+	<title><?=TaskerMAN\WebInterface\WebInterface::$title?> - TaskerMAN</title>	
 
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
@@ -29,7 +29,7 @@
 	        </div>
 	        <div id="navbar" class="navbar-collapse collapse">
 	          <ul class="nav navbar-nav navbar-right">
-	            <li><a href="index.php?p=user&amp;id=<?=WebInterface\WebInterface::$user->getID()?>"><?=WebInterface\WebInterface::$user->getName()?></a></li>
+	            <li><a href="index.php?p=user&amp;id=<?=TaskerMAN\WebInterface\WebInterface::$user->getID()?>"><?=TaskerMAN\WebInterface\WebInterface::$user->getName()?></a></li>
 	            <li><a href="index.php?p=logout">Logout</a></li>
 	          </ul>
 	        </div>
@@ -39,7 +39,7 @@
 
 <?php
 // Build sidebar navigation
-$sidebar = new WebInterface\SidebarNavigation();
+$sidebar = new TaskerMAN\WebInterface\SidebarNavigation();
 $sidebar->setActiveHTML(' class="active"');
 $sidebar->addItem('main', 'Dashboard');
 $sidebar->addItem('new_task', 'New Task');
