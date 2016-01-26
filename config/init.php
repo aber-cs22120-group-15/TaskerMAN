@@ -6,6 +6,9 @@ date_default_timezone_set('Europe/London');
 // Initialize autoloader
 function CustomAutoLoader($class){
 
+	/*echo 'Class: ' . $class . "\n\n";
+	debug_print_backtrace();*/
+
 	if (substr($class, 0, 22) == 'TaskerMAN\Application\\'){
 		$lib_path = 'lib/Application/';
 		$exception_path = 'exceptions/Application/';

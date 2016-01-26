@@ -103,11 +103,12 @@ class TaskStep {
 				LIMIT 1
 			");
 
-			$query->bindValue(':id', $this->task_id);
+			$query->bindValue(':id', $this->id);
 			$query->bindValue(':title', $this->title);
 			$query->bindValue(':comment', $this->comment);
 
 			$query->execute();
+
 		}
 
 	}

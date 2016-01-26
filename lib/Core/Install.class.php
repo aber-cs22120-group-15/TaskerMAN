@@ -40,7 +40,7 @@ class Install {
 
 	static public function required(){
 
-		$query = new \DBQuery("SHOW TABLES IN " . Registry::getConfig('DB_DATABASE'));
+		$query = new DBQuery("SHOW TABLES IN " . Registry::getConfig('DB_DATABASE'));
 
 		$query->execute();
 
@@ -57,7 +57,7 @@ class Install {
 
 		// Count number of users in database
 
-		$query = new \DBQuery("SELECT COUNT(*) AS `NumRows` FROM `users`");
+		$query = new DBQuery("SELECT COUNT(*) AS `NumRows` FROM `users`");
 		$query->execute();
 
 		$row = $query->row();
@@ -73,7 +73,7 @@ class Install {
 
 		foreach (self::$required_tables as $statement){
 
-			$query = new \DBQuery($statement);
+			$query = new DBQuery($statement);
 			$query->execute();
 
 		}
