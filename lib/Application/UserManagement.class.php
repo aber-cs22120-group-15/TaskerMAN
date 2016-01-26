@@ -127,13 +127,14 @@ class UserManagement {
 		// Do not allow deletion if only one user is registered
 		$query = new \TaskerMAN\Core\DBQuery("SELECT COUNT(*) AS `rowCount`
 			FROM `users`
+			WHERE `admin` = '1'
 		");
 
 		$query->execute();
 		$fetch = $query->row();
 
 		if ($fetch['rowCount'] == 1){
-			throw new UserManagementException('Cannot delete last remaining user');
+			throw new UserManagementException('Cannot delete last remaining administrator');
 			return false;
 		}
 

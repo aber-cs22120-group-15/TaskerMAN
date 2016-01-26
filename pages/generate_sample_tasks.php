@@ -49,8 +49,8 @@ foreach ($tasks as $i){
 
 	$t = new TaskerMAN\Application\Task();
 	$t->setAssignee($users[array_rand($users)]);
-	$due_by = rand_future_time() - (86400 * 4);
-	$t->setDueBy(date('Y-m-d H:i:s', $due_by));
+	$due_by = rand_future_time();
+	$t->setDueBy(date('Y-m-d', $due_by));
 	$t->setCreatedByUser($admins[array_rand($admins)]);
 
 	if (rand(1, 5) > 2){
