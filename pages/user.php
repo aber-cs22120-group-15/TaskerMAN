@@ -26,7 +26,7 @@ if (isset($_POST['submit'])){
 		TaskerMAN\Application\UserManagement::update($user->id, TaskerMAN\Core\IO::POST('name'), TaskerMAN\Core\IO::POST('email'), $is_admin);
 
 		// Update password
-		if (!empty(IO::POST('password'))){
+		if (!empty(TaskerMAN\Core\IO::POST('password'))){
 			TaskerMAN\Application\UserManagement::changePassword($user->id, TaskerMAN\Core\IO::POST('password'));
 		}
 

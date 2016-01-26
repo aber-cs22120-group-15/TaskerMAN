@@ -1,6 +1,6 @@
 <?php
 
-$tasks = range(1, 100);
+$tasks = range(1, 50);
 
 // Title generation
 $verbs = array(

@@ -28,11 +28,9 @@ function CustomAutoLoader($class){
 
 
 	if (substr($class, strlen($class) - 9) == 'Exception'){
-
-		require_once($exception_path . $class . '.class.php');
+			@include_once($exception_path . $class . '.class.php');
 	} else { // Normal library include
-		
-		require_once($lib_path . $class . '.class.php');
+			@include_once($lib_path . $class . '.class.php');
 	}
 }
 
