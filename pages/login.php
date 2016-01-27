@@ -1,17 +1,18 @@
 <?php
 
 // Check if the application is installed, if not, bounce to install page
-
 if (TaskerMAN\Core\Install::required()){
 	header('Location: index.php?p=install');
 	exit;
 }
 
+// If user is already logged in, take them to main dashboard
 if (TaskerMAN\WebInterface\Session::isLoggedIn()){
 	header('Location: index.php?p=main');
 	exit;
 }
 
+// Hide template
 TaskerMAN\WebInterface\WebInterface::showTemplate(false);
 
 $error = null;

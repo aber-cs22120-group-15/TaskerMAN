@@ -9,9 +9,9 @@ namespace TaskerMAN\WebInterface;
 */
 class UserListDropdownGenerator {
 
-
 	/**
 	 * Returns HTML for dropdown
+	 *
 	 * @param int $selected Already selected uid
 	 * @return string HTML output
 	*/

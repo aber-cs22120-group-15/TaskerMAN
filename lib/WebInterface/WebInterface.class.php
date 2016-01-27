@@ -1,8 +1,13 @@
 <?php
 namespace TaskerMAN\WebInterface;
-
 use \TaskerMAN\Core\IO;
 
+/**
+ * Handles templating for the web interface
+ *
+ * @author Daniel K Monaghan <dkm2@aber.ac.uk>
+ * @version 1.0
+*/ 
 class WebInterface {
 	
 	static public $page;
@@ -14,6 +19,11 @@ class WebInterface {
 
 	static public $user = null;
 
+	/** 
+	 * Initalizes the web interface by enforcing logins, validating that the page
+	 * that's requested exists and that the user has permission to view it, then
+	 * loads the user's information, then finally executes the page
+	*/
 	static public function init(){
 
 		Session::init();
@@ -25,6 +35,10 @@ class WebInterface {
 		self::execute();
 	}
 
+	/**
+	 * Enforces login by redirecting the user to the login page if they
+	 * access a page they don't have permission to view
+	*/
 	static private function enforceLogin(){
 
 		if (self::$page !== 'login' && self::$page !== 'install' && self::$page !== '404' && !Session::isLoggedIn()){
@@ -33,7 +47,14 @@ class WebInterface {
 		}
 	}
 
+	/**
+	 * Confirms that the requested page exists
+	 *
+	 * @return boolean
+	 * @throws FatalException
+	*/
 	static private function validatePage(){
+
 		if (empty(self::$page)){
 			self::$page = 'main';
 			return true;
@@ -45,14 +66,24 @@ class WebInterface {
 		return true;
 	}
 
+	/**
+	 * Loads the logged in user's data into the session
+	 *
+	 * @return boolean 
+	 */
 	static private function loadLoggedInUser(){
+
 		if (!Session::isLoggedIn()){
 			return false;
 		}
 
 		self::$user = new \TaskerMAN\Application\User(Session::get('uid'));
+		return true;
 	}
 
+	/**
+	 * Executes the requested page
+	*/
 	static private function execute(){
 
 		ob_start();
@@ -71,10 +102,20 @@ class WebInterface {
 		}
 	}
 
+	/**
+	 * Sets page title
+	 * 
+	 * @param string $title
+	*/
 	static public function setTitle($title){
 		self::$title = $title;
 	}
 
+	/**
+	 * Toggles templating 
+	 *
+	 * @param boolean
+	*/
 	static public function showTemplate($bool){
 		self::$showTemplate = $bool;
 	}

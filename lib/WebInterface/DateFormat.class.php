@@ -1,6 +1,12 @@
 <?php
 namespace TaskerMAN\WebInterface;
 
+/**
+ * This class provides functions for calculating dates
+ *
+ * @author Daniel K Monaghan <dkm2@aber.ac.uk>
+ * @version 1.0
+*/ 
 class DateFormat {
 
 	static private $increments = array(
@@ -16,6 +22,12 @@ class DateFormat {
 	// Number of visible increments
 	const TO_DISPLAY = 2;
 
+	/**
+	 * Returns the difference between the current time and a given time
+	 *
+	 * @param mixed $compare Date to comapare to
+	 * @param boolean $short Toggle short form of output
+	*/
 	static public function timeDifference($compare, $short = false){
 		$to = time();
 		
@@ -35,6 +47,13 @@ class DateFormat {
 
 	}
 
+	/**
+	 * Formats a timestamp into the format of 1 day, 5 hours
+	 *
+	 * @param int $time Unix Timestamp
+	 * @param boolean $short Toggle short form of output
+	 * @return string
+	*/
 	static public function timeFormat($time, $short = false){
 
 		$diff = array(

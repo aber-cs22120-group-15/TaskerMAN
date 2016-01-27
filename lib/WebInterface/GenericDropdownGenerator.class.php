@@ -11,6 +11,7 @@ class GenericDropdownGenerator {
 
 	/**
 	 * Returns HTML for dropdown
+	 * 
 	 * @param int $selected Already selected option
 	 * @return string HTML output
 	*/
@@ -30,8 +31,5 @@ class GenericDropdownGenerator {
 		}
 
 		return $output;
-
-
 	}
-
 }

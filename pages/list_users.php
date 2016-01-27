@@ -1,9 +1,7 @@
 <?php
-
-
 TaskerMAN\WebInterface\WebInterface::setTitle('Manage Users');
 
-
+// Load all users
 $UserData = TaskerMAN\Application\UserListInterface::getUsers();
 ?>
 

@@ -116,7 +116,7 @@ $stats = TaskerMAN\Application\DashboardStats::getStats();
 
 
 <?php
-
+// Only show 'Allocated' tasks
 TaskerMAN\Application\TaskListInterface::setSearchCriteria('status', 1);
 
 // Pagination
@@ -128,6 +128,8 @@ $Pagination->setBaseURL('index.php?p=main');
 
 TaskerMAN\Application\TaskListInterface::setStartPosition($Pagination->generateLIMITStartPosition());
 TaskerMAN\Application\TaskListInterface::setLimit($Pagination->getItemsPerPage());
+
+// Load tasks
 $TaskData = TaskerMAN\Application\TaskListInterface::getTasks(true);
 ?>
 

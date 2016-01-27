@@ -11,6 +11,7 @@ class StatusDropdownGenerator {
 
 	/**
 	 * Returns HTML for dropdown
+	 *
 	 * @param int $selected Already selected status
 	 * @return string HTML output
 	*/
@@ -31,8 +32,6 @@ class StatusDropdownGenerator {
 		}
 
 		return $output;
-
-
 	}
 
 }

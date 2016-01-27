@@ -1,9 +1,18 @@
 <?php
 namespace TaskerMAN\Core; 
 
+
+/**
+ * Provides functions for installing the program
+ *
+ * @author Daniel K Monaghan <dkm2@aber.ac.uk>
+ * @version 1.0
+*/
 class Install {
 
-
+	/**
+	 * @var array CREATE statements for all tables
+	*/
 	static private $required_tables = array(
 
 		'steps' => "CREATE TABLE IF NOT EXISTS `steps` (
@@ -38,6 +47,11 @@ class Install {
 
 	);
 
+	/**
+	 * Check whether or not an installation is required 
+	 * 
+	 * @return boolean
+	*/
 	static public function required(){
 
 		$query = new DBQuery("SHOW TABLES IN " . Registry::getConfig('DB_DATABASE'));
@@ -56,12 +70,12 @@ class Install {
 		}
 
 		// Count number of users in database
-
 		$query = new DBQuery("SELECT COUNT(*) AS `NumRows` FROM `users`");
 		$query->execute();
 
 		$row = $query->row();
 
+		// If no users, offer installation
 		if ($row['NumRows'] == 0){
 			return true;
 		}
@@ -69,21 +83,28 @@ class Install {
 		return false;
 	}
 
+	/**
+	 * This creates all the tables as defined in self::$required_tables
+	 */
 	public function createTables(){
 
 		foreach (self::$required_tables as $statement){
-
 			$query = new DBQuery($statement);
 			$query->execute();
-
 		}
 
 	}
 
+	/**
+	 * Creates administrative user
+	 * 
+	 * @param string $email
+	 * @param string $name
+	 * @param string $password
+	 * @return boolean
+	 */
 	public function createAdminUser($email, $name, $password){
-
-		return TaskerMAN\UserManagement::create($email, $name, $password);
-
+		return TaskerMAN\UserManagement::create($email, $name, $password, true);
 	}
 
 

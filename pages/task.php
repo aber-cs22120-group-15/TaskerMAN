@@ -103,6 +103,12 @@ TaskerMAN\WebInterface\WebInterface::setTitle('Task ' . $task_id);
   				<br />
 
   				<div class="input-group input-group-md">
+					<span class="input-group-addon" id="sizing-addon5">Created By</span>
+	  				<input readonly type="text" class="form-control" placeholder="Created By" aria-describedby="sizing-addon1" value="<?=$task->created_name?>" />
+  				</div>
+  				<br />
+
+  				<div class="input-group input-group-md">
 	  				<input type="submit" name="submit" value="Submit" class="btn btn-md btn-primary" />
 	  			</div>
 

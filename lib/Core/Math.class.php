@@ -1,11 +1,21 @@
 <?php
 namespace TaskerMAN\Core; 
 
+/**
+ * An assortion of mathematical functions used by the application
+ *
+ * @author Daniel K Monaghan <dkm2@aber.ac.uk>
+ * @version 1.0
+*/
 class Math {
 	
-
 	/**
-	* This function was inspired by code found at https://github.com/j20/php-uuid/blob/master/src/J20/Uuid/Uuid.php
+	 * Generates a UUID v4 token conforming to RFC 4122
+	 *
+	 * This function was inspired by code 
+	 * found at https://github.com/j20/php-uuid/blob/master/src/J20/Uuid/Uuid.php
+	 *
+	 * @return string
 	*/
 	static public function GenerateUUIDv4(){
 		$hex = bin2hex(openssl_random_pseudo_bytes(14));

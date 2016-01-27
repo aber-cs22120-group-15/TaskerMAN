@@ -3,12 +3,8 @@
 TaskerMAN\WebInterface\WebInterface::setTitle('Create New Task');
 
 if (isset($_POST['submit'])){
-	// Form submitted
 	
-	// Create Task
 	try {
-
-		// TODO - INPUT VALIDATION
 	
 		$task = new TaskerMAN\Application\Task;
 		$task->setCreatedByUser(TaskerMAN\WebInterface\WebInterface::$user->getID());
@@ -22,8 +18,8 @@ if (isset($_POST['submit'])){
 		$task->save();
 
 		header('Location: index.php?p=task&id=' . $task->id);
+		exit;
 		
-
 	} catch (TaskerMAN\Application\UserManagementException $e){
 		$alert = '<div class="alert alert-danger" role="alert">' . $e->getMessage() . '</div>';
 	} catch (TaskerMAN\Application\TaskException $e){

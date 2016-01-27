@@ -5,6 +5,7 @@ TaskerMAN\WebInterface\WebInterface::setTitle('Create New User');
 if (isset($_POST['submit'])){
 	// Form submitted
 	
+	// Is the user an administrator?
 	if (isset($_POST['admin'])){
 		$is_admin = true;
 	} else {
@@ -15,8 +16,8 @@ if (isset($_POST['submit'])){
 	try {
 
 		$uid = TaskerMAN\Application\UserManagement::create(TaskerMAN\Core\IO::POST('email'), TaskerMAN\Core\IO::POST('name'), TaskerMAN\Core\IO::POST('password'), $is_admin);
-
 		header('Location: index.php?p=user&id=' . $uid);
+		exit;
 
 	} catch (TaskerMAN\Application\UserManagementException $e){
 		$alert = '<div class="alert alert-danger" role="alert">' . $e->getMessage() . '</div>';

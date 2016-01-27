@@ -1,8 +1,8 @@
 <?php
-
-
+// Hide default template
 TaskerMAN\WebInterface\WebInterface::showTemplate(false);
 
+// Intialize installation engine
 $install = new TaskerMAN\Core\Install;
 
 if (!$install->required()){

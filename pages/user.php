@@ -4,6 +4,7 @@ $uid = TaskerMAN\Core\IO::GET('id');
 
 $user = new TaskerMAN\Application\User($uid);
 
+// User does not exist, throw 404
 if (!$user->exists){
 	throw new \FatalException('404 - Page Not Found', new \Exception('Requested user ('  . $uid . ') was not found'));
 }
@@ -26,6 +27,7 @@ if (isset($_POST['delete'])){
 
 		header('Location: index.php?p=list_users');
 		exit;
+
 	} catch (TaskerMAN\Application\UserManagementException $e){
 		$alert = '<div class="alert alert-danger" role="alert">' . $e->getMessage() . '</div>';
 	}
@@ -58,8 +60,6 @@ if (isset($_POST['delete'])){
 	}
 
 }
-
-
 ?>
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
