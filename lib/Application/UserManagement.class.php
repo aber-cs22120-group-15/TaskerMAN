@@ -28,16 +28,10 @@ class UserManagement {
 		}
 
 		// Validate password
-		if (strlen($password) < 5 || strlen($password) > 13){
-			throw new UserManagementException('Password must be between 5 and 13 characters');
+		if (!self::validatePassword($password)){
 			return false;
 		}
 
-		// Check that password contains a special character
-		if (!strpbrk($password, "#$%^&*()+=-[]';,./{}|:<>?~!")){
-			throw new UserManagementException('Password must contain at least one special character');
-			return false;
-		}
 
 		// Validate username
 		if (empty($name) || strlen($name) > 50){
@@ -126,14 +120,13 @@ class UserManagement {
 	}
 
 	/**
-	 * Validates and sets a user's password
-     *
-     * @param int $uid
-     * @param string $password
-     * @return boolean
-     * @throws UserManagementException
-    */
-	static public function changePassword($id, $password){
+	 * Verifies that a password meets the requirements
+	 *
+	 * @param string $password
+	 * @return boolean
+	 * @throws UserManagementException
+	*/
+	static private function validatePassword($password){
 
 		// Check password length is between 5 and 13 characters
 		if (strlen($password) < 5 || strlen($password) > 13){
@@ -144,6 +137,23 @@ class UserManagement {
 		// Check that password contains a special character
 		if (!strpbrk($password, "#$%^&*()+=-[]';,./{}|:<>?~!")){
 			throw new UserManagementException('Password must contain at least one special character');
+			return false;
+		}
+
+	}
+
+	/**
+	 * Validates and sets a user's password
+     *
+     * @param int $uid
+     * @param string $password
+     * @return boolean
+     * @throws UserManagementException
+    */
+	static public function changePassword($id, $password){
+
+		// Validate password
+		if (!self::validatePassword($password)){
 			return false;
 		}
 

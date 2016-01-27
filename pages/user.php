@@ -164,7 +164,7 @@ if (isset($_POST['delete'])){
 
 				<div class="input-group input-group-md">
 					<span class="input-group-addon" id="sizing-addon1">Name</span>
-	  				<input type="text" name="name" class="form-control" placeholder="Name" aria-describedby="sizing-addon1" value="<?=$user->name?>">
+	  				<input type="text" name="name" class="form-control" placeholder="Name" aria-describedby="sizing-addon1" value="<?=$user->name?>" maxlength="50">
   				</div>
   				
   				<br />

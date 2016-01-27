@@ -44,7 +44,7 @@ if (isset($_POST['submit'])){
 
 				<div class="input-group input-group-md">
 					<span class="input-group-addon" id="sizing-addon1">Name</span>
-	  				<input type="text" name="name" class="form-control" placeholder="Name" aria-describedby="sizing-addon1" value="<?=TaskerMAN\Core\IO::POST('name')?>">
+	  				<input type="text" name="name" class="form-control" placeholder="Name" aria-describedby="sizing-addon1" maxlength="50" value="<?=TaskerMAN\Core\IO::POST('name')?>">
   				</div>
   				
   				<br />
