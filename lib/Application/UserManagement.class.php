@@ -198,13 +198,21 @@ class UserManagement {
 
 		$query->execute($id);
 
-		// Unassign all tasks which were assigned to this user
+		// Assign this user's tasks to currently logged in user
 		$query = new \TaskerMAN\Core\DBQuery("UPDATE `tasks`
-			SET `assignee_uid` = NULL
+			SET `assignee_uid` = ?
 			WHERE `assignee_uid` = ?
 		");
 
-		$query->execute($id);
+		$query->execute(\TaskerMAN\WebInterface\WebInterface::$user->getID(), $id);
+
+		// Make all tasks this user created to now be created by the currently logged in user
+		$query = new \TaskerMAN\Core\DBQuery("UPDATE `tasks`
+			SET `created_uid` = ?
+			WHERE `created_uid` = ?
+		");
+
+		$query->execute(\TaskerMAN\WebInterface\WebInterface::$user->getID(), $id);
 
 		return true;
 	}
