@@ -6,7 +6,7 @@ $user = new TaskerMAN\Application\User($uid);
 
 // User does not exist, throw 404
 if (!$user->exists){
-	throw new \FatalException('404 - Page Not Found', new \Exception('Requested user ('  . $uid . ') was not found'));
+	throw new TaskMAN\Core\FatalException('404 - Page Not Found', new \Exception('Requested user ('  . $uid . ') was not found'));
 }
 
 TaskerMAN\WebInterface\WebInterface::setTitle($user->name);
@@ -187,7 +187,7 @@ if (isset($_POST['delete'])){
 
 	  				<span class="input-group-addon" id="sizing-addon4">Administrator </span>
 	  				<span class="input-group-addon">
-	  					<input type="checkbox" name="admin" class="form-control" placeholder="Password" aria-describedby="sizing-addon4" <?php if ($user->isAdmin()) echo 'checked'; ?>>	  				
+	  					<input type="checkbox" name="admin" class="form-control" aria-describedby="sizing-addon4" <?php if ($user->isAdmin()) echo 'checked'; ?>>	  				
 	  				</span>
   				</div>
 
