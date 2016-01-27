@@ -95,8 +95,15 @@ class UserManagement {
 
 	static public function changePassword($id, $password){
 
+		// Check password length is between 5 and 13 characters
 		if (strlen($password) < 5 || strlen($password) > 13){
 			throw new UserManagementException('Password must be between 5 and 13 characters');
+			return false;
+		}
+
+		// Check that password contains a special character
+		if (!strpbrk($password, "#$%^&*()+=-[]';,./{}|:<>?~!")){
+			throw new UserManagementException('Password must contain at least one special character');
 			return false;
 		}
 
