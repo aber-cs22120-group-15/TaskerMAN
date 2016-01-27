@@ -33,7 +33,7 @@ class Task {
 	 * @param int $id
 	*/
 	public function __construct($id = null){
-	
+
 		if (!empty($id)){
 			$this->new_task = false;
 			$this->load($id);
@@ -64,7 +64,7 @@ class Task {
 		");
 
 		$query->execute($id);
-
+		
 		if ($query->rowCount() == 0){
 			return false;
 		}

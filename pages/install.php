@@ -6,7 +6,7 @@ TaskerMAN\WebInterface\WebInterface::showTemplate(false);
 $install = new TaskerMAN\Core\Install;
 
 if (!$install->required()){
-	throw new \FatalException('Install Not Required', new \Exception('All database tables already exist, so an install is not required.'));
+	throw new TaskerMAN\Core\FatalException('Install Not Required', new \Exception('All database tables already exist, so an install is not required.'));
 }
 
 $alert = null;

@@ -1,6 +1,7 @@
 <?php
+namespace TaskerMAN\Core;
 
-class FatalException extends Exception {
+class FatalException extends \Exception {
 	
 	private $e_message = null;
 	private $trace = null;
@@ -51,7 +52,7 @@ class FatalException extends Exception {
 
 	public function get_json(){
 
-		if (\TaskerMAN\Core\Registry::getConfig('DEBUG')){
+		if (Registry::getConfig('DEBUG')){
 
 			return array(
 					'message' => $this->message,

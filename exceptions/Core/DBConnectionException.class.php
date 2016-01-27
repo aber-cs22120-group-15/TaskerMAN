@@ -1,4 +1,5 @@
 <?php
+namespace TaskerMAN\Core;
 
 class DBConnectionException extends FatalException {
 	
