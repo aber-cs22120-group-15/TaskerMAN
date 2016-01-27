@@ -2,9 +2,10 @@
 namespace TaskerMAN\WebInterface;
 
 /**
- * Handles the generation of pagination
+ * Handles the generation of pagination on the web interface
  *
  * @author Daniel K Monaghan <dkm2@aber.ac.uk>
+ * @version 1.0
 */
 class WebPagination {
 

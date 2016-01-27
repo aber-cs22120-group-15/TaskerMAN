@@ -61,7 +61,6 @@ $Pagination->setBaseURL($base_url);
 TaskerMAN\Application\TaskListInterface::setStartPosition($Pagination->generateLIMITStartPosition());
 TaskerMAN\Application\TaskListInterface::setLimit($Pagination->getItemsPerPage());
 
-
 /**
  * Handle sorting
 */
@@ -80,7 +79,6 @@ TaskerMAN\Application\TaskListInterface::setSort($sort_col, $sort_dir);
 
 
 $TaskData = TaskerMAN\Application\TaskListInterface::getTasks(true);
-
 ?>
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

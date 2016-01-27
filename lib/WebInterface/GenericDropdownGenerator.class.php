@@ -2,7 +2,7 @@
 namespace TaskerMAN\WebInterface;
 
 /**
- * Enables generation of dropdowns on listings page
+ * Enables generic generation of dropdowns on listings page
  *
  * @author Daniel K Monaghan <dkm2@aber.ac.uk>
  * @license GNU General Public License v3.0
@@ -11,7 +11,7 @@ class GenericDropdownGenerator {
 
 	/**
 	 * Returns HTML for dropdown
-	 * @param int $selected Already selected status
+	 * @param int $selected Already selected option
 	 * @return string HTML output
 	*/
 	static public function generate($options, $selected = null){

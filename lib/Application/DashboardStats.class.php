@@ -1,8 +1,20 @@
 <?php
 namespace TaskerMAN\Application;
 
+/**
+ * Generates and returns statistics about tasks and users
+ *
+ * @author Daniel K Monaghan <dkm2@aber.ac.uk>
+ * @version 1.0
+*/
 class DashboardStats {
 	
+	/**
+	 * Returns statistics on task data
+	 *
+	 * @param int optional user id
+	 * @return array statistics
+	*/
 	static public function getStats($uid = null){
 
 		if (!is_null($uid)){
@@ -95,9 +107,9 @@ class DashboardStats {
 		}
 
 		$query->execute();
-
 		$stats = $query->row();
 
+		// Calculate percentage of tasks completed on time
 		if ($stats['completed'] > 0){
 			$stats['completed_on_time_percentage'] = round(($stats['completed_on_time'] / $stats['completed'] * 100), 2);
 		} else {
@@ -111,6 +123,11 @@ class DashboardStats {
 		return $stats;
 	}
 
+	/**
+	 * Returns number of tasks assigned to each user
+	 *
+	 * @return array statistics
+	*/
 	static public function getTaskDistribution(){
 
 		$query = new \TaskerMAN\Core\DBQuery("SELECT 

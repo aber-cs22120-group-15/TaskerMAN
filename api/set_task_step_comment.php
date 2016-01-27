@@ -10,16 +10,16 @@ if ($step->task_id === NULL){
 	throw new TaskerMAN\Application\APIErrorException('Unknown step ID');
 }
 
+// Check that user is permitted to modify this task
 if ((int) $step->assignee_uid != TaskerMAN\Application\API::$uid){
 	throw new TaskerMAN\Application\APIErrorException('User does not have access to modify this step');
 }
 
+// Set comment and commit changes
 try {
-	
 	$step->setComment($comment);
 	$step->save();
 } catch (TaskerMAN\Application\TaskException $e){
-
 	throw new TaskerMAN\Application\APIErrorException($e->getMessage());
 }
 

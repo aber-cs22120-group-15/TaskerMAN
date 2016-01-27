@@ -1,5 +1,6 @@
 <?php
 
+// Get username and password
 $email = TaskerMAN\Core\IO::GET('email');
 $password = TaskerMAN\Core\IO::GET('password');
 

@@ -1,7 +1,9 @@
 <?php
 
+// Get array of task IDs 
 $ids = explode(',', TaskerMAN\Core\IO::GET('id'));
 
+// Remove non-numeric IDs
 foreach ($ids as $key => $id){
 	if (!is_numeric($id)){
 		unset($ids[$key]);
@@ -10,6 +12,7 @@ foreach ($ids as $key => $id){
 
 $steps = array();
 
+// Loop through each task
 foreach ($ids as $id){
 
 	$task = new TaskerMAN\Application\Task($id);
@@ -22,6 +25,7 @@ foreach ($ids as $id){
 		throw new TaskerMAN\Application\APIErrorException('User does not have access to task ' . $id);
 	}
 
+	// Load steps into response array
 	$steps[$id] = $task->getSteps();
 
 }

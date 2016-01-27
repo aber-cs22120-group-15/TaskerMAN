@@ -1,11 +1,13 @@
 <?php
 
+// Get task ID and status variables
 $task_id = (int) TaskerMAN\Core\IO::GET('id');
 $status = (int) TaskerMAN\Core\IO::GET('status');
 
 // Expects time in UNIX timestamp format
 $completed_time = (int) TaskerMAN\Core\IO::GET('completed_time');
 
+// If no completed time is passed, use current time
 if (empty($completed_time)){
 	$completed_time = time();
 }
@@ -43,6 +45,8 @@ switch ($status){
 	break;
 }
 
+// Commit changes
 $task->save();
 
+// Return success response
 echo TaskerMAN\Application\API::response('Success');
