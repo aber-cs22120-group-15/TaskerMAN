@@ -61,12 +61,155 @@ $Pagination->setBaseURL($base_url);
 TaskerMAN\Application\TaskListInterface::setStartPosition($Pagination->generateLIMITStartPosition());
 TaskerMAN\Application\TaskListInterface::setLimit($Pagination->getItemsPerPage());
 
-TaskerMAN\Application\TaskListInterface::setSort('id', 'ASC');
+
+/**
+ * Handle sorting
+*/
+$sort_col = TaskerMAN\Core\IO::get('sort_col');
+$sort_dir = TaskerMAN\Core\IO::get('sort_dir');
+
+if (empty($sort_col)){
+  $sort_col = 'due_by';
+} 
+
+if (empty($sort_dir)){
+  $sort_dir = 'ASC';
+}
+
+TaskerMAN\Application\TaskListInterface::setSort($sort_col, $sort_dir);
+
 
 $TaskData = TaskerMAN\Application\TaskListInterface::getTasks(true);
+
 ?>
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <div class="row">
+  <div class="col-md-8">
+
+  <div class="panel panel-info">
+    <div class="panel-heading"><h3 class="panel-title">Search Criteria</h3></div>
+    <div class="panel-body">
+        <form method="get" action="index.php">
+          <input type="hidden" name="p" value="list_tasks" />
+
+          <div class="row">
+
+            <!-- Title -->
+            <div class="col-lg-10">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  Title
+                </span>
+                <input type="text" name="title" class="form-control" placeholder="Task title" value="<?=$title?>" />
+              </div>
+            </div>
+
+          </div>
+
+          <br />
+
+          <div class="row">
+
+            <!-- Assignee -->
+            <div class="col-lg-6">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  Assigned To
+                </span>
+                <select name="assignee_uid" class="form-control">
+                  <option value="any">-----</option>
+                  <?=TaskerMAN\WebInterface\UserListDropdownGenerator::generate($assignee_uid)?>
+                </select>
+              </div>
+            </div>
+
+            <!-- Creator -->
+            <div class="col-lg-6">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  Creator
+                </span>
+                <select name="created_uid" class="form-control">
+                  <option value="any">-----</option>
+                  <?=TaskerMAN\WebInterface\UserListDropdownGenerator::generate($created_uid)?>
+                </select>
+              </div>
+            </div>
+          
+
+          </div>
+
+          <br />
+
+          <div class="row">
+
+           <!-- Status -->
+            <div class="col-lg-4">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  Status
+                </span>
+                <select name="status" class="form-control">
+                  <option value="any">-----</option>
+                  <?=TaskerMAN\WebInterface\StatusDropdownGenerator::generate($status)?>
+                </select>
+              </div>
+            </div>
+
+            <!-- Sort Column -->
+            <div class="col-lg-3">
+              <div class="input-group">
+                <span class="input-group-addon">
+                  Sort By
+                </span>
+                <select name="sort_col" class="form-control">
+
+                  <?php
+                  $sort_columns = array('title' => 'Title', 'status' => 'Status', 'due_by' => 'Due By', 'completed_time' => 'Completed Time');
+
+                  echo TaskerMAN\WebInterface\GenericDropdownGenerator::generate($sort_columns, $sort_col);
+
+                  ?>
+                </select>
+              </div>
+            </div>
+
+            <!-- Sort Direction -->
+            <div class="col-lg-3">
+              <div class="input-group">
+                <select name="sort_dir" class="form-control">
+                  <?php
+                  echo '<option value="ASC"';
+                  if ($sort_dir == 'ASC'){
+                    echo 'selected';
+                  }
+                  echo '>Ascending</option>';
+
+                  echo '<option value="DESC"';
+                  if ($sort_dir == 'DESC'){
+                    echo 'selected';
+                  }
+                  echo '>Descending</option>';
+                  ?>
+                </select>
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="col-lg-2">
+              <div class="btn-group">
+                <input type="submit" class="btn btn-success" value="Go!" />
+              </div>
+            </div>
+
+          </div>
+
+        </form>
+    </div>
+  </div>
+  </div>
+</div>
 
 	<h2 class="page-header">Task List</h2>
 	<div class="table-responsive">

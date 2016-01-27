@@ -7,23 +7,22 @@ namespace TaskerMAN\WebInterface;
  * @author Daniel K Monaghan <dkm2@aber.ac.uk>
  * @license GNU General Public License v3.0
 */
-class StatusDropdownGenerator {
+class GenericDropdownGenerator {
 
 	/**
 	 * Returns HTML for dropdown
 	 * @param int $selected Already selected status
 	 * @return string HTML output
 	*/
-	static public function generate($selected = null){
+	static public function generate($options, $selected = null){
 
 		$output = '';
-		
-		$statuses = array(0 => 'Abandoned', 1 => 'Allocated', 2 => 'Completed');
-		
-		foreach ($statuses as $status => $string){
-			$output .= '<option value="' . $status . '"';
+				
+		foreach ($options as $key => $string){
 
-			if ($status == $selected && !is_null($selected)){
+			$output .= '<option value="' . $key . '"';
+
+			if ($key == $selected){
 				$output .= ' selected';
 			}
 

@@ -44,11 +44,11 @@ class TaskListInterface {
 								'parameter' => ':title'
 							),
 
-		'creator_uid' => array(
+		'created_uid' => array(
 								'enabled' => false,
 								'value' => null,
-								'condition' => "`tasks`.`creator_uid` = :creator_uid",
-								'parameter' => ':creator_uid'
+								'condition' => "`tasks`.`created_uid` = :created_uid",
+								'parameter' => ':created_uid'
 							)
 	);
 
@@ -65,7 +65,7 @@ class TaskListInterface {
 	*/
 	static public function setSearchCriteria($key, $value){
 
-		if (empty($value)){
+		if (is_null($value)){
 			return false;
 		}
 
@@ -116,6 +116,7 @@ class TaskListInterface {
 		}
 
 		self::$sort = 'ORDER BY `tasks`.`' . $column . '` ' . $direction;
+
 		return true;
 	}
 

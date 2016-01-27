@@ -22,7 +22,14 @@ TaskerMAN\WebInterface\WebInterface::setTitle('Task ' . $task_id);
 			$task->setTitle(TaskerMAN\Core\IO::POST('task-title'));
 			$task->setDueBy(TaskerMAN\Core\IO::POST('due-date'));
 			$task->setAssignee(TaskerMAN\Core\IO::POST('assigned-to'));
+
+			// Task changed to completed
+			if ($task->status != 2 && TaskerMAN\Core\IO::POST('status') == 2){
+				$task->setCompletedTime();
+			}
+
 			$task->setStatus(TaskerMAN\Core\IO::POST('status'));
+
 			$task->save();
 
 		} catch (TaskerMAN\Application\TaskException $e){
