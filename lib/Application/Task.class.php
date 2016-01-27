@@ -182,6 +182,11 @@ class Task {
 
 	public function createStep($title, $comment = null){
 
+		if (empty($title)){
+			throw new TaskException('Task Step title cannot be blank');
+			return false;
+		}
+
 		if ($this->new_task){
 
 			$this->temp_steps[] = array('title' => $title, 'comment' => $comment);

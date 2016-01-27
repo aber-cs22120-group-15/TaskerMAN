@@ -60,6 +60,7 @@ class TaskStep {
 
 		if (empty($title)){
 			throw new TaskException('Task Step title cannot be blank');
+			return false;
 		}
 
 		$this->title = $title;

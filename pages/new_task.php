@@ -9,7 +9,6 @@ if (isset($_POST['submit'])){
 	try {
 
 		// TODO - INPUT VALIDATION
-
 	
 		$task = new TaskerMAN\Application\Task;
 		$task->setCreatedByUser(TaskerMAN\WebInterface\WebInterface::$user->getID());
