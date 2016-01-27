@@ -18,8 +18,8 @@ class Install {
 		'steps' => "CREATE TABLE IF NOT EXISTS `steps` (
   			`id` int(11) NOT NULL AUTO_INCREMENT,
 			  `task_id` int(11) NOT NULL,
-			  `title` mediumtext,
-			  `comment` mediumtext,
+			  `title` varchar(150),
+			  `comment` varchar(2000),
 			  PRIMARY KEY (`id`)
 			) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=latin1",
 
