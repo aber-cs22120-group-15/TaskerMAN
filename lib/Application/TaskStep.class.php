@@ -75,6 +75,12 @@ class TaskStep {
 	 * @param string $comment
 	*/
 	public function setComment($comment){
+
+		if (strlen($comment) > 2000){
+			throw new TaskException('Task Step comment must be 2000 characters or less');
+			exit;
+		}
+
 		$this->comment = $comment;
 	}
 
@@ -85,6 +91,11 @@ class TaskStep {
 	 * @throws TaskException
 	 */
 	public function setTitle($title){
+
+		if (strlen($title) > 150){
+			throw new TaskException('Task Step title must be 150 characters or less');
+			exit;
+		}
 
 		if (empty($title)){
 			throw new TaskException('Task Step title cannot be blank');
