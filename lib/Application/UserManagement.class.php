@@ -126,7 +126,7 @@ class UserManagement {
 	 * @return boolean
 	 * @throws UserManagementException
 	*/
-	static private function validatePassword($password){
+	static public function validatePassword($password){
 
 		// Check password length is between 5 and 13 characters
 		if (strlen($password) < 5 || strlen($password) > 13){
@@ -140,6 +140,7 @@ class UserManagement {
 			return false;
 		}
 
+		return true;
 	}
 
 	/**
