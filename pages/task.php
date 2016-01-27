@@ -6,8 +6,9 @@ $task_id = TaskerMAN\Core\IO::GET('id');
 $task = new TaskerMAN\Application\Task($task_id);
 
 if (is_null($task->id)){
-	throw new \FatalException('404 - Page Not Found', new \Exception('Requested task ('  . $task_id . ') was not found'));
+	throw new TaskerMAN\Core\FatalException('404 - Page Not Found', new \Exception('Requested task ('  . $task_id . ') was not found'));
 }
+
 
 TaskerMAN\WebInterface\WebInterface::setTitle('Task ' . $task_id);
 ?>
@@ -138,13 +139,13 @@ TaskerMAN\WebInterface\WebInterface::setTitle('Task ' . $task_id);
 
 						<div class="input-group input-group-md">
 							<span class="input-group-addon" id="sizing-addon1">Step Title</span>
-			  				<input type="text" name="title" class="form-control" placeholder="Step Title" aria-describedby="sizing-addon1" value="<?=$step['title']?>" />
+			  				<input type="text" name="title" class="form-control" placeholder="Step Title" aria-describedby="sizing-addon1" value="<?=$step['title']?>" maxlength="150" />
 		   				</div>
 		  				<br />
 
 		  				<div class="input-group input-group-md">
 							<span class="input-group-addon" id="sizing-addon2">Step Comment</span>
-			  				<input type="text" name="comment" class="form-control" aria-describedby="sizing-addon2" value="<?=$step['comment']?>">
+							<textarea class="form-control" name="comment" rows="5" aria-describedby="sizing-addon2" maxlength="2000"><?=$step['comment']?></textarea>
 		  				</div>
 		  				<br />
 
