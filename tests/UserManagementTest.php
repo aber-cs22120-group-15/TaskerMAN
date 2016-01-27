@@ -9,7 +9,6 @@ class UserManagementTest extends PHPUnit_Framework_TestCase {
 
 		$passwords = array('hello!', 'thiswill!work', 'but#will#this');
 		foreach ($passwords as $password){
-
 			$this->assertTrue(TaskerMAN\Application\UserManagement::validatePassword($password));
 		}
 	}
@@ -23,7 +22,6 @@ class UserManagementTest extends PHPUnit_Framework_TestCase {
 		$passwords = array('nospecial', 'this_is_too_long_soz', 'numb3rs');
 
 		foreach ($passwords as $password){
-
 			$this->assertFalse(TaskerMAN\Application\UserManagement::validatePassword($password));
 		}
 	}
