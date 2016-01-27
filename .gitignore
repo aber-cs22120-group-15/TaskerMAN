@@ -1,5 +1,6 @@
 config/config.php
-
+phpdox.xml
+phpdox/
 
 .DS_Store
 .AppleDouble
