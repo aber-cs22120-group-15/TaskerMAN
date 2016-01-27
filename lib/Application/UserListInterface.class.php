@@ -63,6 +63,8 @@ class UserListInterface {
 
 		self::$search_criteria[$key]['enabled'] = true;
 		self::$search_criteria[$key]['value'] = $value;
+
+		return true;
 	}
 
 	/**
