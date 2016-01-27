@@ -133,13 +133,23 @@ class TaskListInterface {
 
 		$query = new \TaskerMAN\Core\DBQuery("SELECT 
 			`tasks`.*,
-			`users_assignee`.`name` AS `assignee_name`,
-			`users_created`.`name` AS `created_name`
+			
+			(
+				SELECT `users`.`name`
+				FROM `users`
+				WHERE `users`.`id` = `tasks`.`assignee_uid`
+				LIMIT 1
+			) AS `assignee_name`,
+
+			(
+				SELECT `users`.`name`
+				FROM `users`
+				WHERE `users`.`id` = `tasks`.`created_uid`
+				LIMIT 1
+			) AS `created_name`
 
 			FROM `tasks`
-			JOIN `users` AS `users_assignee` ON `tasks`.`assignee_uid` = `users_assignee`.`id`
-			JOIN `users` AS `users_created` ON `tasks`.`created_uid` = `users_created`.`id`
-
+			
 			$conditional
 
 			" . self::$sort . "
