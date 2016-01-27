@@ -99,7 +99,7 @@ class DashboardStats {
 		$stats = $query->row();
 
 		if ($stats['completed'] > 0){
-			$stats['completed_on_time_percentage'] = round(($stats['completed_late'] / $stats['completed'] * 100), 2);
+			$stats['completed_on_time_percentage'] = round(($stats['completed_on_time'] / $stats['completed'] * 100), 2);
 		} else {
 			$stats['completed_on_time_percentage'] = 100;
 		}
