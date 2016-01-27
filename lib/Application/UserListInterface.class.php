@@ -2,8 +2,10 @@
 namespace TaskerMAN\Application;
 
 /**
+ * Provides an interface for selecting users in the database
  *
  * @author Daniel K Monaghan <dkm2@aber.ac.uk>
+ * @version 1.0
 */
 class UserListInterface {
 	

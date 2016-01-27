@@ -2,8 +2,11 @@
 namespace TaskerMAN\Application;
 
 /**
- *
+ * This is an interface for selecting task data from the database,
+ * it provides functionality such as searching, sorting, etc
+ * 
  * @author Daniel K Monaghan <dkm2@aber.ac.uk>
+ * @version 1.0
 */
 class TaskListInterface {
 	

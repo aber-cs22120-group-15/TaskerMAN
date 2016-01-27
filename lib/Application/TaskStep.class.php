@@ -1,6 +1,12 @@
 <?php
 namespace TaskerMAN\Application;
 
+/**
+ * This class creates an object for a task step
+ *
+ * @author Daniel K Monaghan <dkm2@aber.ac.uk>
+ * @version 1.0
+*/ 
 class TaskStep {
 
 	public $id;
@@ -11,6 +17,11 @@ class TaskStep {
 
 	private $new_step = false;
 
+	/**
+	 * Initializes the task step object, loading data if given a step id
+	 * 
+	 * @param int id
+	 */
 	public function __construct($id = null){
 
 		if (!empty($id)){
@@ -22,6 +33,12 @@ class TaskStep {
 
 	}
 
+	/**
+	 * Loads step data from the database into the object
+	 * 
+	 * @param int $id
+	 * @return boolean
+	*/
 	private function load($id){
 
 		$query = new \TaskerMAN\Core\DBQuery("SELECT `steps`.*,
@@ -52,10 +69,21 @@ class TaskStep {
 		return true;
 	}
 
+	/**
+	 * Sets the comment for the step
+	 *
+	 * @param string $comment
+	*/
 	public function setComment($comment){
 		$this->comment = $comment;
 	}
 
+	/**
+	 * Sets the title for the task
+	 *
+	 * @param string $title
+	 * @throws TaskException
+	 */
 	public function setTitle($title){
 
 		if (empty($title)){
@@ -66,10 +94,18 @@ class TaskStep {
 		$this->title = $title;
 	}
 
+ 	/**
+ 	 * Sets the task ID that this step belongs to
+ 	 *
+ 	 * @param int $task_id
+ 	*/
 	public function setTaskID($task_id){
 		$this->task_id = $task_id;
 	}
 
+ 	/**
+ 	 * Deletes the step
+ 	 */
 	public function delete(){
 
 		$query = new \TaskerMAN\Core\DBQuery("DELETE FROM `steps`
@@ -82,6 +118,9 @@ class TaskStep {
 		return true;
 	}
 
+ 	/**
+ 	 * Saves any changes to the database
+ 	 */
 	public function save(){
 
 		if ($this->new_step){

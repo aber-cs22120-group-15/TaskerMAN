@@ -1,8 +1,24 @@
 <?php
 namespace TaskerMAN\Application;
 
+/**
+ * This class provides functions for manipulating user accounts
+ *
+ * @author Daniel K Monaghan <dkm2@aber.ac.uk>
+ * @version 1.0
+*/ 
 class UserManagement {
 	
+	/**
+	 * Creates a new user. Returns false if error, or the new user's id if success
+	 *
+	 * @param string $email
+	 * @param string $name
+	 * @param string $password
+	 * @param boolean $admin
+	 * @return mixed
+	 * @throws UserManagementException
+	*/
 	static public function create($email, $name, $password, $admin = false){
 
 		// Check if email is valid
@@ -14,6 +30,12 @@ class UserManagement {
 		// Validate password
 		if (strlen($password) < 5 || strlen($password) > 13){
 			throw new UserManagementException('Password must be between 5 and 13 characters');
+			return false;
+		}
+
+		// Check that password contains a special character
+		if (!strpbrk($password, "#$%^&*()+=-[]';,./{}|:<>?~!")){
+			throw new UserManagementException('Password must contain at least one special character');
 			return false;
 		}
 
@@ -60,6 +82,16 @@ class UserManagement {
 		return $query->lastInsertID();
 	}
 
+	/** 
+	 * Updates information for a given user
+	 * 
+	 * @param int $id
+	 * @param string $name
+	 * @param string $email
+	 * @param boolean $admin
+	 * @throws UserManagementException
+	 * @return boolean
+	*/
 	static public function update($id, $name, $email, $admin){
 
 		// Check if email is valid
@@ -93,6 +125,14 @@ class UserManagement {
 		return true;
 	}
 
+	/**
+	 * Validates and sets a user's password
+     *
+     * @param int $uid
+     * @param string $password
+     * @return boolean
+     * @throws UserManagementException
+    */
 	static public function changePassword($id, $password){
 
 		// Check password length is between 5 and 13 characters
@@ -129,6 +169,12 @@ class UserManagement {
 		return true;
 	}
 
+	/** 
+	 * Deletes a given user from the database
+	 *
+	 * @param int $id
+	 * @return boolean
+	*/
 	static public function delete($id){
 
 		// Do not allow deletion if only one user is registered
