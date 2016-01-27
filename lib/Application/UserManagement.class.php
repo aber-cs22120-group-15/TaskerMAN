@@ -135,7 +135,7 @@ class UserManagement {
 		}
 
 		// Check that password contains a special character
-		if (!strpbrk($password, "#$%^&*()+=-[]';,./{}|:<>?~!")){
+		if (!strpbrk($password, "@#$%^&*()+=-[]';,./{}|:<>?~!")){
 			throw new UserManagementException('Password must contain at least one special character');
 			return false;
 		}
