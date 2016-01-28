@@ -19,11 +19,11 @@ if (isset($_POST['submit'])){
 	// Create user
 	try {
 
-		$uid = TaskerMAN\UserManagement::create(TaskerMAN\Core\IO::POST('email'), TaskerMAN\Core\IO::POST('name'), TaskerMAN\Core\IO::POST('password'), true);
+		$uid = TaskerMAN\Application\UserManagement::create(TaskerMAN\Core\IO::POST('email'), TaskerMAN\Core\IO::POST('name'), TaskerMAN\Core\IO::POST('password'), true);
 
 		header('Location: index.php?p=user&id=' . $uid);
 
-	} catch (TaskerMAN\UserManagementException $e){
+	} catch (TaskerMAN\Application\UserManagementException $e){
 		$alert = '<div class="alert alert-danger" role="alert">' . $e->getMessage() . '</div>';
 	}
 
