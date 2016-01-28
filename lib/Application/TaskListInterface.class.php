@@ -63,7 +63,7 @@ class TaskListInterface {
 	 *
 	 * @param string $key Criteria Key
 	 * @param mixed $value Search value
-	 * @throws InventoryException
+	 * @throws TaskListInterfaceException
 	 * @return boolean
 	*/
 	static public function setSearchCriteria($key, $value){
