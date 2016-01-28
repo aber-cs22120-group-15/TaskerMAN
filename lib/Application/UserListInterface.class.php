@@ -47,7 +47,7 @@ class UserListInterface {
 	 *
 	 * @param string $key Criteria Key
 	 * @param mixed $value Search value
-	 * @throws InventoryException
+	 * @throws TaskListInterfaceException
 	 * @return boolean
 	*/
 	static public function setSearchCriteria($key, $value){
@@ -88,8 +88,8 @@ class UserListInterface {
 	/**
 	 * Set sort column
 	 *
-	 * @param str $column Column name
-	 * @param str $direction Ascending/Descending
+	 * @param string $column Column name
+	 * @param string $direction Ascending/Descending
 	 * @return boolean Success
 	*/
 	static public function setSort($column, $direction){
