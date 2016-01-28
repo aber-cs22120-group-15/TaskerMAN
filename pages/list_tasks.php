@@ -83,7 +83,7 @@ $TaskData = TaskerMAN\Application\TaskListInterface::getTasks(true);
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
   <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-9">
 
   <div class="panel panel-info">
     <div class="panel-heading"><h3 class="panel-title">Search Criteria</h3></div>
@@ -143,7 +143,7 @@ $TaskData = TaskerMAN\Application\TaskListInterface::getTasks(true);
           <div class="row">
 
            <!-- Status -->
-            <div class="col-lg-4">
+            <div class="col-lg-3">
               <div class="input-group">
                 <span class="input-group-addon">
                   Status
@@ -156,7 +156,7 @@ $TaskData = TaskerMAN\Application\TaskListInterface::getTasks(true);
             </div>
 
             <!-- Sort Column -->
-            <div class="col-lg-3">
+            <div class="col-lg-4">
               <div class="input-group">
                 <span class="input-group-addon">
                   Sort By
