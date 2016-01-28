@@ -9,7 +9,6 @@ namespace TaskerMAN\Application;
  * @author Daniel K Monaghan <dkm2@aber.ac.uk>
  * @version 1.0
 */
-
 class API {
 	
 	static public $method;

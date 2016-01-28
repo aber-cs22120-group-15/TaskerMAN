@@ -1,13 +1,18 @@
 <?php
 namespace TaskerMAN\Application;
 
-/*
-Status Codes:
-	0 = abandoned
-	1 = allocated
-	2 = completed
+/**
+ * This object represents a single task, and provides functions for creating and
+ * updating new tasks, as well as obtaining data about existing tasks.
+ *
+ * Status Codes:
+ * 0 = abandoned
+ * 1 = allocated
+ *2 = completed
+ *
+ * @author Daniel K Monaghan <dkm2@aber.ac.uk>
+ * @version 1.0
 */
-
 class Task {
 	
 	public $id;
