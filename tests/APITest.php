@@ -17,4 +17,14 @@ class APITest extends PHPUnit_Framework_TestCase {
 
 	}
 
+	/** 
+	 * Check that an invalid token won't allow a user to be authenticated
+	 * Note that checking of a valid token is performed in UserCreationTest
+	 */
+	public function testInvalidTokenAuthentication(){
+		$token = 'NOT-A-REAL-TOKEN';
+
+		$response = TaskerMAN\Application\API::authenticateByToken($token);
+		$this->assertFalse($response);
+	}
 }

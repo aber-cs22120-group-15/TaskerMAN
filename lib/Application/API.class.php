@@ -83,9 +83,13 @@ class API {
 	 *
 	 * @return boolean Success
 	*/
-	static public function authenticateByToken(){
+	static public function authenticateByToken($token = null){
 
-		if (empty(self::$token)){
+		if (is_null($token)){
+			$token = self::$token;
+		}
+
+		if (empty($token)){
 			return false;
 		}
 
@@ -95,7 +99,7 @@ class API {
 			LIMIT 1
 		");
 
-		$query->execute(self::$token);
+		$query->execute($token);
 
 		if ($query->rowCount() < 1){
 			return false;
