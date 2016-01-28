@@ -200,12 +200,6 @@ class Task {
 			return false;
 		}
 
-		// Check that this date isn't in the past
-		if (strtotime($due_by) < time() - 86400){
-			throw new TaskException('Task due date must be in the future');
-			return false;
-		}
-
 		$this->due_by = $due_by;
 		return true;
 	}
