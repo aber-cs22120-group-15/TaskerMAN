@@ -102,8 +102,8 @@ class TaskListInterface {
 	/**
 	 * Set sort column
 	 *
-	 * @param str $column Column name
-	 * @param str $direction Ascending/Descending
+	 * @param string $column Column name
+	 * @param string $direction Ascending/Descending
 	 * @return boolean Success
 	*/
 	static public function setSort($column, $direction){
