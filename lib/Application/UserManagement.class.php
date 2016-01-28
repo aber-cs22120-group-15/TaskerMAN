@@ -73,7 +73,7 @@ class UserManagement {
 
 		$query->execute();
 
-		return $query->lastInsertID();
+		return (int) $query->lastInsertID();
 	}
 
 	/** 

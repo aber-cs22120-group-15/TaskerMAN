@@ -230,7 +230,7 @@ class Task {
 	 * @param string $date
 	 * @return boolean
 	*/
-	private function validateDate($date){
+	public function validateDate($date){
 
 	    $date_object = \DateTime::createFromFormat('Y-m-d', $date);
 	    return $date_object && $date_object->format('Y-m-d') == $date;

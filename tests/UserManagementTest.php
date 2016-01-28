@@ -26,5 +26,4 @@ class UserManagementTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
-
 }
