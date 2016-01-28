@@ -111,13 +111,15 @@ class DashboardStats {
 
 		// Calculate percentage of tasks completed on time
 		if ($stats['completed'] > 0){
+			$stats['average_completion_time'] = \TaskerMAN\WebInterface\DateFormat::timeFormat($stats['average_completion_time'], true);
 			$stats['completed_on_time_percentage'] = round(($stats['completed_on_time'] / $stats['completed'] * 100), 2);
 		} else {
+			$stats['average_completion_time'] = 'n/a';
 			$stats['completed_on_time_percentage'] = 100;
 		}
 		
 		$stats['avg_tasks_per_user'] = floor($stats['total'] / $stats['user_count']);
-		$stats['average_completion_time'] = \TaskerMAN\WebInterface\DateFormat::timeFormat($stats['average_completion_time'], true);
+		
 
 
 		return $stats;
