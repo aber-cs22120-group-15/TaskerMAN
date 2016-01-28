@@ -30,4 +30,8 @@ foreach ($ids as $id){
 
 }
 
+if (empty($steps)){
+	throw new TaskerMAN\Application\APIErrorException('No steps found');
+}
+
 echo TaskerMAN\Application\API::response(array('steps' => $steps));
