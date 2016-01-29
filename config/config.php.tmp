@@ -7,6 +7,8 @@ $config['DB_USERNAME'] = 'taskerman';
 $config['DB_PASSWORD'] = 'abercs';
 $config['DB_DATABASE'] = 'taskerman';
 
+$config['TASKERCLI_URL'] = 'https://github.com/aber-cs22120-group-15/TaskerCLI/raw/master/TaskerCLI.jar';
+
 
 TaskerMAN\Core\Registry::loadConfig($config);
 unset($config);

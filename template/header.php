@@ -59,6 +59,8 @@ $sidebar->addItem('list_users', 'Manage Users');
 	          	echo '<li' . $item['active_html'] . '><a href="index.php?p=' . $item['url'] . '">' . $item['text'] . '</a></li>' . "\n";
 	          }
 	          ?>
+
+	          <li><a href="<?=TaskerMAN\Core\Registry::getConfig('TASKERCLI_URL')?>" target="_blank">Download TaskerCLI</a></li>
 	          </ul>
 	         
 	        </div>
