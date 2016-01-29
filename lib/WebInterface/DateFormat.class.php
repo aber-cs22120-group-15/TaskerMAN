@@ -27,6 +27,7 @@ class DateFormat {
 	 *
 	 * @param mixed $compare Date to comapare to
 	 * @param boolean $short Toggle short form of output
+	 * @return mixed
 	*/
 	static public function timeDifference($compare, $short = false){
 		$to = time();

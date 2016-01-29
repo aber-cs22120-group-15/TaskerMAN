@@ -61,7 +61,7 @@ if (isset($_POST['submit'])){
     <div class="container">
 
    		<form class="form-signin" method="post" action="index.php?p=login">
-			<h2 class="form-signin-heading">TaskerMAN</h2>
+			<img style="padding-bottom: 5px;" src="static/img/banner_login.png" alt="TaskerMAN" title="TaskerMAN" />
 
 			<?php
 	    	if (!is_null($error)){

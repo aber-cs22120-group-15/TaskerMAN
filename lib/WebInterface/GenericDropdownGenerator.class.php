@@ -11,8 +11,9 @@ class GenericDropdownGenerator {
 
 	/**
 	 * Returns HTML for dropdown
-	 * 
-	 * @param int $selected Already selected option
+	 *
+	 * @param array $options
+	 * @param mixed $selected Already selected option
 	 * @return string HTML output
 	*/
 	static public function generate($options, $selected = null){
