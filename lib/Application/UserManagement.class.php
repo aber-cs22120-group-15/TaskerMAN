@@ -128,9 +128,9 @@ class UserManagement {
 	*/
 	static public function validatePassword($password){
 
-		// Check password length is between 5 and 13 characters
-		if (strlen($password) < 5 || strlen($password) > 13){
-			throw new UserManagementException('Password must be between 5 and 13 characters');
+		// Check password length is between 5 and 30 characters
+		if (strlen($password) < 5 || strlen($password) > 30){
+			throw new UserManagementException('Password must be between 5 and 30 characters');
 			return false;
 		}
 

@@ -41,15 +41,6 @@ class TaskTest extends PHPUnit_Framework_TestCase {
 
 		// Check due by was set correctly
 		$this->assertEquals($date, $this->task->due_by);
-
-		// Check that this disallows a date in the past
-		$date = date('Y-m-d', time() - (86400 * 2));
-		$this->setExpectedException('TaskerMAN\Application\TaskException');
-		$result = $this->task->setDueBy($date);
-
-		// Check that the operation did not succeed
-		$this->assertFalse($result);
-
 	}
 
 	/**
